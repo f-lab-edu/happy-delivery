@@ -1,6 +1,7 @@
 #.gitignore
 
 .DS_Store
+out
 
 # IntelliJ project files
 .idea
