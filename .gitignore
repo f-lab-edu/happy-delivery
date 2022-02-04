@@ -6,7 +6,8 @@ out
 # IntelliJ project files
 .idea
 
-# Gradle
+# Ignore gradle files
 .gradle
+build/
 
 
