@@ -5,7 +5,7 @@ import com.happy.delivery.application.dto.UserDTO;
 public class UserServiceImpl implements UserService {
 
     @Override
-    public boolean join(UserDTO userDTO) {
+    public boolean signup(UserDTO userDTO) {
 
         return false;
     }
