@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping("users")
+@RestController
+@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
 
@@ -17,7 +17,6 @@ public class UserController {
 
     @PostMapping("/signup")
     public void signup(@RequestBody UserDTO userDTO) {
-        System.out.println(userDTO.getAddress());
         userService.signup(userDTO);
     }
 }
