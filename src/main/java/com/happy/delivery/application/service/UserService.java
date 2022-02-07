@@ -1,7 +1,8 @@
 package com.happy.delivery.application.service;
 
 import com.happy.delivery.application.dto.UserDTO;
+import org.springframework.stereotype.Service;
 
 public interface UserService {
-    boolean signup(UserDTO userDTO);
+    void signup(UserDTO userDTO);
 }
