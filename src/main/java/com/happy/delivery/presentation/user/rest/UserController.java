@@ -1,5 +1,6 @@
 package com.happy.delivery.presentation.user.rest;
 
+import com.happy.delivery.application.response.SignResponse;
 import com.happy.delivery.application.user.UserService;
 import com.happy.delivery.presentation.common.response.ApiResponse;
 import com.happy.delivery.presentation.user.request.SignupRequest;
@@ -22,7 +23,8 @@ public class UserController {
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping("signup")
     public ApiResponse<SignupResponse> signup(@RequestBody SignupRequest request) {
-        userService.signup(request.toCommand(request));
-        return ApiResponse.success(request);
+        SignResponse signResponse = userService.signup(request.toCommand(request));
+        return ApiResponse.success(signResponse);
     }
+
 }

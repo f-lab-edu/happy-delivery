@@ -1,5 +1,6 @@
 package com.happy.delivery.application.command;
 
+import com.happy.delivery.application.response.SignResponse;
 import com.happy.delivery.presentation.user.request.SignupRequest;
 
 public class SignCommand {
@@ -14,7 +15,15 @@ public class SignCommand {
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
-
+    public SignResponse fromSignResponse(SignCommand signCommand) {
+        SignResponse signResponse = new SignResponse(
+                signCommand.getEmail(),
+                signCommand.getPassword(),
+                signCommand.getName(),
+                signCommand.getPhoneNumber()
+        );
+        return signResponse;
+    }
     public String getEmail() {
         return email;
     }

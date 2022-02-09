@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
-public class HashMapRepositry implements UserRepository {
+public class HashMapRepository implements UserRepository {
     private final Map<Long, User> hashmap = new ConcurrentHashMap<>();
     private Long sequence = 0L;
 
