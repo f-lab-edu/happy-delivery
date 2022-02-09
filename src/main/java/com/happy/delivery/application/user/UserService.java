@@ -1,8 +1,8 @@
 package com.happy.delivery.application.user;
 
-import com.happy.delivery.application.command.SignCommand;
-import com.happy.delivery.application.response.SignResponse;
+import com.happy.delivery.application.command.SignupCommand;
+import com.happy.delivery.application.result.SignupResult;
 
 public interface UserService {
-    public SignResponse signup(SignCommand signCommand);
+    public SignupResult signup(SignupCommand signCommand);
 }

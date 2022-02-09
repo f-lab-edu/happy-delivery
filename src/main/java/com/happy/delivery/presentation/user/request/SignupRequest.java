@@ -1,7 +1,6 @@
 package com.happy.delivery.presentation.user.request;
 
-import com.happy.delivery.application.command.SignCommand;
-import com.happy.delivery.domain.User;
+import com.happy.delivery.application.command.SignupCommand;
 
 //dto
 public class SignupRequest {
@@ -16,8 +15,9 @@ public class SignupRequest {
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
-    public SignCommand toCommand(SignupRequest signupRequest) {
-        SignCommand signCommand = new SignCommand(
+
+    public SignupCommand toCommand(SignupRequest signupRequest) {
+        SignupCommand signCommand = new SignupCommand(
                 signupRequest.getEmail(),
                 signupRequest.getPassword(),
                 signupRequest.getName(),
@@ -25,6 +25,7 @@ public class SignupRequest {
         );
         return signCommand;
     }
+
     public String getEmail() {
         return email;
     }

@@ -1,9 +1,9 @@
 package com.happy.delivery.application.user;
 
-import com.happy.delivery.application.command.SignCommand;
-import com.happy.delivery.application.response.SignResponse;
-import com.happy.delivery.domain.User;
-import com.happy.delivery.domain.UserRepository;
+import com.happy.delivery.application.command.SignupCommand;
+import com.happy.delivery.application.result.SignupResult;
+import com.happy.delivery.domain.user.User;
+import com.happy.delivery.domain.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class UserServiceV1 implements UserService{
     }
 
     @Override
-    public SignResponse signup(SignCommand signCommand) {
+    public SignupResult signup(SignupCommand signCommand) {
 
         //비밀번호 암호화
 
@@ -35,8 +35,8 @@ public class UserServiceV1 implements UserService{
 
         //repository에 저장
         userRepository.save(user);
-        SignResponse signResponse = signCommand.fromSignResponse(signCommand);
-        return signResponse;
+        SignupResult signupResult = signCommand.fromSignResponse(signCommand);
+        return signupResult;
     }
 
 }

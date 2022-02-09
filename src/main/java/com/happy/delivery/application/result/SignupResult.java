@@ -1,13 +1,12 @@
-package com.happy.delivery.domain;
+package com.happy.delivery.application.result;
 
-public class User {
-
+public class SignupResult {
     private String email;
     private String password;
     private String name;
     private String phoneNumber;
 
-    public User(String email, String password, String name, String phoneNumber) {
+    public SignupResult(String email, String password, String name, String phoneNumber) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -30,4 +29,3 @@ public class User {
         return phoneNumber;
     }
 }
-

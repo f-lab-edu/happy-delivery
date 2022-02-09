@@ -1,23 +1,22 @@
 package com.happy.delivery.application.command;
 
-import com.happy.delivery.application.response.SignResponse;
-import com.happy.delivery.presentation.user.request.SignupRequest;
+import com.happy.delivery.application.result.SignupResult;
 
-public class SignCommand {
+public class SignupCommand {
     private String email;
     private String password;
     private String name;
     private String phoneNumber;
 
-    public SignCommand(String email, String password, String name, String phoneNumber) {
+    public SignupCommand(String email, String password, String name, String phoneNumber) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
 
-    public SignResponse fromSignResponse(SignCommand signCommand) {
-        SignResponse signResponse = new SignResponse(
+    public SignupResult fromSignResponse(SignupCommand signCommand) {
+        SignupResult signResponse = new SignupResult(
                 signCommand.getEmail(),
                 signCommand.getPassword(),
                 signCommand.getName(),
