@@ -2,20 +2,20 @@ package com.happy.delivery.domain;
 
 public class User {
 
-    private String eamil;
+    private String email;
     private String password;
     private String name;
     private String phoneNumber;
 
-    public User(String eamil, String password, String name, String phoneNumber) {
-        this.eamil = eamil;
+    public User(String email, String password, String name, String phoneNumber) {
+        this.email = email;
         this.password = password;
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
 
-    public String getEamil() {
-        return eamil;
+    public String getEmail() {
+        return email;
     }
 
     public String getPassword() {

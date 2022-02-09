@@ -15,6 +15,7 @@ public class SignCommand {
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
+
     public SignResponse fromSignResponse(SignCommand signCommand) {
         SignResponse signResponse = new SignResponse(
                 signCommand.getEmail(),
@@ -24,6 +25,7 @@ public class SignCommand {
         );
         return signResponse;
     }
+
     public String getEmail() {
         return email;
     }
