@@ -1,7 +1,6 @@
 package com.happy.delivery.domain.user;
 
 public class User {
-
     private String email;
     private String password;
     private String name;
@@ -28,6 +27,16 @@ public class User {
 
     public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
     }
 }
 
