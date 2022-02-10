@@ -31,9 +31,11 @@ public class UserServiceV1 implements UserService{
 
         //이메일 중복 검사
 
-        //repository에 저장
-        userRepository.save(user);
-        SignupResult signupResult = signCommand.fromSignResponse(signCommand);
+        //repository에 저장하고 결과값 받아옴.
+        //SignupResult signupResult = signCommand.fromSignResponse(signCommand);
+        User result = userRepository.save(user);
+        SignupResult signupResult = result.toSignupResult(result);
+
         return signupResult;
     }
 

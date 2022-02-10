@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -25,8 +27,9 @@ public class UserController {
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping("/signup")
-    public ApiResponse<SignupResult> signup(@RequestBody SignupRequest request) {
-        SignupResult signResponse = userService.signup(request.toCommand(request));
-        return ApiResponse.success(signResponse);
+    public ApiResponse<SignupResult> signup(@Valid @RequestBody SignupRequest request) {
+        //repository에 저장
+        SignupResult signupResult = userService.signup(request.toCommand(request));
+        return ApiResponse.success(signupResult);
     }
 }

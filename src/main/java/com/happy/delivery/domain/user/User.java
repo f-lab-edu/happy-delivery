@@ -1,5 +1,7 @@
 package com.happy.delivery.domain.user;
 
+import com.happy.delivery.application.result.SignupResult;
+
 public class User {
     private String email;
     private String password;
@@ -37,6 +39,15 @@ public class User {
                 ", name='" + name + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
+    }
+
+    public SignupResult toSignupResult(User user) {
+        return new SignupResult(
+                user.getEmail(),
+                user.getPassword(),
+                user.getName(),
+                user.getPhoneNumber()
+        );
     }
 }
 
