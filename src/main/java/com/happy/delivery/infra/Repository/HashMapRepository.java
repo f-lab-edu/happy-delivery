@@ -2,7 +2,6 @@ package com.happy.delivery.infra.Repository;
 
 import com.happy.delivery.domain.user.User;
 import com.happy.delivery.domain.user.repository.UserRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;
