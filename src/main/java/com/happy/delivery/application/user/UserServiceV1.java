@@ -1,7 +1,7 @@
 package com.happy.delivery.application.user;
-
 import com.happy.delivery.application.command.SignupCommand;
 import com.happy.delivery.application.result.SignupResult;
+import com.happy.delivery.domain.exception.EmailAlreadyUserException;
 import com.happy.delivery.domain.user.User;
 import com.happy.delivery.domain.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +18,10 @@ public class UserServiceV1 implements UserService{
     }
 
     @Override
-    public SignupResult signup(SignupCommand signCommand) {
+    public SignupResult signup(SignupCommand signCommand){
         //비밀번호 암호화
-        //UserEntity 만들기
-        //** 질문 **
+        //비밀번호 복호화
+
         User user = new User(
                 signCommand.getEmail(),
                 signCommand.getPassword(),
@@ -29,14 +29,10 @@ public class UserServiceV1 implements UserService{
                 signCommand.getPhoneNumber()
         );
 
-        //이메일 중복 검사
-
-        //repository에 저장하고 결과값 받아옴.
-        //SignupResult signupResult = signCommand.fromSignResponse(signCommand);
+        boolean emailDuplicateCheck = userRepository.emailDuplicateCheck(user.getEmail());
+        if(emailDuplicateCheck) throw new EmailAlreadyUserException();
         User result = userRepository.save(user);
         SignupResult signupResult = result.toSignupResult(result);
-
         return signupResult;
     }
-
 }

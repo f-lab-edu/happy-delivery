@@ -15,16 +15,6 @@ public class SignupCommand {
         this.phoneNumber = phoneNumber;
     }
 
-//    public SignupResult fromSignResponse(SignupCommand signCommand) {
-//        SignupResult signResponse = new SignupResult(
-//                signCommand.getEmail(),
-//                signCommand.getPassword(),
-//                signCommand.getName(),
-//                signCommand.getPhoneNumber()
-//        );
-//        return signResponse;
-//    }
-
     public String getEmail() {
         return email;
     }

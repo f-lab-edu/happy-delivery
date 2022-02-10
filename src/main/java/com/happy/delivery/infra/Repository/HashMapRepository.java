@@ -1,4 +1,5 @@
 package com.happy.delivery.infra.Repository;
+
 import com.happy.delivery.domain.user.User;
 import com.happy.delivery.domain.user.repository.UserRepository;
 import org.springframework.stereotype.Repository;
@@ -13,8 +14,7 @@ public class HashMapRepository implements UserRepository {
     @Override
     public User save(User user) {
         sequence++;
-        boolean emailDuplicateCheck = emailDuplicateCheck(user.getEmail());
-        if(!emailDuplicateCheck)hashmap.put(sequence, user); //email 중복시 저장안됨을 확인
+        hashmap.put(sequence, user);
         return user;
     }
 
@@ -26,6 +26,7 @@ public class HashMapRepository implements UserRepository {
                 .filter(findEmail -> email.equals(findEmail.getEmail()))
                 .findFirst()
                 .isPresent();//값이 없으면 false를 반환하고 있으면 true 반환한다
+
         return findEmailResult;
     }
 }

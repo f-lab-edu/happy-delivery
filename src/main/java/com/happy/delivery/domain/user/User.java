@@ -31,16 +31,6 @@ public class User {
         return phoneNumber;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                '}';
-    }
-
     public SignupResult toSignupResult(User user) {
         return new SignupResult(
                 user.getEmail(),
