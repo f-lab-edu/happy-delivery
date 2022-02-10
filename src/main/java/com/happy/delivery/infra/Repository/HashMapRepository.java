@@ -1,9 +1,7 @@
 package com.happy.delivery.infra.Repository;
-
 import com.happy.delivery.domain.user.User;
 import com.happy.delivery.domain.user.repository.UserRepository;
 import org.springframework.stereotype.Repository;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -15,20 +13,19 @@ public class HashMapRepository implements UserRepository {
     @Override
     public User save(User user) {
         sequence++;
-        User check = emailDuplicateCheck(user);
-        if(check==null) hashmap.put(sequence, user);
+        boolean emailDuplicateCheck = emailDuplicateCheck(user.getEmail());
+        if(!emailDuplicateCheck)hashmap.put(sequence, user); //email 중복시 저장안됨을 확인
         return user;
     }
 
     @Override
-    public User emailDuplicateCheck(User user) {//중복값 체크
-        String email = user.getEmail();
-        User result = hashmap
+    public boolean emailDuplicateCheck(String email) {//중복값 체크
+        boolean findEmailResult = hashmap
                 .values()
                 .stream()
-                .filter(userFindEmail -> email.equals(userFindEmail.getEmail()))
+                .filter(findEmail -> email.equals(findEmail.getEmail()))
                 .findFirst()
-                .orElse(null);//같은 이메일이 없으면 null 반환, 있으면 객체 반환
-        return result;
+                .isPresent();//값이 없으면 false를 반환하고 있으면 true 반환한다
+        return findEmailResult;
     }
 }
