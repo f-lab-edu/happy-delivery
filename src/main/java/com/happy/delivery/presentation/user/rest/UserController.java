@@ -1,12 +1,11 @@
 package com.happy.delivery.presentation.user.rest;
 
-import com.happy.delivery.application.result.SignupResult;
+import com.happy.delivery.application.user.result.SignupResult;
 import com.happy.delivery.application.user.UserService;
 import com.happy.delivery.presentation.common.response.ApiResponse;
 import com.happy.delivery.presentation.user.request.SignupRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +29,7 @@ public class UserController {
     @PostMapping("/signup")
     public ApiResponse<SignupResult> signup(@Valid @RequestBody SignupRequest request) throws NoSuchAlgorithmException {
         //repository에 저장
-        SignupResult signupResult = userService.signup(request.toCommand(request));
+        SignupResult signupResult = userService.signup(request.toCommand());
         return ApiResponse.success(signupResult);
     }
 }

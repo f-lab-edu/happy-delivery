@@ -1,7 +1,7 @@
 package com.happy.delivery.application.user;
-import com.happy.delivery.application.command.SignupCommand;
+import com.happy.delivery.application.user.command.SignupCommand;
 import com.happy.delivery.application.encrypt.Sha256Encrypt;
-import com.happy.delivery.application.result.SignupResult;
+import com.happy.delivery.application.user.result.SignupResult;
 import com.happy.delivery.domain.exception.EmailAlreadyUserException;
 import com.happy.delivery.domain.user.User;
 import com.happy.delivery.domain.user.repository.UserRepository;

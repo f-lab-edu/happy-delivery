@@ -1,4 +1,4 @@
-package com.happy.delivery.infra.Repository;
+package com.happy.delivery.infra.repository.user;
 
 import com.happy.delivery.domain.user.User;
 import com.happy.delivery.domain.user.repository.UserRepository;
@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
-public class HashMapRepository implements UserRepository {
+public class HashMapUserRepository implements UserRepository {
     private final Map<Long, User> hashmap = new ConcurrentHashMap<>();
     private Long sequence = 0L;
 

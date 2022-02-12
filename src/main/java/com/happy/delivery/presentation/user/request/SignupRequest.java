@@ -1,6 +1,6 @@
 package com.happy.delivery.presentation.user.request;
 
-import com.happy.delivery.application.command.SignupCommand;
+import com.happy.delivery.application.user.command.SignupCommand;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -34,12 +34,12 @@ public class SignupRequest {
         this.phoneNumber = phoneNumber;
     }
 
-    public SignupCommand toCommand(SignupRequest signupRequest) {
+    public SignupCommand toCommand() {
         SignupCommand signCommand = new SignupCommand(
-                signupRequest.getEmail(),
-                signupRequest.getPassword(),
-                signupRequest.getName(),
-                signupRequest.getPhoneNumber()
+                this.email,
+                this.password,
+                this.name,
+                this.phoneNumber
         );
         return signCommand;
     }

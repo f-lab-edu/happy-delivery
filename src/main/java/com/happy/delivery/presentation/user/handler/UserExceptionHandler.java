@@ -1,4 +1,4 @@
-package com.happy.delivery.presentation.handler;
+package com.happy.delivery.presentation.user.handler;
 
 import com.happy.delivery.domain.exception.EmailAlreadyUserException;
 import com.happy.delivery.presentation.common.response.ApiResponse;

@@ -1,6 +1,6 @@
 package com.happy.delivery.domain.user;
 
-import com.happy.delivery.application.result.SignupResult;
+import com.happy.delivery.application.user.result.SignupResult;
 
 public class User {
     private String email;

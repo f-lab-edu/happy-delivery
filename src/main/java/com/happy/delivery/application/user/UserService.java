@@ -1,7 +1,7 @@
 package com.happy.delivery.application.user;
 
-import com.happy.delivery.application.command.SignupCommand;
-import com.happy.delivery.application.result.SignupResult;
+import com.happy.delivery.application.user.command.SignupCommand;
+import com.happy.delivery.application.user.result.SignupResult;
 import com.happy.delivery.domain.exception.EmailAlreadyUserException;
 
 import java.security.NoSuchAlgorithmException;

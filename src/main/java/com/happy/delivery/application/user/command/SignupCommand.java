@@ -1,12 +1,12 @@
-package com.happy.delivery.application.result;
+package com.happy.delivery.application.user.command;
 
-public class SignupResult {
+public class SignupCommand {
     private String email;
     private String password;
     private String name;
     private String phoneNumber;
 
-    public SignupResult(String email, String password, String name, String phoneNumber) {
+    public SignupCommand(String email, String password, String name, String phoneNumber) {
         this.email = email;
         this.password = password;
         this.name = name;
