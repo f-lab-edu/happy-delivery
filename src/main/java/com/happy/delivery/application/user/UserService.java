@@ -4,6 +4,8 @@ import com.happy.delivery.application.command.SignupCommand;
 import com.happy.delivery.application.result.SignupResult;
 import com.happy.delivery.domain.exception.EmailAlreadyUserException;
 
+import java.security.NoSuchAlgorithmException;
+
 public interface UserService {
-    public SignupResult signup(SignupCommand signCommand) throws EmailAlreadyUserException;
+    public SignupResult signup(SignupCommand signCommand) throws EmailAlreadyUserException, NoSuchAlgorithmException;
 }

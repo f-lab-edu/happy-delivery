@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.NoSuchAlgorithmException;
 
 @RestController
 @RequestMapping("/user")
@@ -27,7 +28,7 @@ public class UserController {
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping("/signup")
-    public ApiResponse<SignupResult> signup(@Valid @RequestBody SignupRequest request) {
+    public ApiResponse<SignupResult> signup(@Valid @RequestBody SignupRequest request) throws NoSuchAlgorithmException {
         //repository에 저장
         SignupResult signupResult = userService.signup(request.toCommand(request));
         return ApiResponse.success(signupResult);
