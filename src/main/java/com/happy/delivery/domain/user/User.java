@@ -31,12 +31,12 @@ public class User {
         return phoneNumber;
     }
 
-    public SignupResult toSignupResult(User user) {
+    public SignupResult toSignupResult() {
         return new SignupResult(
-                user.getEmail(),
-                user.getPassword(),
-                user.getName(),
-                user.getPhoneNumber()
+                this.email,
+                this.password,
+                this.name,
+                this.phoneNumber
         );
     }
 }
