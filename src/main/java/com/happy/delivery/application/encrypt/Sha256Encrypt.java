@@ -1,5 +1,6 @@
 package com.happy.delivery.application.encrypt;
 
+import org.slf4j.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -7,10 +8,12 @@ import java.security.NoSuchAlgorithmException;
 
 public class Sha256Encrypt {
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     public String encrypt(String plainText) throws NoSuchAlgorithmException {
         MessageDigest instance = MessageDigest.getInstance("SHA-256");
         instance.update(plainText.getBytes(StandardCharsets.UTF_8));
-        System.out.println(byteToHex(instance.digest()));
+        logger.info("encrypt = {}", instance.digest());
         return byteToHex(instance.digest());
     }
 
