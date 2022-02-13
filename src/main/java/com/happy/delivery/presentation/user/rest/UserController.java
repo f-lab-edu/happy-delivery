@@ -28,7 +28,7 @@ public class UserController {
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping("/signup")
-    public ApiResponse<SignupResult> signup(@Valid @RequestBody SignupRequest request) throws NoSuchAlgorithmException {
+    public ApiResponse<SignupResult> signup(@Valid @RequestBody SignupRequest request){
         //repository에 저장
         SignupResult signupResult = userService.signup(request.toCommand());
         return ApiResponse.success(signupResult);
@@ -38,6 +38,7 @@ public class UserController {
     public ApiResponse<SignupResult> signin(@Valid @RequestBody SigninRequest request) {
         log.info("request = {}", request);
         userService.signin(request.toCommand());
-        return ApiResponse.success(request.toString());
+        //SignupResult
+        return ApiResponse.success(request.getEmail());
     }
 }

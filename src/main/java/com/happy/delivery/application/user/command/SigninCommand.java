@@ -1,5 +1,6 @@
 package com.happy.delivery.application.user.command;
 
+import com.happy.delivery.application.user.result.SignupResult;
 import com.happy.delivery.domain.user.User;
 
 public class SigninCommand {

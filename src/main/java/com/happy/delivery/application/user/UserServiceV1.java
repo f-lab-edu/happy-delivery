@@ -26,9 +26,7 @@ public class UserServiceV1 implements UserService{
 
 
     @Override
-    public SignupResult signup(SignupCommand signCommand) throws NoSuchAlgorithmException {
-        //비밀번호 암호화
-        //비밀번호 복호화 - 복호화는 안해도됨. 로그인할때 로그인 받은 암호를 암호화해서 암호화한 값끼리 비교 하면될듯 (확인함)
+    public SignupResult signup(SignupCommand signCommand) {
         String passwordEncrypt = encryptMapper.encoder(signCommand.getPassword());
 
         User user = new User(
@@ -42,7 +40,12 @@ public class UserServiceV1 implements UserService{
         boolean emailDuplicateCheck = userRepository.emailDuplicateCheck(user.getEmail());
         if(emailDuplicateCheck) throw new EmailAlreadyUserException();
         User result = userRepository.save(user);
-        SignupResult signupResult = result.toSignupResult();
+        SignupResult signupResult = new SignupResult(
+                result.getEmail(),
+                passwordEncrypt,
+                result.getName(),
+                result.getPhoneNumber()
+        );
         return signupResult;
     }
 
@@ -57,8 +60,6 @@ public class UserServiceV1 implements UserService{
         if(result) {
             //세션 설정
         }
-
-        //비밀번호가 일치하지 않는다면,
-
+        //비밀번호가 일치하지 않는다면, exception 발생시켜 사용자에게 보내준다.
     }
 }

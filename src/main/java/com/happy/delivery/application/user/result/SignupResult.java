@@ -28,4 +28,6 @@ public class SignupResult {
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
+
 }

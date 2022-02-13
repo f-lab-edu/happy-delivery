@@ -37,13 +37,5 @@ public class User {
         return sequence;
     }
 
-    public SignupResult toSignupResult() {
-        return new SignupResult(
-                this.email,
-                this.password,
-                this.name,
-                this.phoneNumber
-        );
-    }
 }
 
