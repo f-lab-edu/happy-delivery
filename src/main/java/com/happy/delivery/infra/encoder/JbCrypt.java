@@ -14,6 +14,6 @@ public class JbCrypt implements EncryptMapper {
     //비밀번호 일치 비교
     @Override
     public boolean isMatch(String password, String hashed) {
-        return BCrypt.checkpw(password,hashed);
+        return BCrypt.checkpw(password, hashed);
     }
 }

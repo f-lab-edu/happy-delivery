@@ -3,6 +3,7 @@ package com.happy.delivery.presentation.user.rest;
 import com.happy.delivery.application.user.result.SignupResult;
 import com.happy.delivery.application.user.UserService;
 import com.happy.delivery.presentation.common.response.ApiResponse;
+import com.happy.delivery.presentation.user.request.SigninRequest;
 import com.happy.delivery.presentation.user.request.SignupRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,5 +32,12 @@ public class UserController {
         //repository에 저장
         SignupResult signupResult = userService.signup(request.toCommand());
         return ApiResponse.success(signupResult);
+    }
+
+    @PostMapping("/signin")
+    public ApiResponse<SignupResult> signin(@Valid @RequestBody SigninRequest request) {
+        log.info("request = {}", request);
+        userService.signin(request.toCommand());
+        return ApiResponse.success(request.toString());
     }
 }
