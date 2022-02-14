@@ -1,6 +1,4 @@
-package com.happy.delivery.domain.exception;
-
-import com.happy.delivery.domain.user.User;
+package com.happy.delivery.domain.exception.user;
 
 public class EmailAlreadyUserException extends RuntimeException {
     public EmailAlreadyUserException() {

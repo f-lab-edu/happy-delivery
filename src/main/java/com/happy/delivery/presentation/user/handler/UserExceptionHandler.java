@@ -1,13 +1,12 @@
 package com.happy.delivery.presentation.user.handler;
 
-import com.happy.delivery.domain.exception.EmailAlreadyUserException;
-import com.happy.delivery.presentation.common.response.ApiResponse;
+import com.happy.delivery.domain.exception.user.AuthenticationFailedException;
+import com.happy.delivery.domain.exception.user.EmailAlreadyUserException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,4 +27,11 @@ public class UserExceptionHandler {
     public String handle(EmailAlreadyUserException ex) {
         return "EMAIL_ALREADY_USER";
     }
+
+    //Email 또는 Password 인증 실패
+    @ExceptionHandler(AuthenticationFailedException.class)
+    public String handle(AuthenticationFailedException ex){
+        return "ID_OR_PASSWORD_AUTHENTICATION_FAILED";
+    }
+
 }

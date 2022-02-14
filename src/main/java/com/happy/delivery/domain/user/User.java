@@ -1,13 +1,19 @@
 package com.happy.delivery.domain.user;
 
-import com.happy.delivery.application.user.result.SignupResult;
-
 public class User {
+
     private String email;
     private String password;
     private String name;
     private String phoneNumber;
     private Long sequence;
+
+    public User(String email, String password, String name, String phoneNumber) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
 
     public User(String email, String password, String name, String phoneNumber, Long sequence) {
         this.email = email;

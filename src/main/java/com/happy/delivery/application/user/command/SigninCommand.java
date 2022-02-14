@@ -1,6 +1,5 @@
 package com.happy.delivery.application.user.command;
 
-import com.happy.delivery.application.user.result.SignupResult;
 import com.happy.delivery.domain.user.User;
 
 public class SigninCommand {
@@ -20,7 +19,6 @@ public class SigninCommand {
         return password;
     }
 
-    //이게 맞는 방식인가? 전혀 아닌 것 같음.
     public User toUser() {
         return new User(
                 this.email,
@@ -29,13 +27,5 @@ public class SigninCommand {
                 null,
                 null
         );
-    }
-
-    @Override
-    public String toString() {
-        return "SigninCommand{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
     }
 }

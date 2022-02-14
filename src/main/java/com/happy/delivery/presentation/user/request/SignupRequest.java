@@ -1,13 +1,11 @@
 package com.happy.delivery.presentation.user.request;
 
 import com.happy.delivery.application.user.command.SignupCommand;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-//dto
 public class SignupRequest {
 
     @NotBlank
@@ -60,13 +58,4 @@ public class SignupRequest {
         return phoneNumber;
     }
 
-    @Override
-    public String toString() {
-        return "SignupRequest{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                '}';
-    }
 }

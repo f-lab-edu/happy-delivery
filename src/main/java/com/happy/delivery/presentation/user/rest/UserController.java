@@ -9,17 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
-import java.security.NoSuchAlgorithmException;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
     private final static Logger log = LoggerFactory.getLogger(UserController.class);
-    /*
-    UserService 인터페이스가 필요한지 확인 필요.
-     */
     private final UserService userService;
 
     public UserController(UserService userService) {
@@ -28,17 +23,16 @@ public class UserController {
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping("/signup")
+
     public ApiResponse<SignupResult> signup(@Valid @RequestBody SignupRequest request){
-        //repository에 저장
         SignupResult signupResult = userService.signup(request.toCommand());
         return ApiResponse.success(signupResult);
     }
 
+    @ResponseStatus(code = HttpStatus.OK)
     @PostMapping("/signin")
-    public ApiResponse<SignupResult> signin(@Valid @RequestBody SigninRequest request) {
-        log.info("request = {}", request);
-        userService.signin(request.toCommand());
-        //SignupResult
-        return ApiResponse.success(request.getEmail());
+    public ApiResponse<String> signin(@Valid @RequestBody SigninRequest request) {
+        String signinResult = userService.signin(request.toCommand());
+        return ApiResponse.success(signinResult + " 로그인 성공 했습니다.");
     }
 }
