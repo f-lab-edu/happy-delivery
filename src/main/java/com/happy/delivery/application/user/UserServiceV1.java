@@ -30,24 +30,24 @@ public class UserServiceV1 implements UserService{
     public SignupResult signup(SignupCommand signCommand) {
         User user = new User(
                 signCommand.getEmail(),
-                encryptedPassword(signCommand), // 패스워드 암호화 로직
+                this.getEncryptedPassword(signCommand), // 패스워드 암호화 로직
                 signCommand.getName(),
                 signCommand.getPhoneNumber()
         );
         userRepository.emailDuplicateCheck(user.getEmail());
         User result = userRepository.save(user);
-        return new SignupResult(
-                result.getEmail(),
-                result.getPassword(),
-                result.getName(),
-                result.getPhoneNumber()
-        );
+        return new SignupResult().toSignupResult(result);
     }
 
     //패스워드 암호화
-    public String encryptedPassword(SignupCommand signupCommand) {
+    public String getEncryptedPassword(SignupCommand signupCommand) {
         return encryptMapper.encoder(signupCommand.getPassword());
     }
+
+//    석지애 코드 :: 매개변수를 String으로 받아옴
+//    public String getEncryptedPassword(String password) {
+//        return encryptMapper.encoder(password);
+//    }
 
     @Override
     public String signin(SigninCommand signinCommand) {
