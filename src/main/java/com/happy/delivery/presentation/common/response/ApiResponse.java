@@ -15,9 +15,9 @@ public class ApiResponse<T>{
         return new ApiResponse(true, data, null);
     }
 
-//    public static <T> ApiResponse fail(String code, String message) {
-//        return new ApiResponse(false, null, new Error(code, message));
-//    }
+    public static <T> ApiResponse fail(String code, String message) {
+        return new ApiResponse(false, null, new Error(code, message));
+    }
 
     public static class Error {
         private String code;
@@ -26,6 +26,14 @@ public class ApiResponse<T>{
         public Error(String code, String message) {
             this.code = code;
             this.message = message;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public String getMessage() {
+            return message;
         }
     }
     public boolean isSuccess() {

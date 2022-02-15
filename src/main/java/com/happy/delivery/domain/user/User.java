@@ -1,12 +1,13 @@
 package com.happy.delivery.domain.user;
 
 public class User {
-
+    
+    private Long id;
     private String email;
     private String password;
     private String name;
     private String phoneNumber;
-    private Long sequence;
+
 
     public User(String email, String password, String name, String phoneNumber) {
         this.email = email;
@@ -15,12 +16,12 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public User(String email, String password, String name, String phoneNumber, Long sequence) {
+    public User(String email, String password, String name, String phoneNumber, Long id) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.sequence = sequence;
+        this.id = id;
     }
 
     public String getEmail() {
@@ -39,8 +40,8 @@ public class User {
         return phoneNumber;
     }
 
-    public Long getSequence() {
-        return sequence;
+    public Long id() {
+        return id;
     }
 
 }

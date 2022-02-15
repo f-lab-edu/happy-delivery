@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Repository
 public class HashMapUserRepository implements UserRepository {
     private final Map<Long, User> hashmap = new ConcurrentHashMap<>();
-    private Long sequence = 0L;
+    private Long sequence = 0L; // -> AtomicLong increate 값 증가, id
 
     @Override
     public User save(User user) {
@@ -26,11 +26,10 @@ public class HashMapUserRepository implements UserRepository {
                 .stream()
                 .filter(findEmail -> email.equals(findEmail.getEmail()))
                 .findFirst()
-                .isPresent();
+                .isPresent();        //값이 없으면 false를 반환하고 있으면 true 반환한다
         if(present){
             throw new EmailAlreadyUserException();
         }
-        //값이 없으면 false를 반환하고 있으면 true 반환한다
     }
 
     //email을 받아서 저장된 repository에서 찾고 패스워드를 반환
@@ -42,6 +41,5 @@ public class HashMapUserRepository implements UserRepository {
                 .filter(findEmail -> email.equals(findEmail.getEmail()))
                 .findFirst()
                 .orElse(null);// 값이 있으면 값을 반환하고 없으면 null반환
-
     }
 }

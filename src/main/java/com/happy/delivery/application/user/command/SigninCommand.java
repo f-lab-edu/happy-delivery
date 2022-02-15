@@ -1,7 +1,5 @@
 package com.happy.delivery.application.user.command;
 
-import com.happy.delivery.domain.user.User;
-
 public class SigninCommand {
     private String email;
     private String password;
@@ -19,13 +17,4 @@ public class SigninCommand {
         return password;
     }
 
-    public User toUser() {
-        return new User(
-                this.email,
-                this.password,
-                null,
-                null,
-                null
-        );
-    }
 }
