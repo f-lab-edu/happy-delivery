@@ -35,13 +35,13 @@ public class HashMapUserRepository implements UserRepository {
 
     //email을 받아서 저장된 repository에서 찾고 패스워드를 반환
     @Override
-    public String getPassword(String email) {
-        User result = hashmap
+    public User findByEmail(String email) {
+        return  hashmap
                 .values()
                 .stream()
                 .filter(findEmail -> email.equals(findEmail.getEmail()))
                 .findFirst()
                 .orElse(null);// 값이 있으면 값을 반환하고 없으면 null반환
-        return result.getPassword();
+
     }
 }

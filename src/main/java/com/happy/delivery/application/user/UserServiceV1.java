@@ -55,7 +55,8 @@ public class UserServiceV1 implements UserService{
         User user = signinCommand.toUser();
         String hashedPassword;
         try{
-            hashedPassword = userRepository.getPassword(user.getEmail());
+            User result = userRepository.findByEmail(user.getEmail());
+            hashedPassword = result.getPassword();
         } catch (NullPointerException ex){
             throw new AuthenticationFailedException();
         }
