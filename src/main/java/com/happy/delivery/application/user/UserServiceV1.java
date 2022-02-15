@@ -28,24 +28,25 @@ public class UserServiceV1 implements UserService{
 
     @Override
     public SignupResult signup(SignupCommand signCommand) {
-        String passwordEncrypt = encryptMapper.encoder(signCommand.getPassword());
-
         User user = new User(
                 signCommand.getEmail(),
-                passwordEncrypt,
+                encryptedPassword(signCommand), // 패스워드 암호화 로직
                 signCommand.getName(),
                 signCommand.getPhoneNumber()
         );
-
-        boolean emailDuplicateCheck = userRepository.emailDuplicateCheck(user.getEmail());
-        if(emailDuplicateCheck) throw new EmailAlreadyUserException();
+        userRepository.emailDuplicateCheck(user.getEmail());
         User result = userRepository.save(user);
         return new SignupResult(
                 result.getEmail(),
-                passwordEncrypt,
+                result.getPassword(),
                 result.getName(),
                 result.getPhoneNumber()
         );
+    }
+
+    //패스워드 암호화
+    public String encryptedPassword(SignupCommand signupCommand) {
+        return encryptMapper.encoder(signupCommand.getPassword());
     }
 
     @Override
