@@ -1,6 +1,6 @@
 package com.happy.delivery.presentation.user.rest;
 
-import com.happy.delivery.application.user.result.SignupResult;
+import com.happy.delivery.application.user.result.UserResult;
 import com.happy.delivery.application.user.UserService;
 import com.happy.delivery.presentation.common.response.ApiResponse;
 import com.happy.delivery.presentation.user.request.SigninRequest;
@@ -24,15 +24,15 @@ public class UserController {
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping("/signup")
 
-    public ApiResponse<SignupResult> signup(@Valid @RequestBody SignupRequest request){
-        SignupResult signupResult = userService.signup(request.toCommand());
-        return ApiResponse.success(signupResult);
+    public ApiResponse<UserResult> signup(@Valid @RequestBody SignupRequest request){
+        UserResult userResult = userService.signup(request.toCommand());
+        return ApiResponse.success(userResult);
     }
 
     @ResponseStatus(code = HttpStatus.OK)
     @PostMapping("/signin")
-    public ApiResponse<String> signin(@Valid @RequestBody SigninRequest request) {
-        String signinResult = userService.signin(request.toCommand());
-        return ApiResponse.success(signinResult + " 로그인 성공 했습니다.");
+    public ApiResponse<UserResult> signin(@Valid @RequestBody SigninRequest request) {
+        UserResult userResult = userService.signin(request.toCommand());
+        return ApiResponse.success(userResult);
     }
 }

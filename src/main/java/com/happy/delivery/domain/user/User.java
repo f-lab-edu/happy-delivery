@@ -9,6 +9,7 @@ public class User {
     private String phoneNumber;
 
 
+    //회원가입 할 때 사용
     public User(String email, String password, String name, String phoneNumber) {
         this.email = email;
         this.password = password;
@@ -16,13 +17,16 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public User(String email, String password, String name, String phoneNumber, Long id) {
+    //보통의 경우
+    public User(Long id, String email, String password, String name, String phoneNumber) {
+        this.id = id;
         this.email = email;
         this.password = password;
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.id = id;
     }
+
+    public Long getId(){return id;}
 
     public String getEmail() {
         return email;
@@ -38,10 +42,6 @@ public class User {
 
     public String getPhoneNumber() {
         return phoneNumber;
-    }
-
-    public Long id() {
-        return id;
     }
 
 }

@@ -57,5 +57,4 @@ public class SignupRequest {
     public String getPhoneNumber() {
         return phoneNumber;
     }
-
 }

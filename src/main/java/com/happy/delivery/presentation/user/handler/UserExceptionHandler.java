@@ -1,7 +1,7 @@
 package com.happy.delivery.presentation.user.handler;
 
 import com.happy.delivery.domain.exception.user.AuthenticationFailedException;
-import com.happy.delivery.domain.exception.user.EmailAlreadyUserException;
+import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
 import com.happy.delivery.presentation.common.response.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -24,9 +24,9 @@ public class UserExceptionHandler {
     }
 
     //이메일 검증유무
-    @ExceptionHandler(EmailAlreadyUserException.class)
-    public ApiResponse<?> handle(EmailAlreadyUserException ex) {
-        return ApiResponse.fail("EMAIL_ALREADY_USED", null);
+    @ExceptionHandler(UserAlreadyExistedException.class)
+    public ApiResponse<?> handle(UserAlreadyExistedException ex) {
+        return ApiResponse.fail("USER_ALREADY_EXISTED", null);
     }
 
     //Email 또는 Password 인증 실패
