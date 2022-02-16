@@ -4,7 +4,6 @@ import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
 import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
 import com.happy.delivery.presentation.common.response.ApiResponse;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,29 +15,29 @@ import java.util.Map;
 @RestControllerAdvice
 public class UserExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> validationExceptions(MethodArgumentNotValidException ex) {
+    public ApiResponse<?> methodArgumentNotValidException(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult()
                 .getAllErrors()
                 .forEach(error -> errors.put(((FieldError) error).getField(), error.getDefaultMessage()));
-        return ResponseEntity.badRequest().body(errors);
+        return ApiResponse.fail("METHOD_ARGUMENT_NOT_VALID", String.valueOf(errors));
     }
 
     //이메일 검증유무
     @ExceptionHandler(UserAlreadyExistedException.class)
-    public ApiResponse<?> handle(UserAlreadyExistedException ex) {
+    public ApiResponse<?> userAlreadyExistedException(UserAlreadyExistedException ex) {
         return ApiResponse.fail("USER_ALREADY_EXISTED", null);
     }
 
     //로그인시 이메일 불일치
     @ExceptionHandler(EmailIsNotMatchException.class)
-    public ApiResponse<?> handle(EmailIsNotMatchException ex){
+    public ApiResponse<?> emailIsNotMatchException(EmailIsNotMatchException ex){
         return ApiResponse.fail("EMAIL_IS_NOT_MATCHED", null);
     }
 
     //로그인시 패스워드 불일치
     @ExceptionHandler(PasswordIsNotMatchException.class)
-    public ApiResponse<?> handle(PasswordIsNotMatchException ex){
+    public ApiResponse<?> passwordIsNotMatchException(PasswordIsNotMatchException ex){
         return ApiResponse.fail("PASSWORD_IS_NOT_MATCHED", null);
     }
 
