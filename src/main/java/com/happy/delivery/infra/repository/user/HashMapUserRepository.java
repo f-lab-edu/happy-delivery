@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @Repository
 public class HashMapUserRepository implements UserRepository {
     private final Map<Long, User> hashmap = new ConcurrentHashMap<>();
-    private AtomicLong id = new AtomicLong(); // -> AtomicLong increate 값 증가, id
+    private AtomicLong id = new AtomicLong();
 
     @Override
     public User save(User user) {

@@ -26,19 +26,19 @@ public class UserExceptionHandler {
     //이메일 검증유무
     @ExceptionHandler(UserAlreadyExistedException.class)
     public ApiResponse<?> userAlreadyExistedException(UserAlreadyExistedException ex) {
-        return ApiResponse.fail("USER_ALREADY_EXISTED", null);
+        return ApiResponse.fail("USER_ALREADY_EXISTED", ex.getMessage());
     }
 
     //로그인시 이메일 불일치
     @ExceptionHandler(EmailIsNotMatchException.class)
     public ApiResponse<?> emailIsNotMatchException(EmailIsNotMatchException ex){
-        return ApiResponse.fail("EMAIL_IS_NOT_MATCHED", null);
+        return ApiResponse.fail("EMAIL_IS_NOT_MATCHED", ex.getMessage());
     }
 
     //로그인시 패스워드 불일치
     @ExceptionHandler(PasswordIsNotMatchException.class)
     public ApiResponse<?> passwordIsNotMatchException(PasswordIsNotMatchException ex){
-        return ApiResponse.fail("PASSWORD_IS_NOT_MATCHED", null);
+        return ApiResponse.fail("PASSWORD_IS_NOT_MATCHED", ex.getMessage());
     }
 
 }

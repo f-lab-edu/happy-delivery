@@ -29,7 +29,7 @@ public class UserServiceV1 implements UserService {
         // email로 user 조회
         // null이 아니면, 이미 존재하는 계정이니 예외 발생
         if(userRepository.findByEmail(signCommand.getEmail()) != null){
-            throw new UserAlreadyExistedException();
+            throw new UserAlreadyExistedException("이미 존재하는 계정 입니다.");
         }
         // password를 hash 암호화하여 repository에 저장
         User result = userRepository.save(
@@ -47,10 +47,10 @@ public class UserServiceV1 implements UserService {
     public UserResult signin(SigninCommand signinCommand) {
         // 1. repo에 저장된 비밀번호 가져오기
         User user = userRepository.findByEmail(signinCommand.getEmail());
-        if (user == null) throw new EmailIsNotMatchException(); //EmailIsNotMatch
+        if (user == null) throw new EmailIsNotMatchException("이메일이 일치하지 않습니다."); //EmailIsNotMatch
         // 2. 비밀번호 맞는지 확인
         if (!encryptMapper.isMatch(signinCommand.getPassword(), user.getPassword())) {
-            throw new PasswordIsNotMatchException(); //password
+            throw new PasswordIsNotMatchException("패스워드가 일치하지 않습니다."); //password
         }
         return UserResult.fromUser(user);
     }
