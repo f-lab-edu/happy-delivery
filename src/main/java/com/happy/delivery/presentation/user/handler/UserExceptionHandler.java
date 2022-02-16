@@ -1,6 +1,7 @@
 package com.happy.delivery.presentation.user.handler;
 
-import com.happy.delivery.domain.exception.user.AuthenticationFailedException;
+import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
+import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
 import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
 import com.happy.delivery.presentation.common.response.ApiResponse;
 import org.springframework.http.ResponseEntity;
@@ -29,10 +30,16 @@ public class UserExceptionHandler {
         return ApiResponse.fail("USER_ALREADY_EXISTED", null);
     }
 
-    //Email 또는 Password 인증 실패
-    @ExceptionHandler(AuthenticationFailedException.class)
-    public String handle(AuthenticationFailedException ex){
-        return "ID_OR_PASSWORD_AUTHENTICATION_FAILED";
+    //로그인시 이메일 불일치
+    @ExceptionHandler(EmailIsNotMatchException.class)
+    public ApiResponse<?> handle(EmailIsNotMatchException ex){
+        return ApiResponse.fail("EMAIL_IS_NOT_MATCHED", null);
+    }
+
+    //로그인시 패스워드 불일치
+    @ExceptionHandler(PasswordIsNotMatchException.class)
+    public ApiResponse<?> handle(PasswordIsNotMatchException ex){
+        return ApiResponse.fail("PASSWORD_IS_NOT_MATCHED", null);
     }
 
 }

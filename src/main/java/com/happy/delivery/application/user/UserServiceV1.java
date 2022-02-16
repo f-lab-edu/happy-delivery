@@ -2,7 +2,8 @@ package com.happy.delivery.application.user;
 
 import com.happy.delivery.application.user.command.SigninCommand;
 import com.happy.delivery.application.user.command.SignupCommand;
-import com.happy.delivery.domain.exception.user.AuthenticationFailedException;
+import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
+import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
 import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
 import com.happy.delivery.infra.encoder.EncryptMapper;
 import com.happy.delivery.application.user.result.UserResult;
@@ -46,10 +47,10 @@ public class UserServiceV1 implements UserService {
     public UserResult signin(SigninCommand signinCommand) {
         // 1. repo에 저장된 비밀번호 가져오기
         User user = userRepository.findByEmail(signinCommand.getEmail());
-        if (user == null) throw new AuthenticationFailedException(); //email
+        if (user == null) throw new EmailIsNotMatchException(); //EmailIsNotMatch
         // 2. 비밀번호 맞는지 확인
         if (!encryptMapper.isMatch(signinCommand.getPassword(), user.getPassword())) {
-            throw new AuthenticationFailedException(); //password
+            throw new PasswordIsNotMatchException(); //password
         }
         return UserResult.fromUser(user);
     }
