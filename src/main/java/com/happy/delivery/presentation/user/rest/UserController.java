@@ -3,6 +3,7 @@ package com.happy.delivery.presentation.user.rest;
 import com.happy.delivery.application.user.result.UserResult;
 import com.happy.delivery.application.user.UserService;
 import com.happy.delivery.presentation.common.response.ApiResponse;
+import com.happy.delivery.presentation.user.request.PasswordUpdateRequest;
 import com.happy.delivery.presentation.user.request.SigninRequest;
 import com.happy.delivery.presentation.user.request.SignupRequest;
 import org.slf4j.Logger;
@@ -34,5 +35,13 @@ public class UserController {
     public ApiResponse<UserResult> signin(@Valid @RequestBody SigninRequest request) {
         UserResult userResult = userService.signin(request.toCommand());
         return ApiResponse.success(userResult);
+    }
+
+    @ResponseStatus(code = HttpStatus.OK)
+    @PatchMapping("/my-account/password")
+    public ApiResponse<?> updatePassword(@Valid @RequestBody PasswordUpdateRequest request){
+        log.info("request = {}", request);
+        userService.updatePassword(request.toCommand());
+        return ApiResponse.success("OK");
     }
 }

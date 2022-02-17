@@ -1,5 +1,6 @@
 package com.happy.delivery.application.user;
 
+import com.happy.delivery.application.user.command.PasswordUpdateCommand;
 import com.happy.delivery.application.user.command.SigninCommand;
 import com.happy.delivery.application.user.command.SignupCommand;
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
@@ -53,5 +54,15 @@ public class UserServiceV1 implements UserService {
             throw new PasswordIsNotMatchException("패스워드가 일치하지 않습니다."); //password
         }
         return UserResult.fromUser(user);
+    }
+
+    //비밀번호 변경
+    @Override
+    public UserResult updatePassword(PasswordUpdateCommand passwordUpdateCommand) {
+        //현재 비밀번호가 맞았는지
+        //바꾸려는 비밀번호가 올바른 구성인지
+        //바꾸려는 비밀번호 암호화
+        //바꾸려는 비밀번호 db에 update
+        return null;
     }
 }
