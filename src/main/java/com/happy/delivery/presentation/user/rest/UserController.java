@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @RestController
@@ -16,8 +18,10 @@ import javax.validation.Valid;
 public class UserController {
     private final static Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
+    private final HttpSession httpSession;
 
-    public UserController(UserService userService) {
+    public UserController(HttpSession httpSession, UserService userService) {
+        this.httpSession = httpSession;
         this.userService = userService;
     }
 
