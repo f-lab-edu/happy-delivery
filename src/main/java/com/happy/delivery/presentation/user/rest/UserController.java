@@ -2,6 +2,7 @@ package com.happy.delivery.presentation.user.rest;
 
 import com.happy.delivery.application.user.result.UserResult;
 import com.happy.delivery.application.user.UserService;
+import com.happy.delivery.infra.SessionUtil;
 import com.happy.delivery.presentation.common.response.ApiResponse;
 import com.happy.delivery.presentation.user.request.SigninRequest;
 import com.happy.delivery.presentation.user.request.SignupRequest;
@@ -18,16 +19,13 @@ import javax.validation.Valid;
 public class UserController {
     private final static Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
-    private final HttpSession httpSession;
 
-    public UserController(HttpSession httpSession, UserService userService) {
-        this.httpSession = httpSession;
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping("/signup")
-
     public ApiResponse<UserResult> signup(@Valid @RequestBody SignupRequest request){
         UserResult userResult = userService.signup(request.toCommand());
         return ApiResponse.success(userResult);
@@ -35,8 +33,15 @@ public class UserController {
 
     @ResponseStatus(code = HttpStatus.OK)
     @PostMapping("/signin")
-    public ApiResponse<UserResult> signin(@Valid @RequestBody SigninRequest request) {
+    public ApiResponse<UserResult> signin(@Valid @RequestBody SigninRequest request, HttpSession httpSession) {
         UserResult userResult = userService.signin(request.toCommand());
+        if(userResult!=null)SessionUtil.setEmailAddress(httpSession, request.getEmail());
         return ApiResponse.success(userResult);
+    }
+
+    @ResponseStatus(code = HttpStatus.OK)
+    @GetMapping("/logout")
+    public void logout(HttpSession httpSession) {
+        SessionUtil.clear(httpSession);
     }
 }
