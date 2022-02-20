@@ -36,4 +36,23 @@ public class HashMapUserRepository implements UserRepository {
                 .findFirst()
                 .orElse(null);// 값이 있으면 값을 반환하고 없으면 null반환
     }
+
+    @Override
+    public User findById(Long id) {
+        return hashmap.get(id);
+    }
+
+    @Override
+    public User changePassword(Long id, String encryptedPassword) {
+        User currentUser = this.findById(id);
+        User changedUser = new User(
+                currentUser.getId(),
+                currentUser.getEmail(),
+                encryptedPassword,
+                currentUser.getName(),
+                currentUser.getPhoneNumber()
+        );
+        hashmap.put(id, changedUser);
+        return changedUser;
+    }
 }

@@ -4,6 +4,7 @@ import com.happy.delivery.application.user.command.PasswordUpdateCommand;
 import com.happy.delivery.application.user.command.SigninCommand;
 import com.happy.delivery.application.user.command.SignupCommand;
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
+import com.happy.delivery.domain.exception.user.NoUserIdMatchedException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
 import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
 import com.happy.delivery.infra.encoder.EncryptMapper;
@@ -59,10 +60,22 @@ public class UserServiceV1 implements UserService {
     //비밀번호 변경
     @Override
     public UserResult updatePassword(PasswordUpdateCommand passwordUpdateCommand) {
-        //현재 비밀번호가 맞았는지
-        //바꾸려는 비밀번호가 올바른 구성인지
-        //바꾸려는 비밀번호 암호화
+        //현재 비밀번호가 맞았는지 확인
+        // *** 아이디를 session에서 꺼내고 사용할 예정 *** session.getId();
+        // *** session을 이용한다면 일치하는 사용자가 있는지 확인하지 않아도 되겠지..? :: 67~8번째줄
+        //User user = userRepository.findById(session.getId());
+        User user = userRepository.findById(1L);
+        if(!encryptMapper.isMatch(passwordUpdateCommand.getCurrentPassword(), user.getPassword())) {
+            throw new PasswordIsNotMatchException("현재 패스워드가 일치하지 않습니다.");
+        }
+        //바꾸려는 비밀번호가 올바른 구성인지? -> 이미 확인
         //바꾸려는 비밀번호 db에 update
-        return null;
+        // session에서 꺼낸 식별자도 함께 보내주기!
+        //바꾸려는 비밀번호 암호화
+        User result = userRepository.changePassword(
+                1L, //변경해야 함
+                encryptMapper.encoder(passwordUpdateCommand.getChangedPassword()
+                ));
+        return UserResult.fromUser(user);
     }
 }

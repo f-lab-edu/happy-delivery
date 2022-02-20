@@ -1,6 +1,7 @@
 package com.happy.delivery.presentation.user.handler;
 
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
+import com.happy.delivery.domain.exception.user.NoUserIdMatchedException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
 import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
 import com.happy.delivery.presentation.common.response.ApiResponse;
@@ -41,4 +42,8 @@ public class UserExceptionHandler {
         return ApiResponse.fail("PASSWORD_IS_NOT_MATCHED", ex.getMessage());
     }
 
+    @ExceptionHandler(NoUserIdMatchedException.class)
+    public ApiResponse<?> noUserIdMatchedException(NoUserIdMatchedException ex){
+        return ApiResponse.fail("USER_ID_IS_NOT_MATCHED", ex.getMessage());
+    }
 }

@@ -1,34 +1,27 @@
 package com.happy.delivery.application.user.command;
 
 public class PasswordUpdateCommand {
-    private final Long id;
     private final String currentPassword;
-    private final String password;
+    private final String changedPassword;
 
-    public PasswordUpdateCommand(Long id, String currentPassword, String password) {
-        this.id = id;
+    public PasswordUpdateCommand(String currentPassword, String changedPassword) {
         this.currentPassword = currentPassword;
-        this.password = password;
-    }
-
-    public Long getId() {
-        return id;
+        this.changedPassword = changedPassword;
     }
 
     public String getCurrentPassword() {
         return currentPassword;
     }
 
-    public String getPassword() {
-        return password;
+    public String getChangedPassword() {
+        return changedPassword;
     }
 
     @Override
     public String toString() {
         return "PasswordUpdateCommand{" +
-                "id=" + id +
                 ", currentPassword='" + currentPassword + '\'' +
-                ", password='" + password + '\'' +
+                ", changedPassword='" + changedPassword + '\'' +
                 '}';
     }
 }
