@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.6.3'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'checkstyle'
 }
 
 group = 'com.happy'
@@ -28,4 +29,8 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+checkstyle {
+	configFile file("${project.rootDir}/config/checkstyle/checkstyle.xml")
 }
