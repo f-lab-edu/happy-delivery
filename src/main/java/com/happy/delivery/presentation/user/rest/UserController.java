@@ -2,7 +2,7 @@ package com.happy.delivery.presentation.user.rest;
 
 import com.happy.delivery.application.user.result.UserResult;
 import com.happy.delivery.application.user.UserService;
-import com.happy.delivery.infra.SessionUtil;
+import com.happy.delivery.infra.util.SessionUtil;
 import com.happy.delivery.presentation.common.response.ApiResponse;
 import com.happy.delivery.presentation.user.request.SigninRequest;
 import com.happy.delivery.presentation.user.request.SignupRequest;
@@ -35,7 +35,7 @@ public class UserController {
     @PostMapping("/signin")
     public ApiResponse<UserResult> signin(@Valid @RequestBody SigninRequest request, HttpSession httpSession) {
         UserResult userResult = userService.signin(request.toCommand());
-        if(userResult!=null)SessionUtil.setEmailAddress(httpSession, request.getEmail());
+        if(userResult!=null)SessionUtil.setLoginId(httpSession, request.getId());
         return ApiResponse.success(userResult);
     }
 

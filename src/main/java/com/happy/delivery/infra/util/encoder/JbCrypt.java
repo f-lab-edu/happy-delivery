@@ -1,4 +1,4 @@
-package com.happy.delivery.infra.encoder;
+package com.happy.delivery.infra.util.encoder;
 
 import org.mindrot.jbcrypt.BCrypt;
 

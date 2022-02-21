@@ -5,7 +5,7 @@ import com.happy.delivery.application.user.command.SignupCommand;
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
 import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
-import com.happy.delivery.infra.encoder.EncryptMapper;
+import com.happy.delivery.infra.util.encoder.EncryptMapper;
 import com.happy.delivery.application.user.result.UserResult;
 import com.happy.delivery.domain.user.User;
 import com.happy.delivery.domain.user.repository.UserRepository;
