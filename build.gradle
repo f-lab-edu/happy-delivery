@@ -5,6 +5,13 @@ plugins {
 	id 'checkstyle'
 }
 
+checkstyle {
+	toolVersion = '9.3'
+	configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+}
+
+apply plugin: 'checkstyle'
+
 group = 'com.happy'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
@@ -29,8 +36,4 @@ dependencies {
 
 test {
 	useJUnitPlatform()
-}
-
-checkstyle {
-	configFile file("${project.rootDir}/config/checkstyle/checkstyle.xml")
 }
