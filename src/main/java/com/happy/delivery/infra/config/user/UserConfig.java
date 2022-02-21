@@ -1,7 +1,7 @@
 package com.happy.delivery.infra.config.user;
 
-import com.happy.delivery.infra.util.encoder.EncryptMapper;
-import com.happy.delivery.infra.util.encoder.JbCrypt;
+import com.happy.delivery.infra.encoder.EncryptMapper;
+import com.happy.delivery.infra.encoder.JbCrypt;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

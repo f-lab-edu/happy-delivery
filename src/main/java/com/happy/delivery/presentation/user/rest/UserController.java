@@ -17,6 +17,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
     private final static Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
 
@@ -26,16 +27,19 @@ public class UserController {
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping("/signup")
-    public ApiResponse<UserResult> signup(@Valid @RequestBody SignupRequest request){
+    public ApiResponse<UserResult> signup(@Valid @RequestBody SignupRequest request) {
         UserResult userResult = userService.signup(request.toCommand());
         return ApiResponse.success(userResult);
     }
 
     @ResponseStatus(code = HttpStatus.OK)
     @PostMapping("/signin")
-    public ApiResponse<UserResult> signin(@Valid @RequestBody SigninRequest request, HttpSession httpSession) {
+    public ApiResponse<UserResult> signin(@Valid @RequestBody SigninRequest request,
+            HttpSession httpSession) {
         UserResult userResult = userService.signin(request.toCommand());
-        if(userResult!=null)SessionUtil.setLoginId(httpSession, request.getId());
+        if (userResult != null) {
+            SessionUtil.setLoginId(httpSession, request.getId());
+        }
         return ApiResponse.success(userResult);
     }
 

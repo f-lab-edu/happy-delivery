@@ -1,7 +1,5 @@
 package com.happy.delivery;
 
-import com.happy.delivery.infra.util.encoder.EncryptMapper;
-import com.happy.delivery.infra.util.encoder.JbCrypt;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
