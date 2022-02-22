@@ -4,6 +4,7 @@ import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
 import com.happy.delivery.domain.exception.user.NoUserIdMatchedException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
 import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
+import com.happy.delivery.domain.exception.user.UserNotExistedException;
 import com.happy.delivery.presentation.common.response.ApiResponse;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -46,5 +47,11 @@ public class UserExceptionHandler {
     @ExceptionHandler(NoUserIdMatchedException.class)
     public ApiResponse<?> noUserIdMatchedException(NoUserIdMatchedException ex){
         return ApiResponse.fail("USER_ID_IS_NOT_MATCHED", ex.getMessage());
+    }
+
+    //주소가 없음
+    @ExceptionHandler(UserNotExistedException.class)
+    public ApiResponse<?> userNotExistedException(UserNotExistedException ex) {
+        return ApiResponse.fail("USER_NOT_EXISTED", ex.getMessage());
     }
 }

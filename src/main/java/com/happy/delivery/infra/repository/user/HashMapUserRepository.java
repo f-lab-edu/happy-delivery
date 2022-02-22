@@ -45,14 +45,29 @@ public class HashMapUserRepository implements UserRepository {
     @Override
     public User changePassword(Long id, String encryptedPassword) {
         User currentUser = this.findById(id);
-        User changedUser = new User(
+        User result = new User(
             currentUser.getId(),
             currentUser.getEmail(),
             encryptedPassword,
             currentUser.getName(),
             currentUser.getPhoneNumber()
         );
-        hashmap.replace(id, changedUser);
-        return changedUser;
+        hashmap.replace(id, result);
+        return result;
+    }
+
+    @Override
+    public User saveAddress(Long id, String address) {
+        User user = this.findById(id);
+        User result = new User(
+            user.getId(),
+            user.getEmail(),
+            user.getPassword(),
+            user.getName(),
+            user.getPhoneNumber(),
+            address
+        );
+        hashmap.replace(id, result);
+        return result;
     }
 }

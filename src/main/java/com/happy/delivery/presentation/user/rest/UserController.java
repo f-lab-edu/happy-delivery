@@ -4,6 +4,7 @@ import com.happy.delivery.application.user.result.UserResult;
 import com.happy.delivery.application.user.UserService;
 import com.happy.delivery.infra.util.SessionUtil;
 import com.happy.delivery.presentation.common.response.ApiResponse;
+import com.happy.delivery.presentation.user.request.AddressRequest;
 import com.happy.delivery.presentation.user.request.PasswordUpdateRequest;
 import com.happy.delivery.presentation.user.request.SigninRequest;
 import com.happy.delivery.presentation.user.request.SignupRequest;
@@ -51,9 +52,24 @@ public class UserController {
 
     @ResponseStatus(code = HttpStatus.OK)
     @PatchMapping("/myAccount/password")
-    public ApiResponse<?> updatePassword(@Valid @RequestBody PasswordUpdateRequest request){
-        //log.info("request = {}", request);
-        UserResult userResult = userService.updatePassword(request.toCommand());
+    public ApiResponse<?> updatePassword(@Valid @RequestBody PasswordUpdateRequest request,
+        HttpSession httpSession){
+        UserResult userResult = userService.updatePassword(
+            SessionUtil.getLoginId(httpSession),
+            request.toCommand()
+        );
         return ApiResponse.success(userResult);
+    }
+
+    // 주소 저장
+    @ResponseStatus(code = HttpStatus.CREATED)
+    @PostMapping("/address")
+    public ApiResponse<?> saveAddress(@Valid @RequestBody AddressRequest address, HttpSession httpSession){
+        UserResult userResult = userService.saveAddress(
+            SessionUtil.getLoginId(httpSession),
+            address.toCommand()
+        );
+        log.info("userResult = {}", userResult);
+        return ApiResponse.success("userResult");
     }
 }
