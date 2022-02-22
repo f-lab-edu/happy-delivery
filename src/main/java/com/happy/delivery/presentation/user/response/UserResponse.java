@@ -1,31 +1,32 @@
 package com.happy.delivery.presentation.user.response;
 
 public class UserResponse {
-    private Long id;
-    private String email;
-    private String name;
-    private String phoneNumber;
 
-    public UserResponse(Long id, String email, String name, String phoneNumber) {
-        this.id = id;
-        this.email = email;
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-    }
+  private Long id;
+  private String email;
+  private String name;
+  private String phoneNumber;
 
-    public Long getId() {
-        return id;
-    }
+  public UserResponse(Long id, String email, String name, String phoneNumber) {
+    this.id = id;
+    this.email = email;
+    this.name = name;
+    this.phoneNumber = phoneNumber;
+  }
 
-    public String getEmail() {
-        return email;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+  public String getName() {
+    return name;
+  }
+
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
 }

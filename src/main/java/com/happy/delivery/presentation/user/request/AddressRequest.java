@@ -6,6 +6,7 @@ import javax.validation.constraints.Pattern;
 import org.springframework.lang.Nullable;
 
 public class AddressRequest {
+
   //우편주소
   @NotBlank(message = "주소를 입력해주세요.")
   @Pattern(regexp = "^[ㄱ-ㅎ가-힣0-9]*$", message = "형식이 맞지 않습니다. 한글과 숫자만 입력해주세요.")

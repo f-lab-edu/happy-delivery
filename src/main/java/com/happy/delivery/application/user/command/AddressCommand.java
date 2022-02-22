@@ -5,6 +5,7 @@ import javax.validation.constraints.NotBlank;
 import org.springframework.lang.Nullable;
 
 public class AddressCommand {
+
   private String addressCode;
 
   @Nullable
@@ -16,7 +17,9 @@ public class AddressCommand {
   }
 
   public String makeTotalAddress() {
-    if (addressDetail == null) return addressCode;
+    if (addressDetail == null) {
+      return addressCode;
+    }
     return addressCode + addressDetail;
   }
 }

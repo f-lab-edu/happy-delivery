@@ -3,72 +3,73 @@ package com.happy.delivery.application.user.result;
 import com.happy.delivery.domain.user.User;
 
 public class UserResult {
-    private Long id;
-    private String email;
-    private String name;
-    private String phoneNumber;
-    private String address;
 
-    public UserResult(Long id, String email, String name, String phoneNumber) {
-        this.id = id;
-        this.email = email;
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-    }
+  private Long id;
+  private String email;
+  private String name;
+  private String phoneNumber;
+  private String address;
 
-    ////////////// 주소 때문에 만듦 :: ! 임시 ! /////////////
-    public UserResult(Long id, String email, String name, String phoneNumber, String address) {
-        this.id = id;
-        this.email = email;
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-    }
+  public UserResult(Long id, String email, String name, String phoneNumber) {
+    this.id = id;
+    this.email = email;
+    this.name = name;
+    this.phoneNumber = phoneNumber;
+  }
 
-    public static UserResult fromAddressUser(User user) {
-        return new UserResult(
-            user.getId(),
-            user.getEmail(),
-            user.getName(),
-            user.getPhoneNumber(),
-            user.getAddress()
-        );
-    }
-    /////////////////////////////////////////////////
+  ////////////// 주소 때문에 만듦 :: ! 임시 ! /////////////
+  public UserResult(Long id, String email, String name, String phoneNumber, String address) {
+    this.id = id;
+    this.email = email;
+    this.name = name;
+    this.phoneNumber = phoneNumber;
+    this.address = address;
+  }
 
-    public static UserResult fromUser(User user) {
-        return new UserResult(
-            user.getId(),
-            user.getEmail(),
-            user.getName(),
-            user.getPhoneNumber()
-        );
-    }
+  public static UserResult fromAddressUser(User user) {
+    return new UserResult(
+        user.getId(),
+        user.getEmail(),
+        user.getName(),
+        user.getPhoneNumber(),
+        user.getAddress()
+    );
+  }
+  /////////////////////////////////////////////////
 
-    public Long getId() {
-        return id;
-    }
+  public static UserResult fromUser(User user) {
+    return new UserResult(
+        user.getId(),
+        user.getEmail(),
+        user.getName(),
+        user.getPhoneNumber()
+    );
+  }
 
-    public String getEmail() {
-        return email;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+  public String getName() {
+    return name;
+  }
 
-    @Override
-    public String toString() {
-        return "UserResult{" +
-            "id=" + id +
-            ", email='" + email + '\'' +
-            ", name='" + name + '\'' +
-            ", phoneNumber='" + phoneNumber + '\'' +
-            ", address='" + address + '\'' +
-            '}';
-    }
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  @Override
+  public String toString() {
+    return "UserResult{" +
+        "id=" + id +
+        ", email='" + email + '\'' +
+        ", name='" + name + '\'' +
+        ", phoneNumber='" + phoneNumber + '\'' +
+        ", address='" + address + '\'' +
+        '}';
+  }
 }

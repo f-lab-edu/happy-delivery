@@ -6,33 +6,33 @@ import javax.validation.constraints.NotBlank;
 
 public class SigninRequest {
 
-    private final Long id;
+  private final Long id;
 
-    @NotBlank
-    @Email
-    private String email;
+  @NotBlank
+  @Email
+  private String email;
 
-    @NotBlank
-    private String password;
+  @NotBlank
+  private String password;
 
-    public SigninRequest(Long id, String email, String password) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-    }
+  public SigninRequest(Long id, String email, String password) {
+    this.id = id;
+    this.email = email;
+    this.password = password;
+  }
 
-    public Long getId() {
-        return id;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public String getEmail() {
-        return email;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public SigninCommand toCommand() {
-        return new SigninCommand(
-            this.email,
-            this.password
-        );
-    }
+  public SigninCommand toCommand() {
+    return new SigninCommand(
+        this.email,
+        this.password
+    );
+  }
 }
