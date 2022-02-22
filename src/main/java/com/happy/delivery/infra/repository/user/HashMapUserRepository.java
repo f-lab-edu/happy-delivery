@@ -55,5 +55,4 @@ public class HashMapUserRepository implements UserRepository {
         hashmap.replace(id, changedUser);
         return changedUser;
     }
-
 }
