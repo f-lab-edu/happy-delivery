@@ -17,10 +17,10 @@ public class UserResult {
 
     public static UserResult fromUser(User user) {
         return new UserResult(
-                user.getId(),
-                user.getEmail(),
-                user.getName(),
-                user.getPhoneNumber()
+            user.getId(),
+            user.getEmail(),
+            user.getName(),
+            user.getPhoneNumber()
         );
     }
 

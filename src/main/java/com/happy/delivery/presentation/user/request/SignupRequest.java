@@ -34,10 +34,10 @@ public class SignupRequest {
 
     public SignupCommand toCommand() {
         SignupCommand signCommand = new SignupCommand(
-                this.email,
-                this.password,
-                this.name,
-                this.phoneNumber
+            this.email,
+            this.password,
+            this.name,
+            this.phoneNumber
         );
         return signCommand;
     }

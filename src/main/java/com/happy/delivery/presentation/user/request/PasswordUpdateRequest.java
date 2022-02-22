@@ -30,16 +30,16 @@ public class PasswordUpdateRequest {
 
     public PasswordUpdateCommand toCommand(){
         return new PasswordUpdateCommand(
-                this.currentPassword,
-                this.changedPassword
+            this.currentPassword,
+            this.changedPassword
         );
     }
 
     @Override
     public String toString() {
         return "PasswordUpdateRequest{" +
-                ", currentPassword='" + currentPassword + '\'' +
-                ", changedPassword='" + changedPassword + '\'' +
-                '}';
+            ", currentPassword='" + currentPassword + '\'' +
+            ", changedPassword='" + changedPassword + '\'' +
+            '}';
     }
 }

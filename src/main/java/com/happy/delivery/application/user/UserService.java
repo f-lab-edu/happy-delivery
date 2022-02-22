@@ -7,6 +7,8 @@ import com.happy.delivery.application.user.result.UserResult;
 
 public interface UserService {
     public UserResult signup(SignupCommand signCommand);
+
     public UserResult signin(SigninCommand signinCommand);
+
     public UserResult updatePassword(PasswordUpdateCommand passwordUpdateCommand);
 }

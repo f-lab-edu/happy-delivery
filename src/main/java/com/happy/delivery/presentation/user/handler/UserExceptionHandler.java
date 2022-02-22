@@ -42,6 +42,7 @@ public class UserExceptionHandler {
         return ApiResponse.fail("PASSWORD_IS_NOT_MATCHED", ex.getMessage());
     }
 
+    //식별자 없음
     @ExceptionHandler(NoUserIdMatchedException.class)
     public ApiResponse<?> noUserIdMatchedException(NoUserIdMatchedException ex){
         return ApiResponse.fail("USER_ID_IS_NOT_MATCHED", ex.getMessage());

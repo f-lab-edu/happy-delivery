@@ -5,6 +5,9 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 public class SigninRequest {
+
+    private final Long id;
+
     @NotBlank
     @Email
     private String email;
@@ -12,9 +15,14 @@ public class SigninRequest {
     @NotBlank
     private String password;
 
-    public SigninRequest(String email, String password) {
+    public SigninRequest(Long id, String email, String password) {
+        this.id = id;
         this.email = email;
         this.password = password;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getEmail() {
@@ -23,8 +31,8 @@ public class SigninRequest {
 
     public SigninCommand toCommand() {
         return new SigninCommand(
-                this.email,
-                this.password
+            this.email,
+            this.password
         );
     }
 }

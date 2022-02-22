@@ -20,8 +20,8 @@ public class PasswordUpdateCommand {
     @Override
     public String toString() {
         return "PasswordUpdateCommand{" +
-                ", currentPassword='" + currentPassword + '\'' +
-                ", changedPassword='" + changedPassword + '\'' +
-                '}';
+            ", currentPassword='" + currentPassword + '\'' +
+            ", changedPassword='" + changedPassword + '\'' +
+            '}';
     }
 }

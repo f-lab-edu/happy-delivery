@@ -4,13 +4,12 @@ import com.happy.delivery.application.user.command.PasswordUpdateCommand;
 import com.happy.delivery.application.user.command.SigninCommand;
 import com.happy.delivery.application.user.command.SignupCommand;
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
-import com.happy.delivery.domain.exception.user.NoUserIdMatchedException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
 import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
-import com.happy.delivery.infra.encoder.EncryptMapper;
 import com.happy.delivery.application.user.result.UserResult;
 import com.happy.delivery.domain.user.User;
 import com.happy.delivery.domain.user.repository.UserRepository;
+import com.happy.delivery.infra.encoder.EncryptMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,12 +34,12 @@ public class UserServiceV1 implements UserService {
         }
         // password를 hash 암호화하여 repository에 저장
         User result = userRepository.save(
-                new User(
+            new User(
                 signCommand.getEmail(),
                 encryptMapper.encoder(signCommand.getPassword()), // 패스워드 암호화 로직
                 signCommand.getName(),
                 signCommand.getPhoneNumber()
-        ));
+            ));
         // 저장했다면 dto를 리턴하여 종료
         return UserResult.fromUser(result);
     }
@@ -57,7 +56,6 @@ public class UserServiceV1 implements UserService {
         return UserResult.fromUser(user);
     }
 
-    //비밀번호 변경
     @Override
     public UserResult updatePassword(PasswordUpdateCommand passwordUpdateCommand) {
         //현재 비밀번호가 맞았는지 확인
@@ -73,9 +71,9 @@ public class UserServiceV1 implements UserService {
         // session에서 꺼낸 식별자도 함께 보내주기!
         //바꾸려는 비밀번호 암호화
         User result = userRepository.changePassword(
-                1L, //변경해야 함
-                encryptMapper.encoder(passwordUpdateCommand.getChangedPassword()
-                ));
+            1L, //변경해야 함
+            encryptMapper.encoder(passwordUpdateCommand.getChangedPassword()
+            ));
         return UserResult.fromUser(user);
     }
 }
