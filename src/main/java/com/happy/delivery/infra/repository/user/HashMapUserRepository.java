@@ -36,4 +36,9 @@ public class HashMapUserRepository implements UserRepository {
                 .findFirst()
                 .orElse(null);// 값이 있으면 값을 반환하고 없으면 null반환
     }
+
+    public User findById(Long id) {
+        return  hashmap.get(id);
+    }
+
 }
