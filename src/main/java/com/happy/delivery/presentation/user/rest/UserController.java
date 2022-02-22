@@ -38,9 +38,9 @@ public class UserController {
     }
 
     @ResponseStatus(code = HttpStatus.OK)
-    @PatchMapping("/my-account/password")
+    @PatchMapping("/myAccount/password")
     public ApiResponse<?> updatePassword(@Valid @RequestBody PasswordUpdateRequest request){
-        log.info("request = {}", request);
+        //log.info("request = {}", request);
         UserResult userResult = userService.updatePassword(request.toCommand());
         return ApiResponse.success(userResult);
     }
