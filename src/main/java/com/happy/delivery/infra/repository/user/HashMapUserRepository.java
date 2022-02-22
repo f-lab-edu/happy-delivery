@@ -52,7 +52,7 @@ public class HashMapUserRepository implements UserRepository {
                 currentUser.getName(),
                 currentUser.getPhoneNumber()
         );
-        hashmap.put(id, changedUser);
+        hashmap.replace(id, changedUser);
         return changedUser;
     }
 }
