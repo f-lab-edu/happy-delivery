@@ -2,7 +2,15 @@ plugins {
 	id 'org.springframework.boot' version '2.6.3'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'checkstyle'
 }
+
+checkstyle {
+	toolVersion = '8.6'
+	configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+}
+
+apply plugin: 'checkstyle'
 
 group = 'com.happy'
 version = '0.0.1-SNAPSHOT'
