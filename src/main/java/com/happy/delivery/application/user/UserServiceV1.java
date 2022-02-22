@@ -4,16 +4,19 @@ import com.happy.delivery.application.user.command.AddressCommand;
 import com.happy.delivery.application.user.command.PasswordUpdateCommand;
 import com.happy.delivery.application.user.command.SigninCommand;
 import com.happy.delivery.application.user.command.SignupCommand;
+import com.happy.delivery.application.user.result.UserResult;
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
 import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
-import com.happy.delivery.application.user.result.UserResult;
 import com.happy.delivery.domain.user.User;
 import com.happy.delivery.domain.user.repository.UserRepository;
 import com.happy.delivery.infra.encoder.EncryptMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * UserServiceV1.
+ */
 @Service
 public class UserServiceV1 implements UserService {
 
@@ -49,9 +52,9 @@ public class UserServiceV1 implements UserService {
   public UserResult signin(SigninCommand signinCommand) {
     // 1. repo에 저장된 비밀번호 가져오기
     User user = userRepository.findByEmail(signinCommand.getEmail());
-      if (user == null) {
-          throw new EmailIsNotMatchException("이메일이 일치하지 않습니다."); //EmailIsNotMatch
-      }
+    if (user == null) {
+      throw new EmailIsNotMatchException("이메일이 일치하지 않습니다."); //EmailIsNotMatch
+    }
     // 2. 비밀번호 맞는지 확인
     if (!encryptMapper.isMatch(signinCommand.getPassword(), user.getPassword())) {
       throw new PasswordIsNotMatchException("패스워드가 일치하지 않습니다."); //password

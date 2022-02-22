@@ -2,7 +2,9 @@ package com.happy.delivery.infra.encoder;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-
+/**
+ * JbCrypt.
+ */
 public class JbCrypt implements EncryptMapper {
 
   //비밀번호 암호화

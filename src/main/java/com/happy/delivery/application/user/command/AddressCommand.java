@@ -1,9 +1,10 @@
 package com.happy.delivery.application.user.command;
 
-import java.util.Optional;
-import javax.validation.constraints.NotBlank;
 import org.springframework.lang.Nullable;
 
+/**
+ * AddressCommand.
+ */
 public class AddressCommand {
 
   private String addressCode;
@@ -16,6 +17,9 @@ public class AddressCommand {
     this.addressDetail = addressDetail;
   }
 
+  /**
+   * makeTotalAddress.
+   */
   public String makeTotalAddress() {
     if (addressDetail == null) {
       return addressCode;

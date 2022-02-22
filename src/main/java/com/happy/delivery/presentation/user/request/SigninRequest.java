@@ -4,6 +4,9 @@ import com.happy.delivery.application.user.command.SigninCommand;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+/**
+ * SigninRequest.
+ */
 public class SigninRequest {
 
   private final Long id;
@@ -15,6 +18,9 @@ public class SigninRequest {
   @NotBlank
   private String password;
 
+  /**
+   * SigninRequest Constructor.
+   */
   public SigninRequest(Long id, String email, String password) {
     this.id = id;
     this.email = email;
@@ -29,6 +35,9 @@ public class SigninRequest {
     return email;
   }
 
+  /**
+   * SigninRequest --> SigninCommand.
+   */
   public SigninCommand toCommand() {
     return new SigninCommand(
         this.email,

@@ -1,5 +1,8 @@
 package com.happy.delivery.application.user.command;
 
+/**
+ * PasswordUpdateCommand.
+ */
 public class PasswordUpdateCommand {
 
   private final String currentPassword;
@@ -23,6 +26,7 @@ public class PasswordUpdateCommand {
     return "PasswordUpdateCommand{" +
         ", currentPassword='" + currentPassword + '\'' +
         ", changedPassword='" + changedPassword + '\'' +
+
         '}';
   }
 }

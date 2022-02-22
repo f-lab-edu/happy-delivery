@@ -1,5 +1,8 @@
 package com.happy.delivery.domain.exception.user;
 
+/**
+ * EmailIsNotMatchException.
+ */
 public class EmailIsNotMatchException extends RuntimeException {
 
   public EmailIsNotMatchException() {

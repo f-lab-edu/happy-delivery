@@ -2,6 +2,9 @@ package com.happy.delivery.application.user.result;
 
 import com.happy.delivery.domain.user.User;
 
+/**
+ * UserResult.
+ */
 public class UserResult {
 
   private Long id;
@@ -10,6 +13,9 @@ public class UserResult {
   private String phoneNumber;
   private String address;
 
+  /**
+   * UserResult Constructor.
+   */
   public UserResult(Long id, String email, String name, String phoneNumber) {
     this.id = id;
     this.email = email;
@@ -17,7 +23,9 @@ public class UserResult {
     this.phoneNumber = phoneNumber;
   }
 
-  ////////////// 주소 때문에 만듦 :: ! 임시 ! /////////////
+  /**
+   * 주소 때문에 만듬! 임시 !.
+   */
   public UserResult(Long id, String email, String name, String phoneNumber, String address) {
     this.id = id;
     this.email = email;
@@ -26,6 +34,9 @@ public class UserResult {
     this.address = address;
   }
 
+  /**
+   * fromAddressUser.
+   */
   public static UserResult fromAddressUser(User user) {
     return new UserResult(
         user.getId(),
@@ -35,8 +46,10 @@ public class UserResult {
         user.getAddress()
     );
   }
-  /////////////////////////////////////////////////
 
+  /**
+   * UserResult.
+   */
   public static UserResult fromUser(User user) {
     return new UserResult(
         user.getId(),

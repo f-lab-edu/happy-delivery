@@ -5,14 +5,17 @@ import com.happy.delivery.application.user.command.PasswordUpdateCommand;
 import com.happy.delivery.application.user.command.SigninCommand;
 import com.happy.delivery.application.user.command.SignupCommand;
 import com.happy.delivery.application.user.result.UserResult;
-import com.happy.delivery.presentation.user.request.AddressRequest;
 
+/**
+ * UserService.
+ */
 public interface UserService {
-    public UserResult signup(SignupCommand signCommand);
 
-    public UserResult signin(SigninCommand signinCommand);
+  public UserResult signup(SignupCommand signCommand);
 
-    public UserResult updatePassword(Long id, PasswordUpdateCommand passwordUpdateCommand);
+  public UserResult signin(SigninCommand signinCommand);
 
-    public UserResult saveAddress(Long id, AddressCommand address);
+  public UserResult updatePassword(Long id, PasswordUpdateCommand passwordUpdateCommand);
+
+  public UserResult saveAddress(Long id, AddressCommand address);
 }

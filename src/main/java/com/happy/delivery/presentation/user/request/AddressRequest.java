@@ -5,6 +5,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import org.springframework.lang.Nullable;
 
+/**
+ * AddressRequest.
+ */
 public class AddressRequest {
 
   //우편주소
@@ -22,6 +25,9 @@ public class AddressRequest {
     this.addressDetail = addressDetail;
   }
 
+  /**
+   * AddressRequest --> AddressCommand.
+   */
   public AddressCommand toCommand() {
     return new AddressCommand(
         this.addressCode,

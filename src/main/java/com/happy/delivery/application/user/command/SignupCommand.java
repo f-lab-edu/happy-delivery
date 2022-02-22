@@ -1,5 +1,8 @@
 package com.happy.delivery.application.user.command;
 
+/**
+ * SignupCommand.
+ */
 public class SignupCommand {
 
   private String email;
@@ -7,6 +10,9 @@ public class SignupCommand {
   private String name;
   private String phoneNumber;
 
+  /**
+   * SignupCommand constructor.
+   */
   public SignupCommand(String email, String password, String name, String phoneNumber) {
     this.email = email;
     this.password = password;

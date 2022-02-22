@@ -1,5 +1,8 @@
 package com.happy.delivery.application.user.command;
 
+/**
+ * SigninCommand.
+ */
 public class SigninCommand {
 
   private String email;

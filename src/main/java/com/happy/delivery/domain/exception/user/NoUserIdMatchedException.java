@@ -1,5 +1,8 @@
 package com.happy.delivery.domain.exception.user;
 
+/**
+ * NoUserIdMatchedException.
+ */
 public class NoUserIdMatchedException extends RuntimeException {
 
   public NoUserIdMatchedException() {

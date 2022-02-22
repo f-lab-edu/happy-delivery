@@ -1,5 +1,8 @@
 package com.happy.delivery.presentation.user.response;
 
+/**
+ * UserResponse.
+ */
 public class UserResponse {
 
   private Long id;
@@ -7,6 +10,9 @@ public class UserResponse {
   private String name;
   private String phoneNumber;
 
+  /**
+   * UserResponse Constructor.
+   */
   public UserResponse(Long id, String email, String name, String phoneNumber) {
     this.id = id;
     this.email = email;

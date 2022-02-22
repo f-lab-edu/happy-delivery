@@ -6,6 +6,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+/**
+ * SignupRequest.
+ */
 public class SignupRequest {
 
   @NotBlank
@@ -13,7 +16,8 @@ public class SignupRequest {
   private String email;
 
   @NotBlank
-  @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "최소 8 자, 최소 하나의 문자 및 하나의 숫자")
+  @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$",
+           message = "최소 8 자, 최소 하나의 문자 및 하나의 숫자")
   private String password;
 
   @NotBlank
@@ -25,6 +29,9 @@ public class SignupRequest {
   @Pattern(regexp = "^\\d{11}$", message = "'-'없이 숫자 11자리만 입력해주세요.")
   private String phoneNumber;
 
+  /**
+   * SignupRequest Constructor.
+   */
   public SignupRequest(String email, String password, String name, String phoneNumber) {
     this.email = email;
     this.password = password;
@@ -32,6 +39,9 @@ public class SignupRequest {
     this.phoneNumber = phoneNumber;
   }
 
+  /**
+   * SignupRequest --> SignupCommand.
+   */
   public SignupCommand toCommand() {
     SignupCommand signCommand = new SignupCommand(
         this.email,

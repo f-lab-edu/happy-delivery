@@ -1,11 +1,17 @@
 package com.happy.delivery.presentation.common.response;
 
+/**
+ * ApiResponse.
+ */
 public class ApiResponse<T> {
 
   private boolean success;
   private T data;
   private Error error;
 
+  /**
+   * ApiResponse Constructor.
+   */
   public ApiResponse(boolean success, T data, Error error) {
     this.success = success;
     this.data = data;
@@ -20,6 +26,9 @@ public class ApiResponse<T> {
     return new ApiResponse(false, null, new Error(code, message));
   }
 
+  /**
+   * ApiResponse Error.
+   */
   public static class Error {
 
     private String code;

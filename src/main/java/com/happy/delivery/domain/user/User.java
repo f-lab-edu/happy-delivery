@@ -1,5 +1,8 @@
 package com.happy.delivery.domain.user;
 
+/**
+ * User Domain.
+ */
 public class User {
 
   private Long id;
@@ -10,7 +13,9 @@ public class User {
   private String address;
 
 
-  //회원가입 할 때 사용
+  /**
+   * User signin Constructor.
+   */
   public User(String email, String password, String name, String phoneNumber) {
     this.email = email;
     this.password = password;
@@ -18,7 +23,13 @@ public class User {
     this.phoneNumber = phoneNumber;
   }
 
-  //보통의 경우
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  /**
+   * User not signin Constructor.
+   */
   public User(Long id, String email, String password, String name, String phoneNumber) {
     this.id = id;
     this.email = email;
@@ -27,8 +38,9 @@ public class User {
     this.phoneNumber = phoneNumber;
   }
 
-  // ***** 주소 저장하는 경우 ***** :: ! 임시 !
-  // 주소 저장 테이블을 따로 두고 싶음, 주소도 여러개 저장하고 싶음.
+  /**
+   * ***** 주소 저장하는 경우 ***** :: ! 임시 !. 주소 저장 테이블을 따로 두고 싶음, 주소도 여러개 저장하고 싶음.
+   */
   public User(Long id, String email, String password, String name, String phoneNumber,
       String address) {
     this.id = id;
@@ -44,8 +56,6 @@ public class User {
   }
 
   ;
-
-  /////////////////////////////////////////////////////
 
   public Long getId() {
     return id;

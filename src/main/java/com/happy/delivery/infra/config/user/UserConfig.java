@@ -5,6 +5,9 @@ import com.happy.delivery.infra.encoder.JbCrypt;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * UserConfig.
+ */
 @Configuration
 public class UserConfig {
 

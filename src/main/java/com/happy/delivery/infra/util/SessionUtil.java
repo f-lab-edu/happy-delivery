@@ -2,6 +2,9 @@ package com.happy.delivery.infra.util;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * SessionUtil.
+ */
 public class SessionUtil {
 
   private static final String LOGIN_ID = "LOGIN_ID";
