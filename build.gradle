@@ -6,7 +6,7 @@ plugins {
 }
 
 checkstyle {
-	toolVersion = '8.6'
+	toolVersion = '9.3'
 	configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
 }
 
