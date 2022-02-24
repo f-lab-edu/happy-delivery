@@ -12,8 +12,4 @@ public interface UserRepository {
   public User findById(Long id);
 
   public User findByEmail(String email);
-
-  public User changePassword(Long id, String encryptedPassword);
-
-  public User saveAddress(Long id, String address);
 }

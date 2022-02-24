@@ -11,7 +11,6 @@ public class UserResult {
   private String email;
   private String name;
   private String phoneNumber;
-  private String address;
 
   /**
    * UserResult Constructor.
@@ -24,39 +23,10 @@ public class UserResult {
   }
 
   /**
-   * 주소 때문에 만듬! 임시 !.
-   */
-  public UserResult(Long id, String email, String name, String phoneNumber, String address) {
-    this.id = id;
-    this.email = email;
-    this.name = name;
-    this.phoneNumber = phoneNumber;
-    this.address = address;
-  }
-
-  /**
-   * fromAddressUser.
-   */
-  public static UserResult fromAddressUser(User user) {
-    return new UserResult(
-        user.getId(),
-        user.getEmail(),
-        user.getName(),
-        user.getPhoneNumber(),
-        user.getAddress()
-    );
-  }
-
-  /**
    * UserResult.
    */
   public static UserResult fromUser(User user) {
-    return new UserResult(
-        user.getId(),
-        user.getEmail(),
-        user.getName(),
-        user.getPhoneNumber()
-    );
+    return new UserResult(user.getId(), user.getEmail(), user.getName(), user.getPhoneNumber());
   }
 
   public Long getId() {
@@ -82,7 +52,6 @@ public class UserResult {
         ", email='" + email + '\'' +
         ", name='" + name + '\'' +
         ", phoneNumber='" + phoneNumber + '\'' +
-        ", address='" + address + '\'' +
         '}';
   }
 }

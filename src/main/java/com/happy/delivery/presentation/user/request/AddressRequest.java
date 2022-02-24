@@ -28,8 +28,9 @@ public class AddressRequest {
   /**
    * AddressRequest --> AddressCommand.
    */
-  public AddressCommand toCommand() {
+  public AddressCommand toCommand(Long userId) {
     return new AddressCommand(
+        userId,
         this.addressCode,
         this.addressDetail
     );

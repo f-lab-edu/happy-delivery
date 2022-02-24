@@ -1,6 +1,7 @@
 package com.happy.delivery.presentation.user.rest;
 
 import com.happy.delivery.application.user.UserService;
+import com.happy.delivery.application.user.result.UserAddressResult;
 import com.happy.delivery.application.user.result.UserResult;
 import com.happy.delivery.infra.util.SessionUtil;
 import com.happy.delivery.presentation.common.response.ApiResponse;
@@ -69,16 +70,14 @@ public class UserController {
   }
 
   /**
-   * UserController myaccount/password.
+   * UserController my-account/password.
    */
   @ResponseStatus(code = HttpStatus.OK)
-  @PatchMapping("/myAccount/password")
+  @PatchMapping("/my-account/password")
   public ApiResponse<?> updatePassword(@Valid @RequestBody PasswordUpdateRequest request,
       HttpSession httpSession) {
-    UserResult userResult = userService.updatePassword(
-        SessionUtil.getLoginId(httpSession),
-        request.toCommand()
-    );
+    UserResult userResult = userService.updatePassword(SessionUtil.getLoginId(httpSession),
+        request.toCommand());
     return ApiResponse.success(userResult);
   }
 
@@ -89,11 +88,9 @@ public class UserController {
   @PostMapping("/address")
   public ApiResponse<?> saveAddress(@Valid @RequestBody AddressRequest address,
       HttpSession httpSession) {
-    UserResult userResult = userService.saveAddress(
-        SessionUtil.getLoginId(httpSession),
-        address.toCommand()
-    );
-    log.info("userResult = {}", userResult);
-    return ApiResponse.success("userResult");
+    UserAddressResult userAddressResult = userService.saveAddress(
+        address.toCommand(SessionUtil.getLoginId(httpSession)));
+    log.info("userResult = {}", userAddressResult);
+    return ApiResponse.success(userAddressResult);
   }
 }

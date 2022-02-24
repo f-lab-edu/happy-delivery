@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * HashMapUserRepository.
+ * repository는 collection의 역할을 하기때문에 비지니스 로직이 들어가면 안된다.
  */
 @Repository
 public class HashMapUserRepository implements UserRepository {
@@ -42,34 +43,5 @@ public class HashMapUserRepository implements UserRepository {
   @Override
   public User findById(Long id) {
     return hashmap.get(id);
-  }
-
-  @Override
-  public User changePassword(Long id, String encryptedPassword) {
-    User currentUser = this.findById(id);
-    User result = new User(
-        currentUser.getId(),
-        currentUser.getEmail(),
-        encryptedPassword,
-        currentUser.getName(),
-        currentUser.getPhoneNumber()
-    );
-    hashmap.replace(id, result);
-    return result;
-  }
-
-  @Override
-  public User saveAddress(Long id, String address) {
-    User user = this.findById(id);
-    User result = new User(
-        user.getId(),
-        user.getEmail(),
-        user.getPassword(),
-        user.getName(),
-        user.getPhoneNumber(),
-        address
-    );
-    hashmap.replace(id, result);
-    return result;
   }
 }

@@ -7,23 +7,32 @@ import org.springframework.lang.Nullable;
  */
 public class AddressCommand {
 
-  private String addressCode;
+  private final Long userId;
+
+  private final String addressCode;
 
   @Nullable
-  private String addressDetail;
+  private final String addressDetail;
 
-  public AddressCommand(String addressCode, String addressDetail) {
+  /**
+   * AddressCommand Constructor.
+   */
+  public AddressCommand(Long userId, String addressCode, @Nullable String addressDetail) {
+    this.userId = userId;
     this.addressCode = addressCode;
     this.addressDetail = addressDetail;
   }
 
-  /**
-   * makeTotalAddress.
-   */
-  public String makeTotalAddress() {
-    if (addressDetail == null) {
-      return addressCode;
-    }
-    return addressCode + addressDetail;
+  public Long getUserId() {
+    return userId;
+  }
+
+  public String getAddressCode() {
+    return addressCode;
+  }
+
+  @Nullable
+  public String getAddressDetail() {
+    return addressDetail;
   }
 }

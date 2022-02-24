@@ -6,12 +6,10 @@ package com.happy.delivery.domain.user;
 public class User {
 
   private Long id;
-  private String email;
-  private String password;
-  private String name;
-  private String phoneNumber;
-  private String address;
-
+  private final String email;
+  private final String password;
+  private final String name;
+  private final String phoneNumber;
 
   /**
    * User signin Constructor.
@@ -21,10 +19,6 @@ public class User {
     this.password = password;
     this.name = name;
     this.phoneNumber = phoneNumber;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
   }
 
   /**
@@ -38,27 +32,12 @@ public class User {
     this.phoneNumber = phoneNumber;
   }
 
-  /**
-   * ***** 주소 저장하는 경우 ***** :: ! 임시 !. 주소 저장 테이블을 따로 두고 싶음, 주소도 여러개 저장하고 싶음.
-   */
-  public User(Long id, String email, String password, String name, String phoneNumber,
-      String address) {
-    this.id = id;
-    this.email = email;
-    this.password = password;
-    this.name = name;
-    this.phoneNumber = phoneNumber;
-    this.address = address;
-  }
-
-  public String getAddress() {
-    return address;
-  }
-
-  ;
-
   public Long getId() {
     return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public String getEmail() {
