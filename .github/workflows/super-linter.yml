@@ -27,4 +27,4 @@ jobs:
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_JAVA: true
           DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TworkflowsOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
