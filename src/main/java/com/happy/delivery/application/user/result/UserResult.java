@@ -23,10 +23,15 @@ public class UserResult {
   }
 
   /**
-   * UserResult.
+   * UserResult -> User.
    */
   public static UserResult fromUser(User user) {
-    return new UserResult(user.getId(), user.getEmail(), user.getName(), user.getPhoneNumber());
+    return new UserResult(
+        user.getId(),
+        user.getEmail(),
+        user.getName(),
+        user.getPhoneNumber()
+    );
   }
 
   public Long getId() {

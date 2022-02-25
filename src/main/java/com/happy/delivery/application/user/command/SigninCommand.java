@@ -8,6 +8,9 @@ public class SigninCommand {
   private String email;
   private String password;
 
+  /**
+   * SigninCommand Constructor.
+   */
   public SigninCommand(String email, String password) {
     this.email = email;
     this.password = password;

@@ -27,7 +27,7 @@ public class ApiResponse<T> {
   }
 
   /**
-   * ApiResponse Error.
+   * Error.
    */
   public static class Error {
 

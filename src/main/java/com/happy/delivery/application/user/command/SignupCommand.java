@@ -11,7 +11,7 @@ public class SignupCommand {
   private String phoneNumber;
 
   /**
-   * SignupCommand constructor.
+   * SignupCommand Constructor.
    */
   public SignupCommand(String email, String password, String name, String phoneNumber) {
     this.email = email;

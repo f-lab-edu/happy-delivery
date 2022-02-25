@@ -1,18 +1,18 @@
 package com.happy.delivery.domain.user;
 
 /**
- * User Domain.
+ * User.
  */
 public class User {
 
   private Long id;
-  private final String email;
-  private final String password;
-  private final String name;
-  private final String phoneNumber;
+  private String email;
+  private String password;
+  private String name;
+  private String phoneNumber;
 
   /**
-   * User signin Constructor.
+   * 회원가입 할 때 사용.
    */
   public User(String email, String password, String name, String phoneNumber) {
     this.email = email;
@@ -22,7 +22,7 @@ public class User {
   }
 
   /**
-   * User not signin Constructor.
+   * 보통의 경우.
    */
   public User(Long id, String email, String password, String name, String phoneNumber) {
     this.id = id;

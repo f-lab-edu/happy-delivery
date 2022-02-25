@@ -37,3 +37,13 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+
+task checkstyle(type: Checkstyle) {
+	configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+	source 'src/main/java/'
+	include '**/*.java'
+	showViolations true
+	classpath = files()
+	ignoreFailures = false
+	maxWarnings = 0
+}

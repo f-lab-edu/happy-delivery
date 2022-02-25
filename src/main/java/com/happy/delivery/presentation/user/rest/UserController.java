@@ -47,7 +47,7 @@ public class UserController {
   }
 
   /**
-   * UserController signin.
+   * signin.
    */
   @ResponseStatus(code = HttpStatus.OK)
   @PostMapping("/signin")

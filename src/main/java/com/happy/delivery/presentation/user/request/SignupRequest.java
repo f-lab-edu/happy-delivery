@@ -17,7 +17,7 @@ public class SignupRequest {
 
   @NotBlank
   @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$",
-           message = "최소 8 자, 최소 하나의 문자 및 하나의 숫자")
+      message = "최소 8 자, 최소 하나의 문자 및 하나의 숫자")
   private String password;
 
   @NotBlank
@@ -40,7 +40,7 @@ public class SignupRequest {
   }
 
   /**
-   * SignupRequest --> SignupCommand.
+   * SignupRequest ->SignCommand.
    */
   public SignupCommand toCommand() {
     SignupCommand signCommand = new SignupCommand(

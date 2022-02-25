@@ -36,7 +36,7 @@ public class SigninRequest {
   }
 
   /**
-   * SigninRequest --> SigninCommand.
+   * SigninRequest -> SigninCommand.
    */
   public SigninCommand toCommand() {
     return new SigninCommand(
