@@ -5,11 +5,14 @@ import com.happy.delivery.infra.encoder.JbCrypt;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * 보통의 경우.
+ */
 @Configuration
 public class UserConfig {
 
-    @Bean
-    public EncryptMapper encryptMapper() {
-        return new JbCrypt();
-    }
+  @Bean
+  public EncryptMapper encryptMapper() {
+    return new JbCrypt();
+  }
 }

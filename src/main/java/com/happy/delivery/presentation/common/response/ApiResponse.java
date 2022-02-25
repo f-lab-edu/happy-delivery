@@ -1,50 +1,62 @@
 package com.happy.delivery.presentation.common.response;
 
-public class ApiResponse<T>{
-    private boolean success;
-    private T data;
-    private Error error;
+/**
+ * SessionUtil.
+ */
+public class ApiResponse<T> {
 
-    public ApiResponse(boolean success, T data, Error error) {
-        this.success = success;
-        this.data = data;
-        this.error = error;
+  private boolean success;
+  private T data;
+  private Error error;
+
+  /**
+   * ApiResponse.
+   */
+  public ApiResponse(boolean success, T data, Error error) {
+    this.success = success;
+    this.data = data;
+    this.error = error;
+  }
+
+  public static <T> ApiResponse success(T data) {
+    return new ApiResponse(true, data, null);
+  }
+
+  public static <T> ApiResponse fail(String code, String message) {
+    return new ApiResponse(false, null, new Error(code, message));
+  }
+
+  /**
+   * Error.
+   */
+  public static class Error {
+
+    private String code;
+    private String message;
+
+    public Error(String code, String message) {
+      this.code = code;
+      this.message = message;
     }
 
-    public static <T> ApiResponse success(T data) {
-        return new ApiResponse(true, data, null);
+    public String getCode() {
+      return code;
     }
 
-    public static <T> ApiResponse fail(String code, String message) {
-        return new ApiResponse(false, null, new Error(code, message));
+    public String getMessage() {
+      return message;
     }
+  }
 
-    public static class Error {
-        private String code;
-        private String message;
+  public boolean isSuccess() {
+    return success;
+  }
 
-        public Error(String code, String message) {
-            this.code = code;
-            this.message = message;
-        }
+  public T getData() {
+    return data;
+  }
 
-        public String getCode() {
-            return code;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-    }
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public Error getError() {
-        return error;
-    }
+  public Error getError() {
+    return error;
+  }
 }

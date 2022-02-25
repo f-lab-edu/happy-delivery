@@ -1,0 +1,27 @@
+#!/bin/bash
+
+red='\033[0;31;1m'
+green='\033[0;32;1m'
+noColor='\033[0m'
+#
+# for each module
+projectDir=$(git rev-parse --show-toplevel)
+#lintProjects="delivery"
+
+#for project in ${lintProjects[@]}
+#do
+    # Checkstyle
+    printf "-----------------Starting run java checkstyle for ${project}-----------------"
+    checkstylePath="${project}/build/reports/checkstyle/checkstyle.html"
+
+    ./gradlew ${project}:checkstyle >/dev/null
+    checkstyleStatus=$?
+    if [ $checkstyleStatus -ne 0 ]
+    then
+        printf "${red}Failed, ${project} project has checkstyle issues!${noColor}"
+        open ${projectDir}/${checkstylePath}
+        exit $checkstyleStatus
+    fi
+    printf "${green}Succeeded, no android checkstyle issues found for ${project}${noColor}\n\n"
+#done
+#

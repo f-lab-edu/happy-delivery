@@ -2,41 +2,51 @@ package com.happy.delivery.application.user.result;
 
 import com.happy.delivery.domain.user.User;
 
+/**
+ * UserResult.
+ */
 public class UserResult {
-    private Long id;
-    private String email;
-    private String name;
-    private String phoneNumber;
 
-    public UserResult(Long id, String email, String name, String phoneNumber) {
-        this.id = id;
-        this.email = email;
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-    }
+  private Long id;
+  private String email;
+  private String name;
+  private String phoneNumber;
 
-    public static UserResult fromUser(User user) {
-        return new UserResult(
-                user.getId(),
-                user.getEmail(),
-                user.getName(),
-                user.getPhoneNumber()
-        );
-    }
+  /**
+   * UserResult Constructor.
+   */
+  public UserResult(Long id, String email, String name, String phoneNumber) {
+    this.id = id;
+    this.email = email;
+    this.name = name;
+    this.phoneNumber = phoneNumber;
+  }
 
-    public Long getId() {
-        return id;
-    }
+  /**
+   * UserResult -> User.
+   */
+  public static UserResult fromUser(User user) {
+    return new UserResult(
+        user.getId(),
+        user.getEmail(),
+        user.getName(),
+        user.getPhoneNumber()
+    );
+  }
 
-    public String getEmail() {
-        return email;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+  public String getName() {
+    return name;
+  }
+
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
 }
