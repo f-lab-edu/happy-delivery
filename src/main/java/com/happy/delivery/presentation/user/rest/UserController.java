@@ -9,6 +9,7 @@ import com.happy.delivery.presentation.user.request.AddressRequest;
 import com.happy.delivery.presentation.user.request.PasswordUpdateRequest;
 import com.happy.delivery.presentation.user.request.SigninRequest;
 import com.happy.delivery.presentation.user.request.SignupRequest;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.slf4j.Logger;
@@ -74,7 +75,7 @@ public class UserController {
    */
   @ResponseStatus(code = HttpStatus.OK)
   @PatchMapping("/my-account/password")
-  public ApiResponse<?> updatePassword(@Valid @RequestBody PasswordUpdateRequest request,
+  public ApiResponse<UserResult> updatePassword(@Valid @RequestBody PasswordUpdateRequest request,
       HttpSession httpSession) {
     UserResult userResult = userService.updatePassword(SessionUtil.getLoginId(httpSession),
         request.toCommand());
@@ -82,15 +83,31 @@ public class UserController {
   }
 
   /**
-   * UserController /address.
+   * UserController PostMapping /address.
+   * 주소 저장 및 추가
+   * || 새로고침하면 중복 저장되는 문제 ||
    */
   @ResponseStatus(code = HttpStatus.CREATED)
   @PostMapping("/address")
-  public ApiResponse<?> saveAddress(@Valid @RequestBody AddressRequest address,
+  public ApiResponse<UserAddressResult> saveAddress(@Valid @RequestBody AddressRequest address,
       HttpSession httpSession) {
     UserAddressResult userAddressResult = userService.saveAddress(
         address.toCommand(SessionUtil.getLoginId(httpSession)));
-    log.info("userResult = {}", userAddressResult);
+    if (userAddressResult != null) {
+      SessionUtil.setAddressId(httpSession, userAddressResult.getId());
+    }
     return ApiResponse.success(userAddressResult);
+  }
+
+  /**
+   * UserController GetMapping /address.
+   * 주소 목록 가져오기
+   */
+  @ResponseStatus(code = HttpStatus.OK)
+  @GetMapping("/address")
+  public ApiResponse<List<UserAddressResult>> getListOfAllAddresses(HttpSession httpSession) {
+    List<UserAddressResult> listOfAllAddresses = (List<UserAddressResult>) userService
+        .getListOfAllAddresses(SessionUtil.getLoginId(httpSession));
+    return ApiResponse.success(listOfAllAddresses);
   }
 }
