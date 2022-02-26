@@ -7,7 +7,7 @@ noColor='\033[0m'
 # for each module
 projectDir=$(git rev-parse --show-toplevel)
 #lintProjects="delivery"
-#
+
 #for project in ${lintProjects[@]}
 #do
     # Checkstyle
