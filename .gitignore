@@ -1,0 +1,13 @@
+#.gitignore
+
+.DS_Store
+out
+
+# IntelliJ project files
+.idea
+
+# Ignore gradle files
+.gradle
+build/
+
+

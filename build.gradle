@@ -1,0 +1,49 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.3'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'checkstyle'
+}
+
+checkstyle {
+	toolVersion = '9.3'
+	configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+}
+
+apply plugin: 'checkstyle'
+
+group = 'com.happy'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.3m'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+	useJUnitPlatform()
+}
+
+task checkstyle(type: Checkstyle) {
+	configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+	source 'src/main/java/'
+	include '**/*.java'
+	showViolations true
+	classpath = files()
+	ignoreFailures = false
+	maxWarnings = 0
+}
