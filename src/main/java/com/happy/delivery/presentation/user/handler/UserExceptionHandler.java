@@ -62,4 +62,5 @@ public class UserExceptionHandler {
   public ApiResponse<?> noUserIdException(NoUserIdException ex) {
     return ApiResponse.fail("NO_USER_ID.", ex.getMessage());
   }
+  
 }
