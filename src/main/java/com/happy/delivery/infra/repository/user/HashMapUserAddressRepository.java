@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -42,6 +43,9 @@ public class HashMapUserAddressRepository implements UserAddressRepository {
 
   @Override
   public List<UserAddress> findAllByUserId(Long userId) {
-    return null;
+    return map.values()
+        .stream()
+        .filter(userAddress -> userId.equals(userAddress.getUserId()))
+        .collect(Collectors.toList());
   }
 }

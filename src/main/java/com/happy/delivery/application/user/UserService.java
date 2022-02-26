@@ -6,6 +6,7 @@ import com.happy.delivery.application.user.command.SigninCommand;
 import com.happy.delivery.application.user.command.SignupCommand;
 import com.happy.delivery.application.user.result.UserAddressResult;
 import com.happy.delivery.application.user.result.UserResult;
+import java.util.List;
 
 /**
  * UserService.
@@ -19,4 +20,6 @@ public interface UserService {
   public UserResult updatePassword(Long id, PasswordUpdateCommand passwordUpdateCommand);
 
   public UserAddressResult saveAddress(AddressCommand address);
+
+  public List<UserAddressResult> getListOfAllAddresses(Long loginId);
 }

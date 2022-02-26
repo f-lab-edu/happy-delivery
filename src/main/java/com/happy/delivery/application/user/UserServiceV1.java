@@ -14,6 +14,9 @@ import com.happy.delivery.domain.user.UserAddress;
 import com.happy.delivery.domain.user.repository.UserAddressRepository;
 import com.happy.delivery.domain.user.repository.UserRepository;
 import com.happy.delivery.infra.encoder.EncryptMapper;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -98,5 +101,15 @@ public class UserServiceV1 implements UserService {
             addressCommand.getAddressCode(),
             addressCommand.getAddressDetail()));
     return UserAddressResult.fromUserAddress(result);
+  }
+
+  @Override
+  public List<UserAddressResult> getListOfAllAddresses(Long loginId) {
+    List<UserAddressResult> result = new ArrayList<>();
+    List<UserAddress> addresses = userAddressRepository.findAllByUserId(loginId);
+    for (UserAddress address : addresses) {
+      result.add(UserAddressResult.fromUserAddress(address));
+    }
+    return result;
   }
 }

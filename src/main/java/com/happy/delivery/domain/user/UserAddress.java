@@ -57,4 +57,14 @@ public class UserAddress {
     return date;
   }
 
+  @Override
+  public String toString() {
+    return "UserAddress{" +
+        "id=" + id +
+        ", userId=" + userId +
+        ", addressCode='" + addressCode + '\'' +
+        ", addressDetail='" + addressDetail + '\'' +
+        ", date=" + date +
+        '}';
+  }
 }
