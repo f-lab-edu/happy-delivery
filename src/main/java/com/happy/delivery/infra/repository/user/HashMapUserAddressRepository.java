@@ -33,7 +33,7 @@ public class HashMapUserAddressRepository implements UserAddressRepository {
 
   @Override
   public UserAddress findById(Long id) {
-    return null;
+    return map.get(id);
   }
 
   @Override

@@ -15,6 +15,7 @@ import com.happy.delivery.domain.user.UserAddress;
 import com.happy.delivery.domain.user.repository.UserAddressRepository;
 import com.happy.delivery.domain.user.repository.UserRepository;
 import com.happy.delivery.infra.encoder.EncryptMapper;
+import com.happy.delivery.presentation.user.request.AddressRequest;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,6 +111,17 @@ public class UserServiceV1 implements UserService {
       result.add(UserAddressResult.fromUserAddress(address));
     }
     return result;
+  }
+
+  @Override
+  public UserAddressResult updateAddress(Long addressId, AddressRequest addressRequest) {
+    UserAddress userAddress = userAddressRepository.findById(addressId);
+    if (userAddress == null) {
+      throw new UserAddressNotExistedException("존재하지 않는 주소입니다.");
+    }
+    userAddress.changeAddress(addressRequest.getAddressCode(), addressRequest.getAddressDetail());
+    UserAddress result = userAddressRepository.save(userAddress);
+    return UserAddressResult.fromUserAddress(result);
   }
 
   @Override

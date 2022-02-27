@@ -38,4 +38,13 @@ public class AddressRequest {
         this.addressDetail
     );
   }
+
+  public String getAddressCode() {
+    return addressCode;
+  }
+
+  @Nullable
+  public String getAddressDetail() {
+    return addressDetail;
+  }
 }

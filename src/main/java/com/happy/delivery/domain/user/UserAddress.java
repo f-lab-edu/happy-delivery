@@ -1,6 +1,7 @@
 package com.happy.delivery.domain.user;
 
 import java.time.Instant;
+import org.springframework.lang.Nullable;
 
 /**
  * UserAddress.
@@ -9,8 +10,9 @@ public class UserAddress {
 
   private Long id;
   private final Long userId;
-  private final String addressCode;
-  private final String addressDetail;
+  private String addressCode;
+  @Nullable
+  private String addressDetail;
   private Instant date;
 
   /**
@@ -31,6 +33,15 @@ public class UserAddress {
     this.addressCode = addressCode;
     this.addressDetail = addressDetail;
     this.date = date;
+  }
+
+  /**
+   * changeAddress().
+   * 주소 변경.
+   */
+  public void changeAddress(String addressCode, String addressDetail) {
+    this.addressCode = addressCode;
+    this.addressDetail = addressDetail;
   }
 
   public Long getId() {

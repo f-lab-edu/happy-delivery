@@ -75,7 +75,7 @@ public class UserController {
   /**
    * UserController my-account/password.
    */
-  @ResponseStatus(code = HttpStatus.OK)
+  @ResponseStatus(code = HttpStatus.CREATED)
   @PatchMapping("/my-account/password")
   public ApiResponse<UserResult> updatePassword(@Valid @RequestBody PasswordUpdateRequest request,
       HttpSession httpSession) {
@@ -85,7 +85,7 @@ public class UserController {
   }
 
   /**
-   * UserController PostMapping /address.
+   * UserController PostMapping /addresses.
    * 주소 저장 및 추가
    * || 새로고침하면 중복 저장되는 문제 ||
    */
@@ -102,19 +102,31 @@ public class UserController {
   }
 
   /**
-   * UserController GetMapping /address.
+   * UserController GetMapping /addresses.
    * 주소 목록 가져오기
    */
   @ResponseStatus(code = HttpStatus.OK)
   @GetMapping("/addresses")
   public ApiResponse<List<UserAddressResult>> getListOfAllAddresses(HttpSession httpSession) {
-    List<UserAddressResult> listOfAllAddresses = (List<UserAddressResult>) userService
+    List<UserAddressResult> listOfAllAddresses = userService
         .getListOfAllAddresses(SessionUtil.getLoginId(httpSession));
     return ApiResponse.success(listOfAllAddresses);
   }
 
   /**
-   * UserController delete /address.
+   * UserController update /addresses.
+   * 주소 수정
+   */
+  @ResponseStatus(code = HttpStatus.CREATED)
+  @PatchMapping("/addresses/{addressId}")
+  public ApiResponse<UserAddressResult> updateAddress(@PathVariable Long addressId,
+      @Valid @RequestBody AddressRequest addressRequest) {
+    UserAddressResult userAddressResult = userService.updateAddress(addressId, addressRequest);
+    return ApiResponse.success(userAddressResult);
+  }
+
+  /**
+   * UserController delete /addresses.
    * 주소 삭제
    */
   @ResponseStatus(code = HttpStatus.OK)
