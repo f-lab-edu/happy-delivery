@@ -78,7 +78,8 @@ public class UserServiceV1 implements UserService {
    * 비밀번호 변경
    * 1) 변경 전 비밀번호 일치여부 검사.
    * 2) 바꾸려는 비밀번호 암호화.
-   * 3) repository 저장.
+   * 3) User 비밀번호값 바꾸기 : changePassword
+   * 4) repository 저장.
    */
   @Override
   public UserResult updatePassword(Long id, PasswordUpdateCommand passwordUpdateCommand) {
@@ -86,14 +87,9 @@ public class UserServiceV1 implements UserService {
     if (!encryptMapper.isMatch(passwordUpdateCommand.getCurrentPassword(), user.getPassword())) {
       throw new PasswordIsNotMatchException("현재 패스워드가 일치하지 않습니다.");
     }
-    User result = userRepository.save(
-        new User(
-            id,
-            user.getEmail(),
-            encryptMapper.encoder(passwordUpdateCommand.getChangedPassword()),
-            user.getName(),
-            user.getPhoneNumber()));
-    return UserResult.fromUser(user);
+    user.changePassword(encryptMapper, passwordUpdateCommand.getChangedPassword());
+    User result = userRepository.save(user);
+    return UserResult.fromUser(result);
   }
 
   @Override

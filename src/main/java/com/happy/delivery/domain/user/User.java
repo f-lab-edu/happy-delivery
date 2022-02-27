@@ -1,5 +1,7 @@
 package com.happy.delivery.domain.user;
 
+import com.happy.delivery.infra.encoder.EncryptMapper;
+
 /**
  * User.
  */
@@ -30,6 +32,14 @@ public class User {
     this.password = password;
     this.name = name;
     this.phoneNumber = phoneNumber;
+  }
+
+  /**
+   * changePassword().
+   * setter + encoder.
+   */
+  public void changePassword(EncryptMapper encryptMapper, String changedPassword) {
+    this.password = encryptMapper.encoder(changedPassword);
   }
 
   public Long getId() {
