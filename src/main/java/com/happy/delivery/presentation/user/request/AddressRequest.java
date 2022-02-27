@@ -20,6 +20,9 @@ public class AddressRequest {
   @Pattern(regexp = "^[ㄱ-ㅎ가-힣0-9\\s]*$", message = "형식이 맞지 않습니다. 한글과 숫자만 입력해주세요.")
   private String addressDetail;
 
+  /**
+   * AddressRequest Constructor.
+   */
   public AddressRequest(String addressCode, String addressDetail) {
     this.addressCode = addressCode;
     this.addressDetail = addressDetail;

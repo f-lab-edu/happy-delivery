@@ -15,8 +15,10 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -88,7 +90,7 @@ public class UserController {
    * || 새로고침하면 중복 저장되는 문제 ||
    */
   @ResponseStatus(code = HttpStatus.CREATED)
-  @PostMapping("/address")
+  @PostMapping("/addresses")
   public ApiResponse<UserAddressResult> saveAddress(@Valid @RequestBody AddressRequest address,
       HttpSession httpSession) {
     UserAddressResult userAddressResult = userService.saveAddress(
@@ -104,10 +106,21 @@ public class UserController {
    * 주소 목록 가져오기
    */
   @ResponseStatus(code = HttpStatus.OK)
-  @GetMapping("/address")
+  @GetMapping("/addresses")
   public ApiResponse<List<UserAddressResult>> getListOfAllAddresses(HttpSession httpSession) {
     List<UserAddressResult> listOfAllAddresses = (List<UserAddressResult>) userService
         .getListOfAllAddresses(SessionUtil.getLoginId(httpSession));
     return ApiResponse.success(listOfAllAddresses);
+  }
+
+  /**
+   * UserController delete /address.
+   * 주소 삭제
+   */
+  @ResponseStatus(code = HttpStatus.OK)
+  @DeleteMapping("/addresses/{addressId}")
+  public ApiResponse<UserAddressResult> deleteAddress(@PathVariable Long addressId) {
+    UserAddressResult userAddressResult = userService.deleteAddress(addressId);
+    return ApiResponse.success(userAddressResult);
   }
 }

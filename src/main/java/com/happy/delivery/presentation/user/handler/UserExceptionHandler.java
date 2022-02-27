@@ -3,8 +3,8 @@ package com.happy.delivery.presentation.user.handler;
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
 import com.happy.delivery.domain.exception.user.NoUserIdMatchedException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
+import com.happy.delivery.domain.exception.user.UserAddressNotExistedException;
 import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
-import com.happy.delivery.domain.exception.user.UserNotExistedException;
 import com.happy.delivery.presentation.common.response.ApiResponse;
 import java.util.HashMap;
 import java.util.Map;
@@ -64,10 +64,10 @@ public class UserExceptionHandler {
   }
 
   /**
-   * 주소가 없는 경우.
+   * 저장된 주소가 없는 경우.
    */
-  @ExceptionHandler(UserNotExistedException.class)
-  public ApiResponse<?> userNotExistedException(UserNotExistedException ex) {
-    return ApiResponse.fail("USER_NOT_EXISTED", ex.getMessage());
+  @ExceptionHandler(UserAddressNotExistedException.class)
+  public ApiResponse<?> userNotExistedException(UserAddressNotExistedException ex) {
+    return ApiResponse.fail("USER_ADDRESS_NOT_EXISTED", ex.getMessage());
   }
 }

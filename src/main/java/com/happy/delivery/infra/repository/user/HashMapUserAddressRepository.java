@@ -48,4 +48,10 @@ public class HashMapUserAddressRepository implements UserAddressRepository {
         .filter(userAddress -> userId.equals(userAddress.getUserId()))
         .collect(Collectors.toList());
   }
+
+  @Override
+  public UserAddress deleteById(Long id) {
+    UserAddress userAddress = map.remove(id);
+    return userAddress;
+  }
 }

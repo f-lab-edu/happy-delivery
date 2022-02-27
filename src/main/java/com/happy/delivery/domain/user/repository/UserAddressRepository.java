@@ -15,4 +15,6 @@ public interface UserAddressRepository {
   public UserAddress findByLastUsedAddress(Long userId);
 
   public List<UserAddress> findAllByUserId(Long userId);
+
+  public UserAddress deleteById(Long id);
 }

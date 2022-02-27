@@ -8,6 +8,7 @@ import com.happy.delivery.application.user.result.UserAddressResult;
 import com.happy.delivery.application.user.result.UserResult;
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
+import com.happy.delivery.domain.exception.user.UserAddressNotExistedException;
 import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
 import com.happy.delivery.domain.user.User;
 import com.happy.delivery.domain.user.UserAddress;
@@ -16,7 +17,6 @@ import com.happy.delivery.domain.user.repository.UserRepository;
 import com.happy.delivery.infra.encoder.EncryptMapper;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -75,7 +75,10 @@ public class UserServiceV1 implements UserService {
   }
 
   /**
-   * 비밀번호 변경 1) 변경 전 비밀번호 일치여부 검사. 2) 바꾸려는 비밀번호 암호화. 3) repository 저장.
+   * 비밀번호 변경
+   * 1) 변경 전 비밀번호 일치여부 검사.
+   * 2) 바꾸려는 비밀번호 암호화.
+   * 3) repository 저장.
    */
   @Override
   public UserResult updatePassword(Long id, PasswordUpdateCommand passwordUpdateCommand) {
@@ -111,5 +114,12 @@ public class UserServiceV1 implements UserService {
       result.add(UserAddressResult.fromUserAddress(address));
     }
     return result;
+  }
+
+  @Override
+  public UserAddressResult deleteAddress(Long addressId) {
+    UserAddress result = userAddressRepository.deleteById(addressId);
+    if (result == null) throw new UserAddressNotExistedException("존재하지 않는 주소입니다.");
+    return UserAddressResult.fromUserAddress(result);
   }
 }

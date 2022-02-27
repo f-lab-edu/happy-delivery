@@ -6,6 +6,7 @@ import com.happy.delivery.application.user.command.SigninCommand;
 import com.happy.delivery.application.user.command.SignupCommand;
 import com.happy.delivery.application.user.result.UserAddressResult;
 import com.happy.delivery.application.user.result.UserResult;
+import com.happy.delivery.domain.user.UserAddress;
 import java.util.List;
 
 /**
@@ -22,4 +23,6 @@ public interface UserService {
   public UserAddressResult saveAddress(AddressCommand address);
 
   public List<UserAddressResult> getListOfAllAddresses(Long loginId);
+
+  public UserAddressResult deleteAddress(Long addressId);
 }
