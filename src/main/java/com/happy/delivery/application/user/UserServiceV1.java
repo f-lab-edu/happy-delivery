@@ -119,7 +119,9 @@ public class UserServiceV1 implements UserService {
   @Override
   public UserAddressResult deleteAddress(Long addressId) {
     UserAddress result = userAddressRepository.deleteById(addressId);
-    if (result == null) throw new UserAddressNotExistedException("존재하지 않는 주소입니다.");
+    if (result == null) {
+      throw new UserAddressNotExistedException("존재하지 않는 주소입니다.");
+    }
     return UserAddressResult.fromUserAddress(result);
   }
 }
