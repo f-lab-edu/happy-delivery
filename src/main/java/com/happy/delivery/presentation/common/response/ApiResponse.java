@@ -5,9 +5,9 @@ package com.happy.delivery.presentation.common.response;
  */
 public class ApiResponse<T> {
 
-  private boolean success;
-  private T data;
-  private Error error;
+  private final boolean success;
+  private final T data;
+  private final Error error;
 
   /**
    * ApiResponse Constructor.
@@ -31,8 +31,8 @@ public class ApiResponse<T> {
    */
   public static class Error {
 
-    private String code;
-    private String message;
+    private final String code;
+    private final String message;
 
     public Error(String code, String message) {
       this.code = code;
