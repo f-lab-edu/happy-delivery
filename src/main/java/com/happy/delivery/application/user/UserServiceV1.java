@@ -1,9 +1,11 @@
 package com.happy.delivery.application.user;
 
+import com.happy.delivery.application.user.command.MyAccountCommand;
 import com.happy.delivery.application.user.command.SigninCommand;
 import com.happy.delivery.application.user.command.SignupCommand;
 import com.happy.delivery.application.user.result.UserResult;
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
+import com.happy.delivery.domain.exception.user.NoUserIdException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
 import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
 import com.happy.delivery.domain.user.User;
@@ -58,5 +60,35 @@ public class UserServiceV1 implements UserService {
       throw new PasswordIsNotMatchException("패스워드가 일치하지 않습니다."); //password
     }
     return UserResult.fromUser(user);
+  }
+
+  @Override
+  public UserResult myAccount(MyAccountCommand myAccountCommand) {
+    if (myAccountCommand.getId() == null) {
+      throw new NoUserIdException("유저 ID가 없습니다. 로그인 해주세요");
+    }
+
+    // 경우 1. user1, user2 생성, user1로그인 -> user2의 이메일로 변경 ; (변경안됨)
+    // user1이 repo에 있는 계정으로 변경하려 할 경우
+    // 경우 2. user1, user2 생성, user1로그인 -> user1의 이메일로 변경(그대로) 이름과 폰 번호만 변경 ; (변경됨)
+    // 경우 3. user1, user2 생성, user1로그인 -> user3의 이메일 신규 생성 ; (변경됨)
+
+    User byEmail = userRepository.findByEmail(myAccountCommand.getEmail());
+    User user = userRepository.findById(myAccountCommand.getId());
+    //repo에 값이 있거나 기존 이메일과 변경하려는 이메일이 같지 않은경우
+    if (byEmail != null && !myAccountCommand.getEmail().equals(user.getEmail())) {
+      throw new UserAlreadyExistedException("이미 존재하는 계정 입니다.");
+    }
+
+    User saveUser = userRepository.save(
+        new User(
+            user.getId(),
+            myAccountCommand.getEmail(),
+            user.getPassword(),
+            myAccountCommand.getName(),
+            myAccountCommand.getPhoneNumber()
+        )
+    );
+    return UserResult.fromUser(saveUser);
   }
 }

@@ -4,6 +4,7 @@ import com.happy.delivery.application.user.UserService;
 import com.happy.delivery.application.user.result.UserResult;
 import com.happy.delivery.infra.util.SessionUtil;
 import com.happy.delivery.presentation.common.response.ApiResponse;
+import com.happy.delivery.presentation.user.request.MyAccountRequest;
 import com.happy.delivery.presentation.user.request.SigninRequest;
 import com.happy.delivery.presentation.user.request.SignupRequest;
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -49,7 +51,7 @@ public class UserController {
       HttpSession httpSession) {
     UserResult userResult = userService.signin(request.toCommand());
     if (userResult != null) {
-      SessionUtil.setLoginId(httpSession, request.getId());
+      SessionUtil.setLoginId(httpSession, userResult.getId());
     }
     return ApiResponse.success(userResult);
   }
@@ -58,5 +60,23 @@ public class UserController {
   @GetMapping("/logout")
   public void logout(HttpSession httpSession) {
     SessionUtil.clear(httpSession);
+  }
+
+  /**
+   * myAccount.
+   */
+  @ResponseStatus(code = HttpStatus.OK)
+  @PutMapping("/myaccount")
+  public ApiResponse<UserResult> myAccount(@Valid @RequestBody MyAccountRequest myAccountRequest,
+      HttpSession httpSession) {
+    Long sessionId = SessionUtil.getLoginId(httpSession);
+    MyAccountRequest myAccountInfo = new MyAccountRequest(
+        sessionId,
+        myAccountRequest.getEmail(),
+        myAccountRequest.getName(),
+        myAccountRequest.getPhoneNumber()
+    );
+    UserResult myaccountResult = userService.myAccount(myAccountInfo.toCommand());
+    return ApiResponse.success(myaccountResult);
   }
 }
