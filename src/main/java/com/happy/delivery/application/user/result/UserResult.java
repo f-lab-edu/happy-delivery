@@ -7,10 +7,10 @@ import com.happy.delivery.domain.user.User;
  */
 public class UserResult {
 
-  private Long id;
-  private String email;
-  private String name;
-  private String phoneNumber;
+  private final Long id;
+  private final String email;
+  private final String name;
+  private final String phoneNumber;
 
   /**
    * UserResult Constructor.

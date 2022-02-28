@@ -88,7 +88,7 @@ public class UserServiceV1 implements UserService {
     if (!encryptMapper.isMatch(passwordUpdateCommand.getCurrentPassword(), user.getPassword())) {
       throw new PasswordIsNotMatchException("현재 패스워드가 일치하지 않습니다.");
     }
-    user.changePassword(encryptMapper, passwordUpdateCommand.getChangedPassword());
+    user.changePassword(encryptMapper.encoder(passwordUpdateCommand.getChangedPassword()));
     User result = userRepository.save(user);
     return UserResult.fromUser(result);
   }
@@ -114,14 +114,13 @@ public class UserServiceV1 implements UserService {
   }
 
   @Override
-  public UserAddressResult updateAddress(Long addressId, AddressRequest addressRequest) {
+  public void updateAddress(Long addressId, AddressRequest addressRequest) {
     UserAddress userAddress = userAddressRepository.findById(addressId);
     if (userAddress == null) {
       throw new UserAddressNotExistedException("존재하지 않는 주소입니다.");
     }
     userAddress.changeAddress(addressRequest.getAddressCode(), addressRequest.getAddressDetail());
-    UserAddress result = userAddressRepository.save(userAddress);
-    return UserAddressResult.fromUserAddress(result);
+    userAddressRepository.save(userAddress);
   }
 
   @Override
