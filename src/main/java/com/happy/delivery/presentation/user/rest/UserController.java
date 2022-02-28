@@ -44,7 +44,7 @@ public class UserController {
 
   @ResponseStatus(code = HttpStatus.CREATED)
   @PostMapping("/signup")
-  public ApiResponse<UserResult> signup(@Valid @RequestBody SignupRequest request) {
+  public ApiResponse signup(@Valid @RequestBody SignupRequest request) {
     UserResult userResult = userService.signup(request.toCommand());
     return ApiResponse.success(userResult);
   }
@@ -54,7 +54,7 @@ public class UserController {
    */
   @ResponseStatus(code = HttpStatus.OK)
   @PostMapping("/signin")
-  public ApiResponse<UserResult> signin(@Valid @RequestBody SigninRequest request,
+  public ApiResponse signin(@Valid @RequestBody SigninRequest request,
       HttpSession httpSession) {
     UserResult userResult = userService.signin(request.toCommand());
     if (userResult != null) {
@@ -77,7 +77,7 @@ public class UserController {
    */
   @ResponseStatus(code = HttpStatus.CREATED)
   @PatchMapping("/my-account/password")
-  public ApiResponse<UserResult> updatePassword(@Valid @RequestBody PasswordUpdateRequest request,
+  public ApiResponse updatePassword(@Valid @RequestBody PasswordUpdateRequest request,
       HttpSession httpSession) {
     UserResult userResult = userService.updatePassword(SessionUtil.getLoginId(httpSession),
         request.toCommand());
@@ -91,7 +91,7 @@ public class UserController {
    */
   @ResponseStatus(code = HttpStatus.CREATED)
   @PostMapping("/addresses")
-  public ApiResponse<UserAddressResult> saveAddress(@Valid @RequestBody AddressRequest address,
+  public ApiResponse saveAddress(@Valid @RequestBody AddressRequest address,
       HttpSession httpSession) {
     UserAddressResult userAddressResult = userService.saveAddress(
         address.toCommand(SessionUtil.getLoginId(httpSession)));
@@ -107,7 +107,7 @@ public class UserController {
    */
   @ResponseStatus(code = HttpStatus.OK)
   @GetMapping("/addresses")
-  public ApiResponse<List<UserAddressResult>> getListOfAllAddresses(HttpSession httpSession) {
+  public ApiResponse getListOfAllAddresses(HttpSession httpSession) {
     List<UserAddressResult> listOfAllAddresses = userService
         .getListOfAllAddresses(SessionUtil.getLoginId(httpSession));
     return ApiResponse.success(listOfAllAddresses);
@@ -119,10 +119,10 @@ public class UserController {
    */
   @ResponseStatus(code = HttpStatus.CREATED)
   @PatchMapping("/addresses/{addressId}")
-  public ApiResponse<UserAddressResult> updateAddress(@PathVariable Long addressId,
+  public ApiResponse updateAddress(@PathVariable Long addressId,
       @Valid @RequestBody AddressRequest addressRequest) {
-    UserAddressResult userAddressResult = userService.updateAddress(addressId, addressRequest);
-    return ApiResponse.success(userAddressResult);
+    userService.updateAddress(addressId, addressRequest);
+    return ApiResponse.success("UPDATING_ADDRESS_SUCCESS");
   }
 
   /**
@@ -131,7 +131,7 @@ public class UserController {
    */
   @ResponseStatus(code = HttpStatus.OK)
   @DeleteMapping("/addresses/{addressId}")
-  public ApiResponse<UserAddressResult> deleteAddress(@PathVariable Long addressId) {
+  public ApiResponse deleteAddress(@PathVariable Long addressId) {
     UserAddressResult userAddressResult = userService.deleteAddress(addressId);
     return ApiResponse.success(userAddressResult);
   }
