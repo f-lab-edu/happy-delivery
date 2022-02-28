@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 보통의 경우.
+ * UserConfig.
  */
 @Configuration
 public class UserConfig {

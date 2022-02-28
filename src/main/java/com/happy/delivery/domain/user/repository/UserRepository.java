@@ -3,13 +3,13 @@ package com.happy.delivery.domain.user.repository;
 import com.happy.delivery.domain.user.User;
 
 /**
- * EmailIsNotMatchException.
+ * UserRepository.
  */
 public interface UserRepository {
 
-  User save(User user);
+  public User save(User user);
 
-  User findById(Long id);
+  public User findById(Long id);
 
-  User findByEmail(String email);
+  public User findByEmail(String email);
 }

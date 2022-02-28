@@ -49,4 +49,14 @@ public class UserResult {
   public String getPhoneNumber() {
     return phoneNumber;
   }
+
+  @Override
+  public String toString() {
+    return "UserResult{" +
+        "id=" + id +
+        ", email='" + email + '\'' +
+        ", name='" + name + '\'' +
+        ", phoneNumber='" + phoneNumber + '\'' +
+        '}';
+  }
 }
