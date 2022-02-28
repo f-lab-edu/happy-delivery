@@ -63,7 +63,7 @@ public class UserServiceV1 implements UserService {
   }
 
   @Override
-  public UserResult myAccount(MyAccountCommand myAccountCommand) {
+  public UserResult updateMyAccount(MyAccountCommand myAccountCommand) {
     if (myAccountCommand.getId() == null) {
       throw new NoUserIdException("유저 ID가 없습니다. 로그인 해주세요");
     }
@@ -79,16 +79,18 @@ public class UserServiceV1 implements UserService {
     if (byEmail != null && !myAccountCommand.getEmail().equals(user.getEmail())) {
       throw new UserAlreadyExistedException("이미 존재하는 계정 입니다.");
     }
+    user.setMyAccountUpdate(myAccountCommand.getEmail(), myAccountCommand.getName(),
+        myAccountCommand.getPhoneNumber());
+    User userSave = userRepository.save(user);
+    return UserResult.fromUser(userSave);
+  }
 
-    User saveUser = userRepository.save(
-        new User(
-            user.getId(),
-            myAccountCommand.getEmail(),
-            user.getPassword(),
-            myAccountCommand.getName(),
-            myAccountCommand.getPhoneNumber()
-        )
-    );
-    return UserResult.fromUser(saveUser);
+  @Override
+  public UserResult getMyAccount(Long loginId) {
+    if (loginId == null) {
+      throw new NoUserIdException("유저 ID가 없습니다. 로그인 해주세요");
+    }
+    User user = userRepository.findById(loginId);
+    return UserResult.fromUser(user);
   }
 }

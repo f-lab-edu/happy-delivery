@@ -14,5 +14,8 @@ public interface UserService {
 
   public UserResult signin(SigninCommand signinCommand);
 
-  public UserResult myAccount(MyAccountCommand myAccountCommand);
+  public UserResult updateMyAccount(MyAccountCommand myAccountCommand);
+
+  public UserResult getMyAccount(Long loginId);
+
 }

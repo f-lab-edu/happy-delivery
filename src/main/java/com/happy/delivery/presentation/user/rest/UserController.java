@@ -62,13 +62,24 @@ public class UserController {
     SessionUtil.clear(httpSession);
   }
 
+
   /**
-   * myAccount.
+   * myAccount view.
+   */
+  @GetMapping("/myaccount")
+  public ApiResponse<UserResult> getMyAccount(HttpSession httpSession) {
+    Long sessionId = SessionUtil.getLoginId(httpSession);
+    UserResult myAccount = userService.getMyAccount(sessionId);
+    return ApiResponse.success(myAccount);
+  }
+
+  /**
+   * myAccount update.
    */
   @ResponseStatus(code = HttpStatus.OK)
   @PutMapping("/myaccount")
-  public ApiResponse<UserResult> myAccount(@Valid @RequestBody MyAccountRequest myAccountRequest,
-      HttpSession httpSession) {
+  public ApiResponse<UserResult> updateMyAccount(@Valid @RequestBody
+      MyAccountRequest myAccountRequest, HttpSession httpSession) {
     Long sessionId = SessionUtil.getLoginId(httpSession);
     MyAccountRequest myAccountInfo = new MyAccountRequest(
         sessionId,
@@ -76,7 +87,7 @@ public class UserController {
         myAccountRequest.getName(),
         myAccountRequest.getPhoneNumber()
     );
-    UserResult myaccountResult = userService.myAccount(myAccountInfo.toCommand());
+    UserResult myaccountResult = userService.updateMyAccount(myAccountInfo.toCommand());
     return ApiResponse.success(myaccountResult);
   }
 }

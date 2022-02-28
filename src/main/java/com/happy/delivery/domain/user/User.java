@@ -32,6 +32,16 @@ public class User {
     this.phoneNumber = phoneNumber;
   }
 
+  /**
+   * myaccount update할때.
+   */
+  public void setMyAccountUpdate(String email, String name, String phoneNumber) {
+    this.email = email;
+    this.name = name;
+    this.phoneNumber = phoneNumber;
+  }
+
+
   public void setId(Long id) {
     this.id = id;
   }
