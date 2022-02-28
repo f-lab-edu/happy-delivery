@@ -77,7 +77,7 @@ public class UserController {
   /**
    * myAccount view.
    */
-  @GetMapping("/myaccount")
+  @GetMapping("/my-account")
   public ApiResponse<UserResult> getMyAccount(HttpSession httpSession) {
     Long sessionId = SessionUtil.getLoginId(httpSession);
     UserResult myAccount = userService.getMyAccount(sessionId);
@@ -88,7 +88,7 @@ public class UserController {
    * myAccount update.
    */
   @ResponseStatus(code = HttpStatus.OK)
-  @PutMapping("/myaccount")
+  @PutMapping("/my-account")
   public ApiResponse<UserResult> updateMyAccount(@Valid @RequestBody
       MyAccountRequest myAccountRequest, HttpSession httpSession) {
     Long sessionId = SessionUtil.getLoginId(httpSession);
