@@ -34,6 +34,14 @@ public class User {
     this.phoneNumber = phoneNumber;
   }
 
+
+  public void setMyAccountUpdate(String email, String name, String phoneNumber) {
+    this.email = email;
+    this.name = name;
+    this.phoneNumber = phoneNumber;
+
+  }
+
   /**
    * changePassword().
    * setter + encoder.
