@@ -9,12 +9,13 @@ import org.springframework.stereotype.Repository;
 
 /**
  * HashMapUserRepository.
+ * repository는 collection의 역할을 하기때문에 비지니스 로직이 들어가면 안된다.
  */
 @Repository
 public class HashMapUserRepository implements UserRepository {
 
   private final Map<Long, User> hashmap = new ConcurrentHashMap<>();
-  private AtomicLong id = new AtomicLong();
+  private final AtomicLong id = new AtomicLong();
 
   @Override
   public User save(User user) {
@@ -36,11 +37,11 @@ public class HashMapUserRepository implements UserRepository {
         .stream()
         .filter(findEmail -> email.equals(findEmail.getEmail()))
         .findFirst()
-        .orElse(null); // 값이 있으면 값을 반환하고 없으면 null반환
+        .orElse(null);
   }
 
+  @Override
   public User findById(Long id) {
     return hashmap.get(id);
   }
-
 }

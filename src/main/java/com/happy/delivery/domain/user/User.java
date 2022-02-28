@@ -1,5 +1,7 @@
 package com.happy.delivery.domain.user;
 
+import com.happy.delivery.infra.encoder.EncryptMapper;
+
 /**
  * User.
  */
@@ -41,13 +43,16 @@ public class User {
     this.phoneNumber = phoneNumber;
   }
 
-
-  public void setId(Long id) {
-    this.id = id;
+  public void changePassword(EncryptMapper encryptMapper, String changedPassword) {
+    this.password = encryptMapper.encoder(changedPassword);
   }
 
   public Long getId() {
     return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public String getEmail() {
@@ -65,6 +70,5 @@ public class User {
   public String getPhoneNumber() {
     return phoneNumber;
   }
-
 }
 

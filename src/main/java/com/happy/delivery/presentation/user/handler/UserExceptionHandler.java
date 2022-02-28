@@ -2,7 +2,9 @@ package com.happy.delivery.presentation.user.handler;
 
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
 import com.happy.delivery.domain.exception.user.NoUserIdException;
+import com.happy.delivery.domain.exception.user.NoUserIdMatchedException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
+import com.happy.delivery.domain.exception.user.UserAddressNotExistedException;
 import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
 import com.happy.delivery.presentation.common.response.ApiResponse;
 import java.util.HashMap;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-
 /**
  * UserExceptionHandler.
  */
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class UserExceptionHandler {
 
   /**
-   * 유효성 검사.
+   * 유효성 검사에 맞지 않은경우.
    */
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ApiResponse<?> methodArgumentNotValidException(MethodArgumentNotValidException ex) {
@@ -32,7 +33,7 @@ public class UserExceptionHandler {
   }
 
   /**
-   * 이메일 검증 유무.
+   * 이미 사용중인 계정이 있을 경우.
    */
   @ExceptionHandler(UserAlreadyExistedException.class)
   public ApiResponse<?> userAlreadyExistedException(UserAlreadyExistedException ex) {
@@ -61,5 +62,21 @@ public class UserExceptionHandler {
   @ExceptionHandler(NoUserIdException.class)
   public ApiResponse<?> noUserIdException(NoUserIdException ex) {
     return ApiResponse.fail("NO_USER_ID.", ex.getMessage());
+  }
+
+  /**
+   * 로그인 id가 없는경우.
+   */
+  @ExceptionHandler(NoUserIdMatchedException.class)
+  public ApiResponse<?> noUserIdMatchedException(NoUserIdMatchedException ex) {
+    return ApiResponse.fail("USER_ID_IS_NOT_MATCHED", ex.getMessage());
+  }
+
+  /**
+   * 저장된 주소가 없는 경우.
+   */
+  @ExceptionHandler(UserAddressNotExistedException.class)
+  public ApiResponse<?> userNotExistedException(UserAddressNotExistedException ex) {
+    return ApiResponse.fail("USER_ADDRESS_NOT_EXISTED", ex.getMessage());
   }
 }
