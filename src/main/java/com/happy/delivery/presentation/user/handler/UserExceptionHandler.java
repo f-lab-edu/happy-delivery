@@ -67,7 +67,7 @@ public class UserExceptionHandler {
    * 저장된 주소가 없는 경우.
    */
   @ExceptionHandler(UserAddressNotExistedException.class)
-  public ApiResponse<?> userNotExistedException(UserAddressNotExistedException ex) {
+  public ApiResponse<?> UserAddressNotExistedException(UserAddressNotExistedException ex) {
     return ApiResponse.fail("USER_ADDRESS_NOT_EXISTED", ex.getMessage());
   }
 }
