@@ -41,6 +41,12 @@ public class HashMapUserRepository implements UserRepository {
   }
 
   @Override
+  public User deleteUser(Long id) {
+    User removeUser = hashmap.remove(id);
+    return removeUser;
+  }
+
+  @Override
   public User findById(Long id) {
     return hashmap.get(id);
   }

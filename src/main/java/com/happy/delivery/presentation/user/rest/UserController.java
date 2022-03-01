@@ -79,8 +79,8 @@ public class UserController {
    */
   @GetMapping("/my-account")
   public ApiResponse<UserResult> getMyAccount(HttpSession httpSession) {
-    Long sessionId = SessionUtil.getLoginId(httpSession);
-    UserResult myAccount = userService.getMyAccount(sessionId);
+    Long userId = SessionUtil.getLoginId(httpSession);
+    UserResult myAccount = userService.getMyAccount(userId);
     return ApiResponse.success(myAccount);
   }
 
@@ -91,9 +91,9 @@ public class UserController {
   @PutMapping("/my-account")
   public ApiResponse<UserResult> updateMyAccount(@Valid @RequestBody
       MyAccountRequest myAccountRequest, HttpSession httpSession) {
-    Long sessionId = SessionUtil.getLoginId(httpSession);
+    Long userId = SessionUtil.getLoginId(httpSession);
     MyAccountRequest myAccountInfo = new MyAccountRequest(
-        sessionId,
+        userId,
         myAccountRequest.getEmail(),
         myAccountRequest.getName(),
         myAccountRequest.getPhoneNumber()
@@ -103,12 +103,23 @@ public class UserController {
   }
 
   /**
+   * myAccount delete.
+   */
+  @DeleteMapping("my-account")
+  public ApiResponse<UserResult> deleteMyAccount(@Valid HttpSession httpSession) {
+    Long userId = SessionUtil.getLoginId(httpSession);
+    userService.deleteMyAccount(userId);
+    return ApiResponse.success("DELETE_MY_ACCOUNT");
+  }
+
+  /**
    * UserController my-account/password.
    */
   @ResponseStatus(code = HttpStatus.CREATED)
   @PatchMapping("/my-account/password")
   public ApiResponse updatePassword(@Valid @RequestBody PasswordUpdateRequest request,
       HttpSession httpSession) {
+
     UserResult userResult = userService.updatePassword(SessionUtil.getLoginId(httpSession),
         request.toCommand());
     return ApiResponse.success(userResult);

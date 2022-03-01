@@ -21,6 +21,8 @@ public interface UserService {
 
   public UserResult updateMyAccount(MyAccountCommand myAccountCommand);
 
+  public void deleteMyAccount(Long loinid);
+
   public UserResult getMyAccount(Long loginId);
 
   public UserResult updatePassword(Long id, PasswordUpdateCommand passwordUpdateCommand);

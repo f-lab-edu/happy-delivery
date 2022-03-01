@@ -35,11 +35,13 @@ public class User {
   }
 
 
+  /**
+   * 유저 정보 업데이트.
+   */
   public void setMyAccountUpdate(String email, String name, String phoneNumber) {
     this.email = email;
     this.name = name;
     this.phoneNumber = phoneNumber;
-
   }
 
   /**

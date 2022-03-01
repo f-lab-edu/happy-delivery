@@ -23,7 +23,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+/**
+ * UserServiceV1.
+ */
 @Service
 public class UserServiceV1 implements UserService {
 
@@ -94,6 +96,14 @@ public class UserServiceV1 implements UserService {
         myAccountCommand.getPhoneNumber());
     User userSave = userRepository.save(user);
     return UserResult.fromUser(userSave);
+  }
+
+  @Override
+  public void deleteMyAccount(Long loinId) {
+    if (loinId == null) {
+      throw new NoUserIdException("유저 ID가 없습니다. 로그인 해주세요");
+    }
+    userRepository.deleteUser(loinId);
   }
 
   @Override

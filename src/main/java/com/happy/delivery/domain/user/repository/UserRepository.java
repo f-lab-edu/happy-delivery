@@ -12,4 +12,6 @@ public interface UserRepository {
   public User findById(Long id);
 
   public User findByEmail(String email);
+
+  public User deleteUser(Long id);
 }
