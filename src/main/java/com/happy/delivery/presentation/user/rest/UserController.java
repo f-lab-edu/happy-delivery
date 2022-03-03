@@ -3,6 +3,7 @@ package com.happy.delivery.presentation.user.rest;
 import com.happy.delivery.application.user.UserService;
 import com.happy.delivery.application.user.result.UserAddressResult;
 import com.happy.delivery.application.user.result.UserResult;
+import com.happy.delivery.domain.exception.user.NoUserIdMatchedException;
 import com.happy.delivery.infra.util.SessionUtil;
 import com.happy.delivery.presentation.common.response.ApiResponse;
 import com.happy.delivery.presentation.user.request.AddressRequest;
@@ -119,7 +120,9 @@ public class UserController {
   @PatchMapping("/my-account/password")
   public ApiResponse updatePassword(@Valid @RequestBody PasswordUpdateRequest request,
       HttpSession httpSession) {
-
+    if (SessionUtil.getLoginId(httpSession) == null) {
+      throw new NoUserIdMatchedException("로그인이 필요한 서비스입니다.");
+    }
     UserResult userResult = userService.updatePassword(SessionUtil.getLoginId(httpSession),
         request.toCommand());
     return ApiResponse.success(userResult);
@@ -132,6 +135,9 @@ public class UserController {
   @PostMapping("/addresses")
   public ApiResponse saveAddress(@Valid @RequestBody AddressRequest address,
       HttpSession httpSession) {
+    if (SessionUtil.getLoginId(httpSession) == null) {
+      throw new NoUserIdMatchedException("로그인이 필요한 서비스입니다.");
+    }
     UserAddressResult userAddressResult = userService.saveAddress(
         address.toCommand(SessionUtil.getLoginId(httpSession)));
     if (userAddressResult != null) {
@@ -146,6 +152,9 @@ public class UserController {
   @ResponseStatus(code = HttpStatus.OK)
   @GetMapping("/addresses")
   public ApiResponse getListOfAllAddresses(HttpSession httpSession) {
+    if (SessionUtil.getLoginId(httpSession) == null) {
+      throw new NoUserIdMatchedException("로그인이 필요한 서비스입니다.");
+    }
     List<UserAddressResult> listOfAllAddresses = userService
         .getListOfAllAddresses(SessionUtil.getLoginId(httpSession));
     return ApiResponse.success(listOfAllAddresses);
@@ -157,7 +166,10 @@ public class UserController {
   @ResponseStatus(code = HttpStatus.CREATED)
   @PatchMapping("/addresses/{addressId}")
   public ApiResponse updateAddress(@PathVariable Long addressId,
-      @Valid @RequestBody AddressRequest addressRequest) {
+      @Valid @RequestBody AddressRequest addressRequest, HttpSession httpSession) {
+    if (SessionUtil.getLoginId(httpSession) == null) {
+      throw new NoUserIdMatchedException("로그인이 필요한 서비스입니다.");
+    }
     userService.updateAddress(addressId, addressRequest);
     return ApiResponse.success("UPDATING_ADDRESS_SUCCESS");
   }
@@ -167,7 +179,10 @@ public class UserController {
    */
   @ResponseStatus(code = HttpStatus.OK)
   @DeleteMapping("/addresses/{addressId}")
-  public ApiResponse deleteAddress(@PathVariable Long addressId) {
+  public ApiResponse deleteAddress(@PathVariable Long addressId, HttpSession httpSession) {
+    if (SessionUtil.getLoginId(httpSession) == null) {
+      throw new NoUserIdMatchedException("로그인이 필요한 서비스입니다.");
+    }
     UserAddressResult userAddressResult = userService.deleteAddress(addressId);
     return ApiResponse.success(userAddressResult);
   }
