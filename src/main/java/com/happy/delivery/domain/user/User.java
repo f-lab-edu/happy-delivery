@@ -34,6 +34,16 @@ public class User {
     this.phoneNumber = phoneNumber;
   }
 
+
+  /**
+   * 유저 정보 업데이트.
+   */
+  public void setMyAccountUpdate(String email, String name, String phoneNumber) {
+    this.email = email;
+    this.name = name;
+    this.phoneNumber = phoneNumber;
+  }
+
   /**
    * changePassword().
    * setter + encoder.
@@ -46,6 +56,7 @@ public class User {
    */
   public void changePassword(String changedPassword) {
     this.password = changedPassword;
+
   }
 
   public Long getId() {
@@ -71,6 +82,5 @@ public class User {
   public String getPhoneNumber() {
     return phoneNumber;
   }
-
 }
 

@@ -1,7 +1,7 @@
 package com.happy.delivery.presentation.user.handler;
 
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
-import com.happy.delivery.domain.exception.user.NoUserIdMatchedException;
+import com.happy.delivery.domain.exception.user.NoUserIdException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
 import com.happy.delivery.domain.exception.user.UserAddressNotExistedException;
 import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
@@ -56,12 +56,13 @@ public class UserExceptionHandler {
   }
 
   /**
-   * 로그인 id가 없는경우.
+   * 세션 아이디가 없을 경우.
    */
-  @ExceptionHandler(NoUserIdMatchedException.class)
-  public ApiResponse<?> noUserIdMatchedException(NoUserIdMatchedException ex) {
-    return ApiResponse.fail("USER_ID_IS_NOT_MATCHED", ex.getMessage());
+  @ExceptionHandler(NoUserIdException.class)
+  public ApiResponse<?> noUserIdException(NoUserIdException ex) {
+    return ApiResponse.fail("NO_USER_ID.", ex.getMessage());
   }
+
 
   /**
    * 저장된 주소가 없는 경우.
