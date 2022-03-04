@@ -7,7 +7,6 @@ import com.happy.delivery.application.user.command.SigninCommand;
 import com.happy.delivery.application.user.command.SignupCommand;
 import com.happy.delivery.application.user.result.UserAddressResult;
 import com.happy.delivery.application.user.result.UserResult;
-import com.happy.delivery.presentation.user.request.AddressRequest;
 import java.util.List;
 
 /**
@@ -15,23 +14,23 @@ import java.util.List;
  */
 public interface UserService {
 
-  public UserResult signup(SignupCommand signCommand);
+  UserResult signup(SignupCommand signCommand);
 
-  public UserResult signin(SigninCommand signinCommand);
+  UserResult signin(SigninCommand signinCommand);
 
-  public UserResult updateMyAccount(MyAccountCommand myAccountCommand);
+  UserResult updateMyAccount(MyAccountCommand myAccountCommand);
 
-  public void deleteMyAccount(Long loinid);
+  void deleteMyAccount(Long loinid);
 
-  public UserResult getMyAccount(Long loginId);
+  UserResult getMyAccount(Long loginId);
 
-  public UserResult updatePassword(Long id, PasswordUpdateCommand passwordUpdateCommand);
+  UserResult updatePassword(Long id, PasswordUpdateCommand passwordUpdateCommand);
 
-  public UserAddressResult saveAddress(AddressCommand address);
+  UserAddressResult saveAddress(AddressCommand address);
 
-  public List<UserAddressResult> getListOfAllAddresses(Long loginId);
+  List<UserAddressResult> getListOfAllAddresses(Long loginId);
 
-  public void updateAddress(Long addressId, AddressRequest addressRequest);
+  void updateAddress(AddressCommand addressCommand);
 
-  public UserAddressResult deleteAddress(Long addressId);
+  UserAddressResult deleteAddress(AddressCommand addressCommand);
 }

@@ -2,6 +2,7 @@ package com.happy.delivery.presentation.user.handler;
 
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
 import com.happy.delivery.domain.exception.user.NoUserIdException;
+import com.happy.delivery.domain.exception.user.NotAuthorizedException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
 import com.happy.delivery.domain.exception.user.UserAddressNotExistedException;
 import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
@@ -70,5 +71,13 @@ public class UserExceptionHandler {
   @ExceptionHandler(UserAddressNotExistedException.class)
   public ApiResponse<?> userAddressNotExistedException(UserAddressNotExistedException ex) {
     return ApiResponse.fail("USER_ADDRESS_NOT_EXISTED", ex.getMessage());
+  }
+
+  /**
+   * 권한이 없는 경우.
+   */
+  @ExceptionHandler(NotAuthorizedException.class)
+  public ApiResponse<?> notAuthorizedException(NotAuthorizedException ex) {
+    return ApiResponse.fail("NOT_AUTHORIZED", ex.getMessage());
   }
 }

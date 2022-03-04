@@ -1,6 +1,7 @@
 package com.happy.delivery.presentation.user.rest;
 
 import com.happy.delivery.application.user.UserService;
+import com.happy.delivery.application.user.command.AddressCommand;
 import com.happy.delivery.application.user.result.UserAddressResult;
 import com.happy.delivery.application.user.result.UserResult;
 import com.happy.delivery.domain.exception.user.NoUserIdException;
@@ -139,7 +140,7 @@ public class UserController {
       throw new NoUserIdException("로그인이 필요한 서비스입니다.");
     }
     UserAddressResult userAddressResult = userService.saveAddress(
-        address.toCommand(SessionUtil.getLoginId(httpSession)));
+        address.toCommand(null, SessionUtil.getLoginId(httpSession)));
     if (userAddressResult != null) {
       SessionUtil.setAddressId(httpSession, userAddressResult.getId());
     }
@@ -170,7 +171,8 @@ public class UserController {
     if (SessionUtil.getLoginId(httpSession) == null) {
       throw new NoUserIdException("로그인이 필요한 서비스입니다.");
     }
-    userService.updateAddress(addressId, addressRequest);
+    userService.updateAddress(
+        addressRequest.toCommand(addressId, SessionUtil.getLoginId(httpSession)));
     return ApiResponse.success("UPDATING_ADDRESS_SUCCESS");
   }
 
@@ -183,7 +185,8 @@ public class UserController {
     if (SessionUtil.getLoginId(httpSession) == null) {
       throw new NoUserIdException("로그인이 필요한 서비스입니다.");
     }
-    UserAddressResult userAddressResult = userService.deleteAddress(addressId);
+    UserAddressResult userAddressResult = userService.deleteAddress(
+            new AddressCommand(addressId, SessionUtil.getLoginId(httpSession), null, null));
     return ApiResponse.success(userAddressResult);
   }
 }

@@ -7,6 +7,8 @@ import org.springframework.lang.Nullable;
  */
 public class AddressCommand {
 
+  private Long addressId;
+
   private final Long userId;
 
   private final String addressCode;
@@ -17,10 +19,16 @@ public class AddressCommand {
   /**
    * AddressCommand Constructor.
    */
-  public AddressCommand(Long userId, String addressCode, @Nullable String addressDetail) {
+  public AddressCommand(Long addressId, Long userId, String addressCode,
+      @Nullable String addressDetail) {
+    this.addressId = addressId;
     this.userId = userId;
     this.addressCode = addressCode;
     this.addressDetail = addressDetail;
+  }
+
+  public Long getAddressId() {
+    return addressId;
   }
 
   public Long getUserId() {

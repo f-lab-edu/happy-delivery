@@ -9,6 +9,7 @@ import com.happy.delivery.application.user.result.UserAddressResult;
 import com.happy.delivery.application.user.result.UserResult;
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
 import com.happy.delivery.domain.exception.user.NoUserIdException;
+import com.happy.delivery.domain.exception.user.NotAuthorizedException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
 import com.happy.delivery.domain.exception.user.UserAddressNotExistedException;
 import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
@@ -17,9 +18,9 @@ import com.happy.delivery.domain.user.UserAddress;
 import com.happy.delivery.domain.user.repository.UserAddressRepository;
 import com.happy.delivery.domain.user.repository.UserRepository;
 import com.happy.delivery.infra.encoder.EncryptMapper;
-import com.happy.delivery.presentation.user.request.AddressRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -154,21 +155,39 @@ public class UserServiceV1 implements UserService {
   }
 
   @Override
-  public void updateAddress(Long addressId, AddressRequest addressRequest) {
-    UserAddress userAddress = userAddressRepository.findById(addressId);
-    if (userAddress == null) {
-      throw new UserAddressNotExistedException("존재하지 않는 주소입니다.");
-    }
-    userAddress.changeAddress(addressRequest.getAddressCode(), addressRequest.getAddressDetail());
+  public void updateAddress(AddressCommand addressCommand) {
+    UserAddress userAddress = userAddressRepository.findById(addressCommand.getAddressId());
+    checkEmailExistence(userAddress);
+    checkUserAuthority(addressCommand, userAddress);
+    userAddress.changeAddress(addressCommand.getAddressCode(), addressCommand.getAddressDetail());
     userAddressRepository.save(userAddress);
   }
 
   @Override
-  public UserAddressResult deleteAddress(Long addressId) {
-    UserAddress result = userAddressRepository.deleteById(addressId);
-    if (result == null) {
+  public UserAddressResult deleteAddress(AddressCommand addressCommand) {
+    UserAddress userAddress = userAddressRepository.findById(addressCommand.getAddressId());
+    checkEmailExistence(userAddress);
+    checkUserAuthority(addressCommand, userAddress);
+    UserAddress result = userAddressRepository.deleteById(addressCommand.getAddressId());
+    checkEmailExistence(result);
+    return UserAddressResult.fromUserAddress(result);
+  }
+
+  /**
+   * 주소 존재 여부 확인.
+   */
+  private void checkEmailExistence(UserAddress userAddress) {
+    if (userAddress == null) {
       throw new UserAddressNotExistedException("존재하지 않는 주소입니다.");
     }
-    return UserAddressResult.fromUserAddress(result);
+  }
+
+  /**
+   * 수정과 삭제 권한 처리.
+   */
+  private void checkUserAuthority(AddressCommand addressCommand, UserAddress userAddress) {
+    if (!Objects.equals(addressCommand.getUserId(), userAddress.getUserId())) {
+      throw new NotAuthorizedException("권한이 없습니다.");
+    }
   }
 }
