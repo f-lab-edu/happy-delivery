@@ -81,6 +81,9 @@ public class UserController {
   @GetMapping("/my-account")
   public ApiResponse<UserResult> getMyAccount(HttpSession httpSession) {
     Long userId = SessionUtil.getLoginId(httpSession);
+    if (userId == null) {
+      throw new NoUserIdException("유저 ID가 없습니다. 로그인 해주세요");
+    }
     UserResult myAccount = userService.getMyAccount(userId);
     return ApiResponse.success(myAccount);
   }
@@ -93,6 +96,9 @@ public class UserController {
   public ApiResponse<UserResult> updateMyAccount(@Valid @RequestBody
       MyAccountRequest myAccountRequest, HttpSession httpSession) {
     Long userId = SessionUtil.getLoginId(httpSession);
+    if (userId == null) {
+      throw new NoUserIdException("유저 ID가 없습니다. 로그인 해주세요");
+    }
     MyAccountRequest myAccountInfo = new MyAccountRequest(
         userId,
         myAccountRequest.getEmail(),
@@ -109,7 +115,11 @@ public class UserController {
   @DeleteMapping("my-account")
   public ApiResponse<UserResult> deleteMyAccount(@Valid HttpSession httpSession) {
     Long userId = SessionUtil.getLoginId(httpSession);
+    if (userId == null) {
+      throw new NoUserIdException("유저 ID가 없습니다. 로그인 해주세요");
+    }
     userService.deleteMyAccount(userId);
+    SessionUtil.clear(httpSession);
     return ApiResponse.success("DELETE_MY_ACCOUNT");
   }
 
