@@ -1,6 +1,7 @@
 package com.happy.delivery.presentation.user.rest;
 
 import com.happy.delivery.application.user.UserService;
+import com.happy.delivery.application.user.command.AddressCommand;
 import com.happy.delivery.application.user.result.UserAddressResult;
 import com.happy.delivery.application.user.result.UserResult;
 import com.happy.delivery.domain.exception.user.NoUserIdException;
@@ -143,7 +144,7 @@ public class UserController {
     Long userId = SessionUtil.getLoginId(httpSession);
     sessionIsNotExist(userId);
     UserAddressResult userAddressResult = userService.saveAddress(
-        address.toCommand(userId));
+        address.toCommand(null, SessionUtil.getLoginId(httpSession)));
     if (userAddressResult != null) {
       SessionUtil.setAddressId(httpSession, userAddressResult.getId());
     }
@@ -172,7 +173,7 @@ public class UserController {
       @Valid @RequestBody AddressRequest addressRequest, HttpSession httpSession) {
     Long userId = SessionUtil.getLoginId(httpSession);
     sessionIsNotExist(userId);
-    userService.updateAddress(addressId, addressRequest);
+    userService.updateAddress(addressRequest.toCommand(addressId,userId));
     return ApiResponse.success("UPDATING_ADDRESS_SUCCESS");
   }
 
@@ -184,7 +185,9 @@ public class UserController {
   public ApiResponse deleteAddress(@PathVariable Long addressId, HttpSession httpSession) {
     Long userId = SessionUtil.getLoginId(httpSession);
     sessionIsNotExist(userId);
-    UserAddressResult userAddressResult = userService.deleteAddress(addressId);
+    UserAddressResult userAddressResult = userService.deleteAddress(
+        new AddressCommand(addressId, userId, null, null)
+    );
     return ApiResponse.success(userAddressResult);
   }
 

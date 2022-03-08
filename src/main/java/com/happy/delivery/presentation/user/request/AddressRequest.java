@@ -10,6 +10,10 @@ import org.springframework.lang.Nullable;
  */
 public class AddressRequest {
 
+  Long addressId;
+
+  Long userId;
+
   //우편주소
   @NotBlank(message = "주소를 입력해주세요.")
   @Pattern(regexp = "^[가-힣0-9\\s]*$", message = "형식이 맞지 않습니다. 한글과 숫자만 입력해주세요.")
@@ -31,12 +35,21 @@ public class AddressRequest {
   /**
    * AddressRequest --> AddressCommand.
    */
-  public AddressCommand toCommand(Long userId) {
+  public AddressCommand toCommand(Long addressId, Long userId) {
     return new AddressCommand(
+        addressId,
         userId,
         this.addressCode,
         this.addressDetail
     );
+  }
+
+  public Long getAddressId() {
+    return addressId;
+  }
+
+  public Long getUserId() {
+    return userId;
   }
 
   public String getAddressCode() {
