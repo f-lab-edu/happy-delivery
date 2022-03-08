@@ -78,9 +78,11 @@ public class UserController {
   /**
    * myAccount view.
    */
+  @ResponseStatus(code = HttpStatus.OK)
   @GetMapping("/my-account")
   public ApiResponse<UserResult> getMyAccount(HttpSession httpSession) {
     Long userId = SessionUtil.getLoginId(httpSession);
+    sessionIsNotExist(userId);
     UserResult myAccount = userService.getMyAccount(userId);
     return ApiResponse.success(myAccount);
   }
@@ -93,6 +95,7 @@ public class UserController {
   public ApiResponse<UserResult> updateMyAccount(@Valid @RequestBody
       MyAccountRequest myAccountRequest, HttpSession httpSession) {
     Long userId = SessionUtil.getLoginId(httpSession);
+    sessionIsNotExist(userId);
     MyAccountRequest myAccountInfo = new MyAccountRequest(
         userId,
         myAccountRequest.getEmail(),
@@ -106,10 +109,13 @@ public class UserController {
   /**
    * myAccount delete.
    */
+  @ResponseStatus(code = HttpStatus.OK)
   @DeleteMapping("my-account")
   public ApiResponse<UserResult> deleteMyAccount(@Valid HttpSession httpSession) {
     Long userId = SessionUtil.getLoginId(httpSession);
+    sessionIsNotExist(userId);
     userService.deleteMyAccount(userId);
+    SessionUtil.clear(httpSession);
     return ApiResponse.success("DELETE_MY_ACCOUNT");
   }
 
@@ -120,10 +126,9 @@ public class UserController {
   @PatchMapping("/my-account/password")
   public ApiResponse updatePassword(@Valid @RequestBody PasswordUpdateRequest request,
       HttpSession httpSession) {
-    if (SessionUtil.getLoginId(httpSession) == null) {
-      throw new NoUserIdException("로그인이 필요한 서비스입니다.");
-    }
-    UserResult userResult = userService.updatePassword(SessionUtil.getLoginId(httpSession),
+    Long userId = SessionUtil.getLoginId(httpSession);
+    sessionIsNotExist(userId);
+    UserResult userResult = userService.updatePassword(userId,
         request.toCommand());
     return ApiResponse.success(userResult);
   }
@@ -135,11 +140,10 @@ public class UserController {
   @PostMapping("/addresses")
   public ApiResponse saveAddress(@Valid @RequestBody AddressRequest address,
       HttpSession httpSession) {
-    if (SessionUtil.getLoginId(httpSession) == null) {
-      throw new NoUserIdException("로그인이 필요한 서비스입니다.");
-    }
+    Long userId = SessionUtil.getLoginId(httpSession);
+    sessionIsNotExist(userId);
     UserAddressResult userAddressResult = userService.saveAddress(
-        address.toCommand(SessionUtil.getLoginId(httpSession)));
+        address.toCommand(userId));
     if (userAddressResult != null) {
       SessionUtil.setAddressId(httpSession, userAddressResult.getId());
     }
@@ -152,11 +156,10 @@ public class UserController {
   @ResponseStatus(code = HttpStatus.OK)
   @GetMapping("/addresses")
   public ApiResponse getListOfAllAddresses(HttpSession httpSession) {
-    if (SessionUtil.getLoginId(httpSession) == null) {
-      throw new NoUserIdException("로그인이 필요한 서비스입니다.");
-    }
+    Long userId = SessionUtil.getLoginId(httpSession);
+    sessionIsNotExist(userId);
     List<UserAddressResult> listOfAllAddresses = userService
-        .getListOfAllAddresses(SessionUtil.getLoginId(httpSession));
+        .getListOfAllAddresses(userId);
     return ApiResponse.success(listOfAllAddresses);
   }
 
@@ -167,9 +170,8 @@ public class UserController {
   @PatchMapping("/addresses/{addressId}")
   public ApiResponse updateAddress(@PathVariable Long addressId,
       @Valid @RequestBody AddressRequest addressRequest, HttpSession httpSession) {
-    if (SessionUtil.getLoginId(httpSession) == null) {
-      throw new NoUserIdException("로그인이 필요한 서비스입니다.");
-    }
+    Long userId = SessionUtil.getLoginId(httpSession);
+    sessionIsNotExist(userId);
     userService.updateAddress(addressId, addressRequest);
     return ApiResponse.success("UPDATING_ADDRESS_SUCCESS");
   }
@@ -180,10 +182,15 @@ public class UserController {
   @ResponseStatus(code = HttpStatus.OK)
   @DeleteMapping("/addresses/{addressId}")
   public ApiResponse deleteAddress(@PathVariable Long addressId, HttpSession httpSession) {
-    if (SessionUtil.getLoginId(httpSession) == null) {
-      throw new NoUserIdException("로그인이 필요한 서비스입니다.");
-    }
+    Long userId = SessionUtil.getLoginId(httpSession);
+    sessionIsNotExist(userId);
     UserAddressResult userAddressResult = userService.deleteAddress(addressId);
     return ApiResponse.success(userAddressResult);
+  }
+
+  private void sessionIsNotExist(Long userId) {
+    if (userId == null) {
+      throw new NoUserIdException("로그인이 필요한 서비스입니다.");
+    }
   }
 }
