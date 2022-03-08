@@ -80,10 +80,6 @@ public class UserServiceV1 implements UserService {
 
   @Override
   public UserResult updateMyAccount(MyAccountCommand myAccountCommand) {
-    if (myAccountCommand.getId() == null) {
-      throw new NoUserIdException("유저 ID가 없습니다. 로그인 해주세요");
-    }
-
     // 경우 1. user1, user2 생성, user1로그인 -> user2의 이메일로 변경 ; (변경안됨)
     // 경우 2. user1, user2 생성, user1로그인 -> user1의 이메일로 변경(그대로) 이름과 폰 번호만 변경 ; (변경됨)
     // 경우 3. user1, user2 생성, user1로그인 -> user3의 이메일 신규 생성 ; (변경됨)
@@ -101,17 +97,11 @@ public class UserServiceV1 implements UserService {
 
   @Override
   public void deleteMyAccount(Long loinId) {
-    if (loinId == null) {
-      throw new NoUserIdException("유저 ID가 없습니다. 로그인 해주세요");
-    }
     userRepository.deleteUser(loinId);
   }
 
   @Override
   public UserResult getMyAccount(Long loginId) {
-    if (loginId == null) {
-      throw new NoUserIdException("유저 ID가 없습니다. 로그인 해주세요");
-    }
     User user = userRepository.findById(loginId);
     return UserResult.fromUser(user);
   }
