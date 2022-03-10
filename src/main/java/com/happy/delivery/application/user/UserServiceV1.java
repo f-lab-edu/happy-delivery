@@ -17,6 +17,7 @@ import com.happy.delivery.domain.user.UserAddress;
 import com.happy.delivery.domain.user.repository.UserAddressRepository;
 import com.happy.delivery.domain.user.repository.UserRepository;
 import com.happy.delivery.infra.encoder.EncryptMapper;
+import com.happy.delivery.infra.mybatis.UserMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,7 +30,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceV1 implements UserService {
 
-  private final UserRepository userRepository;
+  private final UserMapper userRepository;
   private final UserAddressRepository userAddressRepository;
   private final EncryptMapper encryptMapper;
 
@@ -37,7 +38,7 @@ public class UserServiceV1 implements UserService {
    * UserServiceV1 Constructor.
    */
   @Autowired
-  public UserServiceV1(UserRepository userRepository, UserAddressRepository userAddressRepository,
+  public UserServiceV1(UserMapper userRepository, UserAddressRepository userAddressRepository,
       EncryptMapper encryptMapper) {
     this.userRepository = userRepository;
     this.userAddressRepository = userAddressRepository;

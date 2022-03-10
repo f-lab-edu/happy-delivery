@@ -12,5 +12,4 @@ public interface UserMapper {
     public User findByEmail(String email);
 
     public User deleteUser(Long id);
-
 }
