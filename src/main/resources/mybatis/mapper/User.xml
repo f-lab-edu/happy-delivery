@@ -5,9 +5,8 @@
 
 <mapper namespace="com.happy.delivery.infra.mybatis.UserMapper">
   <insert id="save"  parameterType="com.happy.delivery.domain.user.User">
-    INSERT INTO User
-        (id, email, name, phoneNumber)
-        VALUES (#{id}, #{email}, #{name}, #{phoneNumber})
+    INSERT INTO User (id, email, name, password, phoneNumber)
+     VALUES (#{id}, #{email}, #{name}, #{password}, #{phoneNumber})
   </insert>
 
   <select id="findByEmail"  resultType="com.happy.delivery.domain.user.User">
