@@ -188,7 +188,7 @@ public class UserController {
     UserAddressResult userAddressResult = userService.deleteAddress(
         new AddressCommand(addressId, userId, null, null)
     );
-    return ApiResponse.success(userAddressResult);
+     return ApiResponse.success(userAddressResult);
   }
 
   private void sessionIsNotExist(Long userId) {

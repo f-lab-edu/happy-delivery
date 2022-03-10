@@ -13,6 +13,9 @@ public class User {
   private String name;
   private String phoneNumber;
 
+  public User() {
+  }
+
   /**
    * 회원가입 할 때 사용.
    */

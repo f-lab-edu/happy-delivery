@@ -17,6 +17,7 @@ import com.happy.delivery.domain.user.UserAddress;
 import com.happy.delivery.domain.user.repository.UserAddressRepository;
 import com.happy.delivery.domain.user.repository.UserRepository;
 import com.happy.delivery.infra.encoder.EncryptMapper;
+import com.happy.delivery.infra.mybatis.UserMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,7 +30,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceV1 implements UserService {
 
-  private final UserRepository userRepository;
+  private final UserMapper userRepository;
   private final UserAddressRepository userAddressRepository;
   private final EncryptMapper encryptMapper;
 
@@ -37,7 +38,7 @@ public class UserServiceV1 implements UserService {
    * UserServiceV1 Constructor.
    */
   @Autowired
-  public UserServiceV1(UserRepository userRepository, UserAddressRepository userAddressRepository,
+  public UserServiceV1(UserMapper userRepository, UserAddressRepository userAddressRepository,
       EncryptMapper encryptMapper) {
     this.userRepository = userRepository;
     this.userAddressRepository = userAddressRepository;
@@ -51,16 +52,18 @@ public class UserServiceV1 implements UserService {
     if (userRepository.findByEmail(signCommand.getEmail()) != null) {
       throw new UserAlreadyExistedException("이미 존재하는 계정 입니다.");
     }
-    // password를 hash 암호화하여 repository에 저장
-    User result = userRepository.save(
-        new User(
-            signCommand.getEmail(),
-            encryptMapper.encoder(signCommand.getPassword()),
-            // 패스워드 암호화 로직
-            signCommand.getName(),
-            signCommand.getPhoneNumber()));
-    // 저장했다면 dto를 리턴하여 종료
-    return UserResult.fromUser(result);
+
+    User userResult = new User(
+        signCommand.getEmail(),
+        encryptMapper.encoder(signCommand.getPassword()),
+        // 패스워드 암호화 로직
+        signCommand.getName(),
+        signCommand.getPhoneNumber()
+    );
+    System.out.println(userResult.getPassword());
+
+    userRepository.save(userResult);
+    return UserResult.fromUser(userResult);
   }
 
   @Override
@@ -90,8 +93,8 @@ public class UserServiceV1 implements UserService {
     }
     user.setMyAccountUpdate(myAccountCommand.getEmail(), myAccountCommand.getName(),
         myAccountCommand.getPhoneNumber());
-    User userSave = userRepository.save(user);
-    return UserResult.fromUser(userSave);
+    userRepository.save(user);
+    return UserResult.fromUser(user);
   }
 
   @Override
@@ -119,8 +122,8 @@ public class UserServiceV1 implements UserService {
       throw new PasswordIsNotMatchException("현재 패스워드가 일치하지 않습니다.");
     }
     user.changePassword(encryptMapper.encoder(passwordUpdateCommand.getChangedPassword()));
-    User result = userRepository.save(user);
-    return UserResult.fromUser(result);
+    userRepository.save(user);
+    return UserResult.fromUser(user);
   }
 
   @Override

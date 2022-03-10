@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * DeliveryApplication.
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.happy.delivery")
 public class DeliveryApplication {
 
   public static void main(String[] args) {

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.happy.delivery.infra.mybatis.UserMapper">
+  <insert id="save"  parameterType="com.happy.delivery.domain.user.User">
+    INSERT INTO User (id, email, name, password, phoneNumber)
+     VALUES (#{id}, #{email}, #{name}, #{password}, #{phoneNumber})
+  </insert>
+
+  <select id="findByEmail"  resultType="com.happy.delivery.domain.user.User">
+      SELECT email FROM User WHERE email = #{email}
+    </select>
+
+</mapper>
