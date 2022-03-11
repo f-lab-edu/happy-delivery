@@ -10,7 +10,6 @@
   </insert>
 
   <select id="findByEmail"  resultType="com.happy.delivery.domain.user.User">
-      SELECT email FROM User WHERE email = #{email}
-    </select>
-
+      SELECT * FROM User WHERE email = #{email}
+  </select>
 </mapper>

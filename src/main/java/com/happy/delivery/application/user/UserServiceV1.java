@@ -14,9 +14,8 @@ import com.happy.delivery.domain.exception.user.UserAddressNotExistedException;
 import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
 import com.happy.delivery.domain.user.User;
 import com.happy.delivery.domain.user.UserAddress;
-import com.happy.delivery.domain.user.repository.UserAddressRepository;
-import com.happy.delivery.domain.user.repository.UserRepository;
 import com.happy.delivery.infra.encoder.EncryptMapper;
+import com.happy.delivery.infra.mybatis.UserAddressMapper;
 import com.happy.delivery.infra.mybatis.UserMapper;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,14 +30,14 @@ import org.springframework.stereotype.Service;
 public class UserServiceV1 implements UserService {
 
   private final UserMapper userRepository;
-  private final UserAddressRepository userAddressRepository;
+  private final UserAddressMapper userAddressRepository;
   private final EncryptMapper encryptMapper;
 
   /**
    * UserServiceV1 Constructor.
    */
   @Autowired
-  public UserServiceV1(UserMapper userRepository, UserAddressRepository userAddressRepository,
+  public UserServiceV1(UserMapper userRepository, UserAddressMapper userAddressRepository,
       EncryptMapper encryptMapper) {
     this.userRepository = userRepository;
     this.userAddressRepository = userAddressRepository;
@@ -60,7 +59,6 @@ public class UserServiceV1 implements UserService {
         signCommand.getName(),
         signCommand.getPhoneNumber()
     );
-    System.out.println(userResult.getPassword());
 
     userRepository.save(userResult);
     return UserResult.fromUser(userResult);
@@ -128,12 +126,12 @@ public class UserServiceV1 implements UserService {
 
   @Override
   public UserAddressResult saveAddress(AddressCommand addressCommand) {
-    UserAddress result = userAddressRepository.save(
-        new UserAddress(
-            addressCommand.getUserId(),
-            addressCommand.getAddressCode(),
-            addressCommand.getAddressDetail()));
-    return UserAddressResult.fromUserAddress(result);
+    UserAddress userAddress = new UserAddress(
+        addressCommand.getUserId(),
+        addressCommand.getAddressCode(),
+        addressCommand.getAddressDetail());
+    userAddressRepository.save(userAddress);
+    return UserAddressResult.fromUserAddress(userAddress);
   }
 
   @Override
@@ -152,7 +150,7 @@ public class UserServiceV1 implements UserService {
     checkEmailExistence(userAddress);
     checkUserAuthority(addressCommand, userAddress);
     userAddress.changeAddress(addressCommand.getAddressCode(), addressCommand.getAddressDetail());
-    userAddressRepository.save(userAddress);
+    userAddressRepository.update(userAddress);
   }
 
   @Override
@@ -160,9 +158,8 @@ public class UserServiceV1 implements UserService {
     UserAddress userAddress = userAddressRepository.findById(addressCommand.getAddressId());
     checkEmailExistence(userAddress);
     checkUserAuthority(addressCommand, userAddress);
-    UserAddress result = userAddressRepository.deleteById(addressCommand.getAddressId());
-    checkEmailExistence(result);
-    return UserAddressResult.fromUserAddress(result);
+    userAddressRepository.deleteById(addressCommand.getAddressId());
+    return UserAddressResult.fromUserAddress(userAddress);
   }
 
   /**
