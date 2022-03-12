@@ -12,21 +12,28 @@
 
   <update id="update" parameterType="com.happy.delivery.domain.user.UserAddress">
     UPDATE user_addresses
-    SET addressCode = #{addressCode}, addressDetail = #{addressDetail}
+    SET addressCode   = #{addressCode},
+        addressDetail = #{addressDetail}
     WHERE id = #{id};
   </update>
 
   <select id="findById" parameterType="Long"
     resultType="com.happy.delivery.domain.user.UserAddress">
-    SELECT * FROM user_addresses WHERE id = #{id}
+    SELECT *
+    FROM user_addresses
+    WHERE id = #{id}
   </select>
 
   <select id="findAllByUserId" resultType="com.happy.delivery.domain.user.UserAddress">
-    SELECT * FROM user_addresses WHERE userId = #{userId}
+    SELECT *
+    FROM user_addresses
+    WHERE userId = #{userId}
   </select>
 
   <delete id="deleteById" parameterType="Long">
-    DELETE FROM user_addresses WHERE id = #{id}
+    DELETE
+    FROM user_addresses
+    WHERE id = #{id}
   </delete>
 
 </mapper>
