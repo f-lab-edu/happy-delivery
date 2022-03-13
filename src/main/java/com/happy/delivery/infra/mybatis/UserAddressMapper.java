@@ -10,13 +10,13 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserAddressMapper {
 
-  public void save(UserAddress userAddress);
+  void insert(UserAddress userAddress);
 
-  public void update(UserAddress userAddress);
+  void update(UserAddress userAddress);
 
-  public UserAddress findById(Long id);
+  UserAddress findById(Long id);
 
-  public List<UserAddress> findAllByUserId(Long userId);
+  List<UserAddress> findAllByUserId(Long userId);
 
-  public void deleteById(Long id);
+  void deleteById(Long id);
 }

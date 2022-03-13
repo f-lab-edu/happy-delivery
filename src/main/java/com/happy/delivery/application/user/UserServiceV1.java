@@ -14,8 +14,8 @@ import com.happy.delivery.domain.exception.user.UserAddressNotExistedException;
 import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
 import com.happy.delivery.domain.user.User;
 import com.happy.delivery.domain.user.UserAddress;
+import com.happy.delivery.domain.user.repository.UserAddressRepository;
 import com.happy.delivery.infra.encoder.EncryptMapper;
-import com.happy.delivery.infra.mybatis.UserAddressMapper;
 import com.happy.delivery.infra.mybatis.UserMapper;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,14 +30,14 @@ import org.springframework.stereotype.Service;
 public class UserServiceV1 implements UserService {
 
   private final UserMapper userRepository;
-  private final UserAddressMapper userAddressRepository;
+  private final UserAddressRepository userAddressRepository;
   private final EncryptMapper encryptMapper;
 
   /**
    * UserServiceV1 Constructor.
    */
   @Autowired
-  public UserServiceV1(UserMapper userRepository, UserAddressMapper userAddressRepository,
+  public UserServiceV1(UserMapper userRepository, UserAddressRepository userAddressRepository,
       EncryptMapper encryptMapper) {
     this.userRepository = userRepository;
     this.userAddressRepository = userAddressRepository;
@@ -107,11 +107,8 @@ public class UserServiceV1 implements UserService {
   }
 
   /**
-   * 비밀번호 변경
-   * 1) 변경 전 비밀번호 일치여부 검사.
-   * 2) 바꾸려는 비밀번호 암호화.
-   * 3) User 비밀번호값 바꾸기 : changePassword
-   * 4) repository 저장.
+   * 비밀번호 변경 1) 변경 전 비밀번호 일치여부 검사. 2) 바꾸려는 비밀번호 암호화. 3) User 비밀번호값 바꾸기 : changePassword 4)
+   * repository 저장.
    */
   @Override
   public UserResult updatePassword(Long id, PasswordUpdateCommand passwordUpdateCommand) {
@@ -150,7 +147,7 @@ public class UserServiceV1 implements UserService {
     checkEmailExistence(userAddress);
     checkUserAuthority(addressCommand, userAddress);
     userAddress.changeAddress(addressCommand.getAddressCode(), addressCommand.getAddressDetail());
-    userAddressRepository.update(userAddress);
+    userAddressRepository.save(userAddress);
   }
 
   @Override

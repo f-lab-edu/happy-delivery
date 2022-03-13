@@ -5,7 +5,7 @@
 
 <mapper namespace="com.happy.delivery.infra.mybatis.UserAddressMapper">
 
-  <insert id="save" parameterType="com.happy.delivery.domain.user.UserAddress">
+  <insert id="insert" parameterType="com.happy.delivery.domain.user.UserAddress">
     INSERT INTO user_addresses (userId, addressCode, addressDetail)
     VALUES (#{userId}, #{addressCode}, #{addressDetail})
   </insert>
