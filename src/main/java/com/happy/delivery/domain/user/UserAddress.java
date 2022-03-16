@@ -1,6 +1,5 @@
 package com.happy.delivery.domain.user;
 
-import java.time.Instant;
 import org.springframework.lang.Nullable;
 
 /**
@@ -9,11 +8,13 @@ import org.springframework.lang.Nullable;
 public class UserAddress {
 
   private Long id;
-  private final Long userId;
+  private Long userId;
   private String addressCode;
   @Nullable
   private String addressDetail;
-  private Instant date;
+
+  public UserAddress() {
+  }
 
   /**
    * UserAddress savePassword Constructor.
@@ -22,17 +23,6 @@ public class UserAddress {
     this.userId = userId;
     this.addressCode = addressCode;
     this.addressDetail = addressDetail;
-  }
-
-  /**
-   * User not savePassword Constructor.
-   */
-  public UserAddress(Long id, Long userId, String addressCode, String addressDetail, Instant date) {
-    this.id = id;
-    this.userId = userId;
-    this.addressCode = addressCode;
-    this.addressDetail = addressDetail;
-    this.date = date;
   }
 
   /**
@@ -64,10 +54,6 @@ public class UserAddress {
     return addressDetail;
   }
 
-  public Instant getDate() {
-    return date;
-  }
-
   @Override
   public String toString() {
     return "UserAddress{" +
@@ -75,7 +61,6 @@ public class UserAddress {
         ", userId=" + userId +
         ", addressCode='" + addressCode + '\'' +
         ", addressDetail='" + addressDetail + '\'' +
-        ", date=" + date +
         '}';
   }
 }
