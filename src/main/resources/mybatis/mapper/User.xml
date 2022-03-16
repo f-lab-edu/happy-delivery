@@ -20,5 +20,4 @@
   <delete id="deleteUser">
     DELETE FROM User WHERE id = #{id}
   </delete>
-
 </mapper>

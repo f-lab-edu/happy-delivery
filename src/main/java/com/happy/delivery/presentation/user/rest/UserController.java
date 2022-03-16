@@ -173,7 +173,7 @@ public class UserController {
       @Valid @RequestBody AddressRequest addressRequest, HttpSession httpSession) {
     Long userId = SessionUtil.getLoginId(httpSession);
     sessionIsNotExist(userId);
-    userService.updateAddress(addressRequest.toCommand(addressId,userId));
+    userService.updateAddress(addressRequest.toCommand(addressId, userId));
     return ApiResponse.success("UPDATING_ADDRESS_SUCCESS");
   }
 
@@ -188,7 +188,7 @@ public class UserController {
     UserAddressResult userAddressResult = userService.deleteAddress(
         new AddressCommand(addressId, userId, null, null)
     );
-     return ApiResponse.success(userAddressResult);
+    return ApiResponse.success(userAddressResult);
   }
 
   private void sessionIsNotExist(Long userId) {
