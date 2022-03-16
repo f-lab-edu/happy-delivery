@@ -60,8 +60,9 @@ public class UserServiceV1 implements UserService {
         signCommand.getName(),
         signCommand.getPhoneNumber()
     );
-    userRepository.save(userResult);
-    return UserResult.fromUser(userResult);
+    userRepository.insert(userResult);
+    User byEmail = userRepository.findByEmail(signCommand.getEmail());
+    return UserResult.fromUser(byEmail);
   }
 
   @Override
@@ -94,7 +95,7 @@ public class UserServiceV1 implements UserService {
     }
     user.setMyAccountUpdate(myAccountCommand.getEmail(), myAccountCommand.getName(),
         myAccountCommand.getPhoneNumber());
-    userRepository.save(user);
+    userRepository.insert(user);
     return UserResult.fromUser(user);
   }
 
@@ -123,7 +124,7 @@ public class UserServiceV1 implements UserService {
       throw new PasswordIsNotMatchException("현재 패스워드가 일치하지 않습니다.");
     }
     user.changePassword(encryptMapper.encoder(passwordUpdateCommand.getChangedPassword()));
-    userRepository.save(user);
+    userRepository.insert(user);
     return UserResult.fromUser(user);
   }
 

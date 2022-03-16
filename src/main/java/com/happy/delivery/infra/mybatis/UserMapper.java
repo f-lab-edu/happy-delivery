@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserMapper {
-    public void save(User user);
+    public void insert(User user);
 
     public User findById(Long id);
 
