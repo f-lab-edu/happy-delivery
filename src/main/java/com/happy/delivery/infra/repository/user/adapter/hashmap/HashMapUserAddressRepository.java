@@ -1,4 +1,4 @@
-package com.happy.delivery.infra.repository.user;
+package com.happy.delivery.infra.repository.user.adapter.hashmap;
 
 import com.happy.delivery.domain.user.UserAddress;
 import com.happy.delivery.domain.user.repository.UserAddressRepository;

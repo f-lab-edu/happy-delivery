@@ -1,9 +1,12 @@
-package com.happy.delivery.infra;
+package com.happy.delivery.infra.repository.user.adapter;
 
 import com.happy.delivery.domain.user.User;
 import com.happy.delivery.domain.user.repository.UserRepository;
 import com.happy.delivery.infra.mybatis.UserMapper;
 
+/**
+ * UserRepositoryAdapter.
+ */
 public class UserRepositoryAdapter implements UserRepository {
 
   private final UserMapper userMapper;
@@ -14,7 +17,10 @@ public class UserRepositoryAdapter implements UserRepository {
 
   @Override
   public void insert(User user) {
-    userMapper.insert(user);
+    if (user.getId() == null || user.getId() <= 0L) {
+      userMapper.insert(user);
+    }
+    userMapper.update(user);
   }
 
   @Override

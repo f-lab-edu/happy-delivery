@@ -61,8 +61,7 @@ public class UserServiceV1 implements UserService {
         signCommand.getPhoneNumber()
     );
     userRepository.insert(userResult);
-    User byEmail = userRepository.findByEmail(signCommand.getEmail());
-    return UserResult.fromUser(byEmail);
+    return UserResult.fromUser(userResult);
   }
 
   @Override
@@ -90,7 +89,7 @@ public class UserServiceV1 implements UserService {
     if (byEmail != null && !myAccountCommand.getEmail().equals(user.getEmail())) {
       throw new UserAlreadyExistedException("이미 존재하는 계정 입니다.");
     }
-    if(user.getId().equals(myAccountCommand.getId())){
+    if (user.getId().equals(myAccountCommand.getId())) {
       userRepository.deleteUser(user.getId());
     }
     user.setMyAccountUpdate(myAccountCommand.getEmail(), myAccountCommand.getName(),
@@ -111,11 +110,8 @@ public class UserServiceV1 implements UserService {
   }
 
   /**
-   * 비밀번호 변경
-   * 1) 변경 전 비밀번호 일치여부 검사.
-   * 2) 바꾸려는 비밀번호 암호화.
-   * 3) User 비밀번호값 바꾸기 : changePassword
-   * 4) repository 저장.
+   * 비밀번호 변경 1) 변경 전 비밀번호 일치여부 검사. 2) 바꾸려는 비밀번호 암호화. 3) User 비밀번호값 바꾸기 : changePassword 4)
+   * repository 저장.
    */
   @Override
   public UserResult updatePassword(Long id, PasswordUpdateCommand passwordUpdateCommand) {
