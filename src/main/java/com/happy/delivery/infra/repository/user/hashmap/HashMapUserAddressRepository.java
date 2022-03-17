@@ -19,7 +19,7 @@ public class HashMapUserAddressRepository implements UserAddressRepository {
   private final AtomicLong id = new AtomicLong();
 
   @Override
-  public void save(UserAddress userAddress) {
+  public UserAddress save(UserAddress userAddress) {
     if ((userAddress.getId() == null) || (userAddress.getId() <= 0L)) {
       Long addressId = id.incrementAndGet();
       userAddress.setId(addressId);
@@ -27,6 +27,7 @@ public class HashMapUserAddressRepository implements UserAddressRepository {
     } else {
       map.put(userAddress.getId(), userAddress);
     }
+    return userAddress;
   }
 
   @Override
@@ -44,6 +45,6 @@ public class HashMapUserAddressRepository implements UserAddressRepository {
 
   @Override
   public void deleteById(Long id) {
-    UserAddress userAddress = map.remove(id);
+    map.remove(id);
   }
 }

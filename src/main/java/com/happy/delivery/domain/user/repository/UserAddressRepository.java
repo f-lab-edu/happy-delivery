@@ -8,7 +8,7 @@ import java.util.List;
  */
 public interface UserAddressRepository {
 
-  void save(UserAddress userAddress);
+  UserAddress save(UserAddress userAddress);
 
   UserAddress findById(Long id);
 

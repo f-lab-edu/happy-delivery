@@ -30,7 +30,7 @@ public interface UserService {
 
   List<UserAddressResult> getListOfAllAddresses(Long loginId);
 
-  void updateAddress(AddressCommand addressCommand);
+  UserAddressResult updateAddress(AddressCommand addressCommand);
 
-  UserAddressResult deleteAddress(AddressCommand addressCommand);
+  void deleteAddress(AddressCommand addressCommand);
 }
