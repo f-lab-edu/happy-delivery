@@ -12,18 +12,15 @@ public class UserAddressResult {
   private Long userId;
   private String addressCode;
   private String addressDetail;
-  private Instant date;
 
   /**
    * UserAddressResult constructor.
    */
-  public UserAddressResult(Long id, Long userId, String addressCode, String addressDetail,
-      Instant date) {
+  public UserAddressResult(Long id, Long userId, String addressCode, String addressDetail) {
     this.id = id;
     this.userId = userId;
     this.addressCode = addressCode;
     this.addressDetail = addressDetail;
-    this.date = date;
   }
 
   /**
@@ -34,8 +31,7 @@ public class UserAddressResult {
         userAddress.getId(),
         userAddress.getUserId(),
         userAddress.getAddressCode(),
-        userAddress.getAddressDetail(),
-        userAddress.getDate());
+        userAddress.getAddressDetail());
   }
 
   public Long getId() {
@@ -54,10 +50,6 @@ public class UserAddressResult {
     return addressDetail;
   }
 
-  public Instant getDate() {
-    return date;
-  }
-
   @Override
   public String toString() {
     return "UserAddressResult{" +
@@ -65,7 +57,6 @@ public class UserAddressResult {
         ", userId=" + userId +
         ", addressCode='" + addressCode + '\'' +
         ", addressDetail='" + addressDetail + '\'' +
-        ", date=" + date +
         '}';
   }
 }

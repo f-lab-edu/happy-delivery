@@ -12,5 +12,4 @@
   <select id="findByEmail"  resultType="com.happy.delivery.domain.user.User">
     SELECT * FROM users WHERE email = #{email}
   </select>
-
 </mapper>
