@@ -127,8 +127,7 @@ public class UserServiceV1 implements UserService {
         addressCommand.getUserId(),
         addressCommand.getAddressCode(),
         addressCommand.getAddressDetail());
-    UserAddress result = userAddressRepository.save(userAddress);
-    return UserAddressResult.fromUserAddress(result);
+    return UserAddressResult.fromUserAddress(userAddressRepository.save(userAddress));
   }
 
   @Override
@@ -147,8 +146,7 @@ public class UserServiceV1 implements UserService {
     checkEmailExistence(userAddress);
     checkUserAuthority(addressCommand, userAddress);
     userAddress.changeAddress(addressCommand.getAddressCode(), addressCommand.getAddressDetail());
-    UserAddress result = userAddressRepository.save(userAddress);
-    return UserAddressResult.fromUserAddress(result);
+    return UserAddressResult.fromUserAddress(userAddressRepository.save(userAddress));
   }
 
   @Override
