@@ -7,11 +7,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
-import org.springframework.stereotype.Repository;
 
 /**
- * HashMapUserAddressRepository.
- * repository는 collection의 역할을 하기때문에 비지니스 로직이 들어가면 안된다.
+ * HashMapUserAddressRepository. repository는 collection의 역할을 하기때문에 비지니스 로직이 들어가면 안된다.
  */
 public class HashMapUserAddressRepository implements UserAddressRepository {
 
@@ -44,7 +42,11 @@ public class HashMapUserAddressRepository implements UserAddressRepository {
   }
 
   @Override
-  public void deleteById(Long id) {
-    map.remove(id);
+  public int deleteById(Long id) {
+    int deletedRow = 0;
+    if (map.remove(id) != null) {
+      deletedRow++;
+    }
+    return deletedRow;
   }
 }

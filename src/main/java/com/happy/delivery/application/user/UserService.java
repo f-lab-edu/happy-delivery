@@ -32,5 +32,5 @@ public interface UserService {
 
   UserAddressResult updateAddress(AddressCommand addressCommand);
 
-  void deleteAddress(AddressCommand addressCommand);
+  int deleteAddress(AddressCommand addressCommand);
 }

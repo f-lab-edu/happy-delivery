@@ -186,9 +186,9 @@ public class UserController {
   public ApiResponse deleteAddress(@PathVariable Long addressId, HttpSession httpSession) {
     Long userId = SessionUtil.getLoginId(httpSession);
     sessionIsNotExist(userId);
-    userService.deleteAddress(
+    int deletedRow = userService.deleteAddress(
         new AddressCommand(addressId, userId, null, null));
-    return ApiResponse.success("USER_ADDRESS_DELETE_SUCCESS");
+    return ApiResponse.success("USER_ADDRESS_DELETE_SUCCESS " + deletedRow + " row");
   }
 
   private void sessionIsNotExist(Long userId) {
