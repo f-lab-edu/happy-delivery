@@ -42,11 +42,7 @@ public class HashMapUserAddressRepository implements UserAddressRepository {
   }
 
   @Override
-  public int deleteById(Long id) {
-    int deletedRow = 0;
-    if (map.remove(id) != null) {
-      deletedRow++;
-    }
-    return deletedRow;
+  public void deleteById(Long id) {
+    map.remove(id);
   }
 }

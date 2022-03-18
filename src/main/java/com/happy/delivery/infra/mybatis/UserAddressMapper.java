@@ -18,5 +18,5 @@ public interface UserAddressMapper {
 
   List<UserAddress> findAllByUserId(Long userId);
 
-  int deleteById(Long id);
+  void deleteById(Long id);
 }

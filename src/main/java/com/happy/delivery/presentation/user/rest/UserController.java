@@ -180,8 +180,8 @@ public class UserController {
   @ResponseStatus(code = HttpStatus.OK)
   @DeleteMapping("/addresses/{addressId}")
   public ApiResponse deleteAddress(@PathVariable Long addressId, HttpSession httpSession) {
-    int deletedRow = userService.deleteAddress(
+    userService.deleteAddress(
         new AddressCommand(addressId, SessionUtil.getLoginId(httpSession), null, null));
-    return ApiResponse.success("USER_ADDRESS_DELETE_SUCCESS " + deletedRow + " row");
+    return ApiResponse.success("USER_ADDRESS_DELETE_SUCCESS");
   }
 }
