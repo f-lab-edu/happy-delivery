@@ -5,15 +5,16 @@
 
 <mapper namespace="com.happy.delivery.infra.mybatis.UserAddressMapper">
 
-  <insert id="insert" parameterType="com.happy.delivery.domain.user.UserAddress">
+  <insert id="insert" parameterType="com.happy.delivery.domain.user.UserAddress"
+    useGeneratedKeys="true" keyProperty="id">
     INSERT INTO user_addresses (userId, addressCode, addressDetail)
     VALUES (#{userId}, #{addressCode}, #{addressDetail})
   </insert>
 
   <update id="update" parameterType="com.happy.delivery.domain.user.UserAddress">
     UPDATE user_addresses
-    SET addressCode   = #{addressCode},
-        addressDetail = #{addressDetail}
+    SET addressCode = #{addressCode},
+    addressDetail = #{addressDetail}
     WHERE id = #{id};
   </update>
 

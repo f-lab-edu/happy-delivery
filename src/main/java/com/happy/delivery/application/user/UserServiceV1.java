@@ -127,8 +127,7 @@ public class UserServiceV1 implements UserService {
         addressCommand.getUserId(),
         addressCommand.getAddressCode(),
         addressCommand.getAddressDetail());
-    userAddressRepository.save(userAddress);
-    return UserAddressResult.fromUserAddress(userAddress);
+    return UserAddressResult.fromUserAddress(userAddressRepository.save(userAddress));
   }
 
   @Override
@@ -142,21 +141,20 @@ public class UserServiceV1 implements UserService {
   }
 
   @Override
-  public void updateAddress(AddressCommand addressCommand) {
+  public UserAddressResult updateAddress(AddressCommand addressCommand) {
     UserAddress userAddress = userAddressRepository.findById(addressCommand.getAddressId());
     checkEmailExistence(userAddress);
     checkUserAuthority(addressCommand, userAddress);
     userAddress.changeAddress(addressCommand.getAddressCode(), addressCommand.getAddressDetail());
-    userAddressRepository.save(userAddress);
+    return UserAddressResult.fromUserAddress(userAddressRepository.save(userAddress));
   }
 
   @Override
-  public UserAddressResult deleteAddress(AddressCommand addressCommand) {
+  public boolean deleteAddress(AddressCommand addressCommand) {
     UserAddress userAddress = userAddressRepository.findById(addressCommand.getAddressId());
     checkEmailExistence(userAddress);
     checkUserAuthority(addressCommand, userAddress);
-    userAddressRepository.deleteById(addressCommand.getAddressId());
-    return UserAddressResult.fromUserAddress(userAddress);
+    return userAddressRepository.deleteById(addressCommand.getAddressId());
   }
 
   /**

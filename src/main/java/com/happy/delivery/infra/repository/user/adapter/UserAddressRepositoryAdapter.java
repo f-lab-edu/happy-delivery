@@ -20,11 +20,12 @@ public class UserAddressRepositoryAdapter implements UserAddressRepository {
   }
 
   @Override
-  public void save(UserAddress userAddress) {
+  public UserAddress save(UserAddress userAddress) {
     if ((userAddress.getId() == null) || (userAddress.getId() <= 0L)) {
       userAddressMapper.insert(userAddress);
     }
     userAddressMapper.update(userAddress);
+    return userAddress;
   }
 
   @Override
@@ -38,7 +39,7 @@ public class UserAddressRepositoryAdapter implements UserAddressRepository {
   }
 
   @Override
-  public void deleteById(Long id) {
-    userAddressMapper.deleteById(id);
+  public boolean deleteById(Long id) {
+    return userAddressMapper.deleteById(id);
   }
 }
