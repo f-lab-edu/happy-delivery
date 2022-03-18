@@ -22,11 +22,12 @@
 * [docker를 사용하지 않는 elastic APM 설정 예시](https://oopsys.tistory.com/m/284)
 * 버전은 7.17.1 사용
 * VM options 설정
-    * -javaagent:~/happy-delivery/elastic-apm-agent-1.29.0.jar
-    * -Delastic.apm.service_name=happy-delivery
-    * -Delastic.apm.server_urls=http://localhost:8200
-    * -Delastic.apm.application_packages=com.happy.delivery
-    * -Delastic.apm.transaction_sample_rate=1
+  ```
+     -javaagent:~/happy-delivery/elastic-apm-agent-1.29.0.jar
+     -Delastic.apm.service_name=happy-delivery
+     -Delastic.apm.server_urls=http://localhost:8200
+     -Delastic.apm.application_packages=com.happy.delivery
+     -Delastic.apm.transaction_sample_rate=1
 
 ##CI
 * pre-commit을 이용해 code convention 확인
