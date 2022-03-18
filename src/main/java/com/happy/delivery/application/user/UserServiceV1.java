@@ -150,11 +150,11 @@ public class UserServiceV1 implements UserService {
   }
 
   @Override
-  public void deleteAddress(AddressCommand addressCommand) {
+  public boolean deleteAddress(AddressCommand addressCommand) {
     UserAddress userAddress = userAddressRepository.findById(addressCommand.getAddressId());
     checkEmailExistence(userAddress);
     checkUserAuthority(addressCommand, userAddress);
-    userAddressRepository.deleteById(addressCommand.getAddressId());
+    return userAddressRepository.deleteById(addressCommand.getAddressId());
   }
 
   /**

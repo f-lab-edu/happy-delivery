@@ -14,5 +14,5 @@ public interface UserAddressRepository {
 
   List<UserAddress> findAllByUserId(Long userId);
 
-  void deleteById(Long id);
+  boolean deleteById(Long id);
 }

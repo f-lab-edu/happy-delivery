@@ -133,7 +133,9 @@ public class UserController {
   }
 
   /**
-   * UserController PostMapping /addresses. 주소 저장 및 추가 || 새로고침하면 중복 저장되는 문제 ||
+   * UserController PostMapping /addresses.
+   * 주소 저장 및 추가 .
+   * || 새로고침하면 중복 저장되는 문제 ||
    */
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.CREATED)
@@ -149,7 +151,8 @@ public class UserController {
   }
 
   /**
-   * UserController GetMapping /addresses. 주소 목록 가져오기
+   * UserController GetMapping /addresses.
+   * 주소 목록 가져오기.
    */
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
@@ -161,7 +164,8 @@ public class UserController {
   }
 
   /**
-   * UserController update /addresses. 주소 수정
+   * UserController update /addresses.
+   * 주소 수정.
    */
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.CREATED)
@@ -174,14 +178,15 @@ public class UserController {
   }
 
   /**
-   * UserController delete /addresses. 주소 삭제
+   * UserController delete /addresses.
+   * 주소 삭제.
    */
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @DeleteMapping("/addresses/{addressId}")
   public ApiResponse deleteAddress(@PathVariable Long addressId, HttpSession httpSession) {
-    userService.deleteAddress(
-        new AddressCommand(addressId, SessionUtil.getLoginId(httpSession), null, null));
-    return ApiResponse.success("USER_ADDRESS_DELETE_SUCCESS");
+    return ApiResponse.success(
+        userService.deleteAddress(new AddressCommand(addressId, SessionUtil.getLoginId(httpSession),
+            null, null)));
   }
 }

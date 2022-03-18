@@ -39,7 +39,7 @@ public class UserAddressRepositoryAdapter implements UserAddressRepository {
   }
 
   @Override
-  public void deleteById(Long id) {
-    userAddressMapper.deleteById(id);
+  public boolean deleteById(Long id) {
+    return userAddressMapper.deleteById(id);
   }
 }
