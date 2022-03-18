@@ -4,13 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.happy.delivery.infra.mybatis.UserMapper">
-  <insert id="save"  parameterType="com.happy.delivery.domain.user.User">
-    INSERT INTO User (id, email, name, password, phoneNumber)
-     VALUES (#{id}, #{email}, #{name}, #{password}, #{phoneNumber})
+  <insert id="save" parameterType="com.happy.delivery.domain.user.User">
+    INSERT INTO users (email, name, password, phoneNumber)
+    VALUES (#{email}, #{name}, #{password}, #{phoneNumber})
   </insert>
 
-  <select id="findByEmail"  resultType="com.happy.delivery.domain.user.User">
-      SELECT email FROM User WHERE email = #{email}
-    </select>
-
+  <select id="findByEmail" resultType="com.happy.delivery.domain.user.User">
+    SELECT *
+    FROM users
+    WHERE email = #{email}
+  </select>
 </mapper>

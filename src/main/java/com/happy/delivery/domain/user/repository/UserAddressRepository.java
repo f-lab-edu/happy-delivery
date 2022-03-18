@@ -8,13 +8,11 @@ import java.util.List;
  */
 public interface UserAddressRepository {
 
-  public UserAddress save(UserAddress userAddress);
+  void save(UserAddress userAddress);
 
-  public UserAddress findById(Long id);
+  UserAddress findById(Long id);
 
-  public UserAddress findByLastUsedAddress(Long userId);
+  List<UserAddress> findAllByUserId(Long userId);
 
-  public List<UserAddress> findAllByUserId(Long userId);
-
-  public UserAddress deleteById(Long id);
+  void deleteById(Long id);
 }

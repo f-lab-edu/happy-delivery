@@ -5,5 +5,11 @@ spring:
     password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+    flyway:
+      locations: classpath:/db/migration
+      baseline-on-migrate: true
+      baseline-version: 0
+      useMysqlMetadata: true
+
 mybatis:
   mapper-locations: mybatis/mapper/**/*.xml
