@@ -4,7 +4,7 @@ import com.happy.delivery.application.user.UserService;
 import com.happy.delivery.application.user.command.AddressCommand;
 import com.happy.delivery.application.user.result.UserAddressResult;
 import com.happy.delivery.application.user.result.UserResult;
-import com.happy.delivery.domain.exception.user.NoUserIdException;
+import com.happy.delivery.infra.annotation.UserLoginCheck;
 import com.happy.delivery.infra.util.SessionUtil;
 import com.happy.delivery.presentation.common.response.ApiResponse;
 import com.happy.delivery.presentation.user.request.AddressRequest;
@@ -70,6 +70,7 @@ public class UserController {
   /**
    * UserController logout.
    */
+  @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @GetMapping("/logout")
   public void logout(HttpSession httpSession) {
@@ -79,11 +80,11 @@ public class UserController {
   /**
    * myAccount view.
    */
+  @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @GetMapping("/my-account")
   public ApiResponse<UserResult> getMyAccount(HttpSession httpSession) {
     Long userId = SessionUtil.getLoginId(httpSession);
-    sessionIsNotExist(userId);
     UserResult myAccount = userService.getMyAccount(userId);
     return ApiResponse.success(myAccount);
   }
@@ -91,14 +92,13 @@ public class UserController {
   /**
    * myAccount update.
    */
+  @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @PutMapping("/my-account")
   public ApiResponse<UserResult> updateMyAccount(@Valid @RequestBody
       MyAccountRequest myAccountRequest, HttpSession httpSession) {
-    Long userId = SessionUtil.getLoginId(httpSession);
-    sessionIsNotExist(userId);
     MyAccountRequest myAccountInfo = new MyAccountRequest(
-        userId,
+        SessionUtil.getLoginId(httpSession),
         myAccountRequest.getEmail(),
         myAccountRequest.getName(),
         myAccountRequest.getPhoneNumber()
@@ -110,12 +110,11 @@ public class UserController {
   /**
    * myAccount delete.
    */
+  @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @DeleteMapping("my-account")
   public ApiResponse<UserResult> deleteMyAccount(@Valid HttpSession httpSession) {
-    Long userId = SessionUtil.getLoginId(httpSession);
-    sessionIsNotExist(userId);
-    userService.deleteMyAccount(userId);
+    userService.deleteMyAccount(SessionUtil.getLoginId(httpSession));
     SessionUtil.clear(httpSession);
     return ApiResponse.success("DELETE_MY_ACCOUNT");
   }
@@ -123,13 +122,12 @@ public class UserController {
   /**
    * UserController my-account/password.
    */
+  @UserLoginCheck
   @ResponseStatus(code = HttpStatus.CREATED)
   @PatchMapping("/my-account/password")
   public ApiResponse updatePassword(@Valid @RequestBody PasswordUpdateRequest request,
       HttpSession httpSession) {
-    Long userId = SessionUtil.getLoginId(httpSession);
-    sessionIsNotExist(userId);
-    UserResult userResult = userService.updatePassword(userId,
+    UserResult userResult = userService.updatePassword(SessionUtil.getLoginId(httpSession),
         request.toCommand());
     return ApiResponse.success(userResult);
   }
@@ -137,12 +135,11 @@ public class UserController {
   /**
    * UserController PostMapping /addresses. 주소 저장 및 추가 || 새로고침하면 중복 저장되는 문제 ||
    */
+  @UserLoginCheck
   @ResponseStatus(code = HttpStatus.CREATED)
   @PostMapping("/addresses")
   public ApiResponse saveAddress(@Valid @RequestBody AddressRequest address,
       HttpSession httpSession) {
-    Long userId = SessionUtil.getLoginId(httpSession);
-    sessionIsNotExist(userId);
     UserAddressResult userAddressResult = userService.saveAddress(
         address.toCommand(null, SessionUtil.getLoginId(httpSession)));
     if (userAddressResult != null) {
@@ -154,46 +151,37 @@ public class UserController {
   /**
    * UserController GetMapping /addresses. 주소 목록 가져오기
    */
+  @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @GetMapping("/addresses")
   public ApiResponse getListOfAllAddresses(HttpSession httpSession) {
-    Long userId = SessionUtil.getLoginId(httpSession);
-    sessionIsNotExist(userId);
     List<UserAddressResult> listOfAllAddresses = userService
-        .getListOfAllAddresses(userId);
+        .getListOfAllAddresses(SessionUtil.getLoginId(httpSession));
     return ApiResponse.success(listOfAllAddresses);
   }
 
   /**
    * UserController update /addresses. 주소 수정
    */
+  @UserLoginCheck
   @ResponseStatus(code = HttpStatus.CREATED)
   @PatchMapping("/addresses/{addressId}")
   public ApiResponse updateAddress(@PathVariable Long addressId,
       @Valid @RequestBody AddressRequest addressRequest, HttpSession httpSession) {
-    Long userId = SessionUtil.getLoginId(httpSession);
-    sessionIsNotExist(userId);
     UserAddressResult userAddressResult = userService.updateAddress(
-        addressRequest.toCommand(addressId, userId));
+        addressRequest.toCommand(addressId, SessionUtil.getLoginId(httpSession)));
     return ApiResponse.success(userAddressResult);
   }
 
   /**
    * UserController delete /addresses. 주소 삭제
    */
+  @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @DeleteMapping("/addresses/{addressId}")
   public ApiResponse deleteAddress(@PathVariable Long addressId, HttpSession httpSession) {
-    Long userId = SessionUtil.getLoginId(httpSession);
-    sessionIsNotExist(userId);
     int deletedRow = userService.deleteAddress(
-        new AddressCommand(addressId, userId, null, null));
+        new AddressCommand(addressId, SessionUtil.getLoginId(httpSession), null, null));
     return ApiResponse.success("USER_ADDRESS_DELETE_SUCCESS " + deletedRow + " row");
-  }
-
-  private void sessionIsNotExist(Long userId) {
-    if (userId == null) {
-      throw new NoUserIdException("로그인이 필요한 서비스입니다.");
-    }
   }
 }
