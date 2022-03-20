@@ -30,21 +30,10 @@
     WHERE email = #{email}
   </select>
 
-  <delete id="deleteUser">
+  <delete id="deleteId" parameterType="Long">
     DELETE
     FROM User
     WHERE id = #{id}
   </delete>
 
-=======
-  <insert id="save" parameterType="com.happy.delivery.domain.user.User">
-    INSERT INTO users (email, name, password, phoneNumber)
-    VALUES (#{email}, #{name}, #{password}, #{phoneNumber})
-  </insert>
-
-  <select id="findByEmail" resultType="com.happy.delivery.domain.user.User">
-    SELECT *
-    FROM users
-    WHERE email = #{email}
-  </select>
 </mapper>

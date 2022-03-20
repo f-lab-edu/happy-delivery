@@ -23,11 +23,12 @@
 * 버전은 7.17.1 사용
 * VM options 설정
   ```
-     -javaagent:~/happy-delivery/elastic-apm-agent-1.29.0.jar
-     -Delastic.apm.service_name=happy-delivery
-     -Delastic.apm.server_urls=http://localhost:8200
-     -Delastic.apm.application_packages=com.happy.delivery
-     -Delastic.apm.transaction_sample_rate=1
+  -javaagent:./elastic-apm-agent-1.29.0.jar
+  -Delastic.apm.service_name=happy-delivery
+  -Delastic.apm.server_urls=http://localhost:8200
+  -Delastic.apm.application_packages=com.happy.delivery
+  -Delastic.apm.transaction_sample_rate=1
+  -Delastic.apm.trace_methods=com.happy.*
 
 ##CI
 * pre-commit을 이용해 code convention 확인
@@ -59,6 +60,3 @@
 
 ## 기능정의
 * [기능명세서](https://github.com/f-lab-edu/happy-delivery/wiki/기능-명세서)
-
-
-
