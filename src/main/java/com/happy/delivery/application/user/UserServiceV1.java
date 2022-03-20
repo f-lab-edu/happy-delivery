@@ -90,7 +90,7 @@ public class UserServiceV1 implements UserService {
       throw new UserAlreadyExistedException("이미 존재하는 계정 입니다.");
     }
     if (user.getId().equals(myAccountCommand.getId())) {
-      userRepository.deleteUser(user.getId());
+      userRepository.deleteId(user.getId());
     }
     user.setMyAccountUpdate(myAccountCommand.getEmail(), myAccountCommand.getName(),
         myAccountCommand.getPhoneNumber());
@@ -99,8 +99,8 @@ public class UserServiceV1 implements UserService {
   }
 
   @Override
-  public void deleteMyAccount(Long loinId) {
-    userRepository.deleteUser(loinId);
+  public boolean deleteMyAccount(Long loinId) {
+    return userRepository.deleteId(loinId);
   }
 
   @Override

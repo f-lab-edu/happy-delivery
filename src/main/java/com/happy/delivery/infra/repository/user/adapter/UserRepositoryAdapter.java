@@ -16,11 +16,12 @@ public class UserRepositoryAdapter implements UserRepository {
   }
 
   @Override
-  public void insert(User user) {
+  public User save(User user) {
     if (user.getId() == null || user.getId() <= 0L) {
       userMapper.insert(user);
     }
     userMapper.update(user);
+    return user;
   }
 
   @Override
@@ -34,7 +35,7 @@ public class UserRepositoryAdapter implements UserRepository {
   }
 
   @Override
-  public void deleteUser(Long id) {
-    userMapper.deleteUser(id);
+  public boolean deleteId(Long id) {
+    return userMapper.deleteId(id);
   }
 }
