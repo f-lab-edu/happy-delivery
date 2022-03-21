@@ -59,8 +59,8 @@ public class UserServiceV1 implements UserService {
         signCommand.getName(),
         signCommand.getPhoneNumber()
     );
+    userRepository.insert(userResult);
 
-    userRepository.save(userResult);
     return UserResult.fromUser(userResult);
   }
 
@@ -89,15 +89,18 @@ public class UserServiceV1 implements UserService {
     if (byEmail != null && !myAccountCommand.getEmail().equals(user.getEmail())) {
       throw new UserAlreadyExistedException("이미 존재하는 계정 입니다.");
     }
+    if (user.getId().equals(myAccountCommand.getId())) {
+      userRepository.deleteId(user.getId());
+    }
     user.setMyAccountUpdate(myAccountCommand.getEmail(), myAccountCommand.getName(),
         myAccountCommand.getPhoneNumber());
-    userRepository.save(user);
+    userRepository.insert(user);
     return UserResult.fromUser(user);
   }
 
   @Override
-  public void deleteMyAccount(Long loinId) {
-    userRepository.deleteUser(loinId);
+  public boolean deleteMyAccount(Long loinId) {
+    return userRepository.deleteId(loinId);
   }
 
   @Override
@@ -117,7 +120,7 @@ public class UserServiceV1 implements UserService {
       throw new PasswordIsNotMatchException("현재 패스워드가 일치하지 않습니다.");
     }
     user.changePassword(encryptMapper.encoder(passwordUpdateCommand.getChangedPassword()));
-    userRepository.save(user);
+    userRepository.insert(user);
     return UserResult.fromUser(user);
   }
 

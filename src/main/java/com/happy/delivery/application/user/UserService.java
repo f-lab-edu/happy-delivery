@@ -20,7 +20,7 @@ public interface UserService {
 
   UserResult updateMyAccount(MyAccountCommand myAccountCommand);
 
-  void deleteMyAccount(Long loinid);
+  boolean deleteMyAccount(Long loinid);
 
   UserResult getMyAccount(Long loginId);
 

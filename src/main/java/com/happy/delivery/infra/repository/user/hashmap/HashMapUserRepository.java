@@ -8,8 +8,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.stereotype.Repository;
 
 /**
- * HashMapUserRepository.
- * repository는 collection의 역할을 하기때문에 비지니스 로직이 들어가면 안된다.
+ * HashMapUserRepository. repository는 collection의 역할을 하기때문에 비지니스 로직이 들어가면 안된다.
  */
 public class HashMapUserRepository implements UserRepository {
 
@@ -40,9 +39,8 @@ public class HashMapUserRepository implements UserRepository {
   }
 
   @Override
-  public User deleteUser(Long id) {
-    User removeUser = hashmap.remove(id);
-    return removeUser;
+  public boolean deleteId(Long id) {
+    return hashmap.remove(id) != null;
   }
 
   @Override
