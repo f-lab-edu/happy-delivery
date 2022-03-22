@@ -15,8 +15,8 @@ import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
 import com.happy.delivery.domain.user.User;
 import com.happy.delivery.domain.user.UserAddress;
 import com.happy.delivery.domain.user.repository.UserAddressRepository;
+import com.happy.delivery.domain.user.repository.UserRepository;
 import com.happy.delivery.infra.encoder.EncryptMapper;
-import com.happy.delivery.infra.mybatis.UserMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,7 +29,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceV1 implements UserService {
 
-  private final UserMapper userRepository;
+  private final UserRepository userRepository;
   private final UserAddressRepository userAddressRepository;
   private final EncryptMapper encryptMapper;
 
@@ -37,7 +37,7 @@ public class UserServiceV1 implements UserService {
    * UserServiceV1 Constructor.
    */
   @Autowired
-  public UserServiceV1(UserMapper userRepository, UserAddressRepository userAddressRepository,
+  public UserServiceV1(UserRepository userRepository, UserAddressRepository userAddressRepository,
       EncryptMapper encryptMapper) {
     this.userRepository = userRepository;
     this.userAddressRepository = userAddressRepository;
@@ -59,7 +59,7 @@ public class UserServiceV1 implements UserService {
         signCommand.getName(),
         signCommand.getPhoneNumber()
     );
-    userRepository.insert(userResult);
+    userRepository.save(userResult);
 
     return UserResult.fromUser(userResult);
   }
@@ -94,7 +94,7 @@ public class UserServiceV1 implements UserService {
     }
     user.setMyAccountUpdate(myAccountCommand.getEmail(), myAccountCommand.getName(),
         myAccountCommand.getPhoneNumber());
-    userRepository.insert(user);
+    userRepository.save(user);
     return UserResult.fromUser(user);
   }
 
@@ -120,7 +120,7 @@ public class UserServiceV1 implements UserService {
       throw new PasswordIsNotMatchException("현재 패스워드가 일치하지 않습니다.");
     }
     user.changePassword(encryptMapper.encoder(passwordUpdateCommand.getChangedPassword()));
-    userRepository.insert(user);
+    userRepository.save(user);
     return UserResult.fromUser(user);
   }
 

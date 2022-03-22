@@ -12,7 +12,7 @@ public interface UserMapper {
 
   void insert(User user);
 
-  User update(User user);
+  void update(User user);
 
   User findById(Long id);
 
