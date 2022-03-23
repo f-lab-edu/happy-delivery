@@ -42,8 +42,8 @@ public class UserRepositoryAdapter implements UserRepository {
   }
 
   @Override
-  public User saveMainAddress(User user) {
-    userMapper.updateAddress(user);
+  public User saveAddressId(User user) {
+    userMapper.updateAddressId(user);
     return user;
   }
 }

@@ -13,8 +13,6 @@ public class User {
   private String name;
   private String phoneNumber;
   private Long addressId;
-  private String addressCode;
-  private String addressDetail;
 
   public User() {
   }
@@ -88,14 +86,12 @@ public class User {
     return phoneNumber;
   }
 
-  /**
-   * setAddress.
-   * user에 address값 넣어주기.
-   */
-  public void setAddress(Long addressId, String addressCode, String addressDetail) {
+  public Long getAddressId() {
+    return addressId;
+  }
+
+  public void setAddressId(Long addressId) {
     this.addressId = addressId;
-    this.addressCode = addressCode;
-    this.addressDetail = addressDetail;
   }
 
   @Override
@@ -107,8 +103,6 @@ public class User {
         ", name='" + name + '\'' +
         ", phoneNumber='" + phoneNumber + '\'' +
         ", addressId=" + addressId +
-        ", addressCode='" + addressCode + '\'' +
-        ", addressDetail='" + addressDetail + '\'' +
         '}';
   }
 }

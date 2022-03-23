@@ -44,7 +44,7 @@ public class HashMapUserRepository implements UserRepository {
   }
 
   @Override
-  public User saveMainAddress(User user) {
+  public User saveAddressId(User user) {
     return hashmap.put(user.getId(), user);
   }
 

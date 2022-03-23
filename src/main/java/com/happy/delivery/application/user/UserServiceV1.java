@@ -8,6 +8,7 @@ import com.happy.delivery.application.user.command.SignupCommand;
 import com.happy.delivery.application.user.result.UserAddressResult;
 import com.happy.delivery.application.user.result.UserResult;
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
+import com.happy.delivery.domain.exception.user.NoUserIdException;
 import com.happy.delivery.domain.exception.user.NotAuthorizedException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
 import com.happy.delivery.domain.exception.user.UserAddressNotExistedException;
@@ -141,13 +142,12 @@ public class UserServiceV1 implements UserService {
             addressCommand.getUserId(),
             addressCommand.getAddressCode(),
             addressCommand.getAddressDetail()));
-
-    if (address != null) {
-      User user = userRepository.findById(address.getUserId());
-      user.setAddress(address.getId(), address.getAddressCode(), address.getAddressDetail());
-      System.out.println(userRepository.saveMainAddress(user));
+    User user = userRepository.findById(address.getUserId());
+    if (user == null) {
+      throw new NoUserIdException();
     }
-
+    user.setAddressId(address.getId());
+    userRepository.saveAddressId(user);
     return UserAddressResult.fromUserAddress(address);
   }
 

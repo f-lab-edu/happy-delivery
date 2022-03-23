@@ -13,7 +13,7 @@ public interface UserMapper {
 
   void update(User user);
 
-  void updateAddress(User user);
+  void updateAddressId(User user);
 
   User findById(Long id);
 

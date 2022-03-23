@@ -15,5 +15,5 @@ public interface UserRepository {
 
   boolean deleteId(Long id);
 
-  User saveMainAddress(User user);
+  User saveAddressId(User user);
 }
