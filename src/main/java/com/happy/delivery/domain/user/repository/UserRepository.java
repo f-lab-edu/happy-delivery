@@ -7,11 +7,11 @@ import com.happy.delivery.domain.user.User;
  */
 public interface UserRepository {
 
-  public User save(User user);
+  User save(User user);
 
-  public User findById(Long id);
+  User findById(Long id);
 
-  public User findByEmail(String email);
+  User findByEmail(String email);
 
-  public boolean deleteId(Long id);
+  boolean deleteId(Long id);
 }

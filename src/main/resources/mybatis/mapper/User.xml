@@ -6,33 +6,34 @@
 <mapper namespace="com.happy.delivery.infra.mybatis.UserMapper">
   <insert id="insert" parameterType="com.happy.delivery.domain.user.User"
     useGeneratedKeys="true" keyProperty="id">
-    INSERT INTO User (email, name, password, phoneNumber)
-    VALUES (#{email}, #{name}, #{password}, #{phoneNumber})
+    INSERT INTO users (id, email, name, password, phoneNumber)
+    VALUES (#{id}, #{email}, #{name}, #{password}, #{phoneNumber})
   </insert>
 
-  <insert id="update" parameterType="com.happy.delivery.domain.user.User">
-    UPDATE User
+  <update id="update" parameterType="com.happy.delivery.domain.user.User">
+    UPDATE users
     SET email       = #{email},
+        password    = #{password},
         name        = #{name},
         phoneNumber = #{phoneNumber}
     WHERE id = #{id}
-  </insert>
+  </update>
 
   <select id="findById" resultType="com.happy.delivery.domain.user.User">
     SELECT id, email, name, password, phoneNumber
-    FROM User
+    FROM users
     WHERE id = #{id}
   </select>
 
   <select id="findByEmail" resultType="com.happy.delivery.domain.user.User">
     SELECT id, email, name, password, phoneNumber
-    FROM User
+    FROM users
     WHERE email = #{email}
   </select>
 
   <delete id="deleteId" parameterType="Long">
     DELETE
-    FROM User
+    FROM users
     WHERE id = #{id}
   </delete>
 
