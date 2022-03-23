@@ -4,7 +4,10 @@ import com.happy.delivery.domain.user.Menu;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
+/**
+ * MenuMapper.
+ */
 @Mapper
 public interface MenuMapper {
-  List<Menu> MenuSelect(Long storeId);
+  List<Menu> menuSelect(Long storeId);
 }

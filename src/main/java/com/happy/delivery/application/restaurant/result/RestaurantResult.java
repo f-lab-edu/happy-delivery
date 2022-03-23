@@ -1,4 +1,4 @@
-package com.happy.delivery.application.user.result;
+package com.happy.delivery.application.restaurant.result;
 
 /**
  * RestaurantResult.

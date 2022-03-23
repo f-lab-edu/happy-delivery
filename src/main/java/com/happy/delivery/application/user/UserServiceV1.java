@@ -83,7 +83,6 @@ public class UserServiceV1 implements UserService {
     return UserResult.fromUser(user);
   }
 
-  @Transactional
   @Override
   @Transactional
   public UserResult updateMyAccount(MyAccountCommand myAccountCommand) {
@@ -109,6 +108,7 @@ public class UserServiceV1 implements UserService {
   }
 
   @Override
+  @Transactional
   public UserResult getMyAccount(Long loginId) {
     User user = userRepository.findById(loginId);
     return UserResult.fromUser(user);

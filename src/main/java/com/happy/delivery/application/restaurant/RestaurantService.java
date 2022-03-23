@@ -1,7 +1,7 @@
 package com.happy.delivery.application.restaurant;
 
-import com.happy.delivery.application.user.result.RestaurantCategoryResult;
-import com.happy.delivery.application.user.result.RestaurantResult;
+import com.happy.delivery.application.restaurant.result.RestaurantCategoryResult;
+import com.happy.delivery.application.restaurant.result.RestaurantResult;
 import java.util.List;
 
 /**

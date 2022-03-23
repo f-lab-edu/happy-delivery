@@ -7,7 +7,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-
+/**
+ * MenuRepositoryAdapter.
+ */
 @Repository
 public class MenuRepositoryAdapter implements MenuRepository {
   private final MenuMapper menuMapper;
@@ -18,8 +20,8 @@ public class MenuRepositoryAdapter implements MenuRepository {
   }
 
   @Override
-  public List<Menu> MenuSelect(Long storeId) {
-    List<Menu> menus = menuMapper.MenuSelect(storeId);
+  public List<Menu> menuSelect(Long storeId) {
+    List<Menu> menus = menuMapper.menuSelect(storeId);
     return menus;
   }
 }
