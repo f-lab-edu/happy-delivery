@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * UserServiceV1.
@@ -45,6 +46,7 @@ public class UserServiceV1 implements UserService {
   }
 
   @Override
+  @Transactional
   public UserResult signup(SignupCommand signCommand) {
     // email로 user 조회
     // null이 아니면, 이미 존재하는 계정이니 예외 발생
@@ -65,6 +67,7 @@ public class UserServiceV1 implements UserService {
   }
 
   @Override
+  @Transactional
   public UserResult signin(SigninCommand signinCommand) {
     // 1. repo에 저장된 비밀번호 가져오기
     User user = userRepository.findByEmail(signinCommand.getEmail());
@@ -79,6 +82,7 @@ public class UserServiceV1 implements UserService {
   }
 
   @Override
+  @Transactional
   public UserResult updateMyAccount(MyAccountCommand myAccountCommand) {
     // 경우 1. user1, user2 생성, user1로그인 -> user2의 이메일로 변경 ; (변경안됨)
     // 경우 2. user1, user2 생성, user1로그인 -> user1의 이메일로 변경(그대로) 이름과 폰 번호만 변경 ; (변경됨)
@@ -99,6 +103,7 @@ public class UserServiceV1 implements UserService {
   }
 
   @Override
+  @Transactional
   public boolean deleteMyAccount(Long loinId) {
     return userRepository.deleteId(loinId);
   }
@@ -110,10 +115,14 @@ public class UserServiceV1 implements UserService {
   }
 
   /**
-   * 비밀번호 변경 1) 변경 전 비밀번호 일치여부 검사. 2) 바꾸려는 비밀번호 암호화. 3) User 비밀번호값 바꾸기 : changePassword 4)
-   * repository 저장.
+   * 비밀번호 변경
+   * 1) 변경 전 비밀번호 일치여부 검사.
+   * 2) 바꾸려는 비밀번호 암호화.
+   * 3) User 비밀번호값 바꾸기 : changePassword
+   * 4) repository 저장.
    */
   @Override
+  @Transactional
   public UserResult updatePassword(Long id, PasswordUpdateCommand passwordUpdateCommand) {
     User user = userRepository.findById(id);
     if (!encryptMapper.isMatch(passwordUpdateCommand.getCurrentPassword(), user.getPassword())) {
@@ -125,15 +134,25 @@ public class UserServiceV1 implements UserService {
   }
 
   @Override
+  @Transactional
   public UserAddressResult saveAddress(AddressCommand addressCommand) {
-    UserAddress userAddress = new UserAddress(
-        addressCommand.getUserId(),
-        addressCommand.getAddressCode(),
-        addressCommand.getAddressDetail());
-    return UserAddressResult.fromUserAddress(userAddressRepository.save(userAddress));
+    UserAddress address = userAddressRepository.save(
+        new UserAddress(
+            addressCommand.getUserId(),
+            addressCommand.getAddressCode(),
+            addressCommand.getAddressDetail()));
+
+    if (address != null) {
+      User user = userRepository.findById(address.getUserId());
+      user.setAddress(address.getId(), address.getAddressCode(), address.getAddressDetail());
+      System.out.println(userRepository.saveMainAddress(user));
+    }
+
+    return UserAddressResult.fromUserAddress(address);
   }
 
   @Override
+  @Transactional
   public List<UserAddressResult> getListOfAllAddresses(Long loginId) {
     List<UserAddressResult> result = new ArrayList<>();
     List<UserAddress> addresses = userAddressRepository.findAllByUserId(loginId);
@@ -144,6 +163,7 @@ public class UserServiceV1 implements UserService {
   }
 
   @Override
+  @Transactional
   public UserAddressResult updateAddress(AddressCommand addressCommand) {
     UserAddress userAddress = userAddressRepository.findById(addressCommand.getAddressId());
     checkEmailExistence(userAddress);
@@ -153,6 +173,7 @@ public class UserServiceV1 implements UserService {
   }
 
   @Override
+  @Transactional
   public boolean deleteAddress(AddressCommand addressCommand) {
     UserAddress userAddress = userAddressRepository.findById(addressCommand.getAddressId());
     checkEmailExistence(userAddress);

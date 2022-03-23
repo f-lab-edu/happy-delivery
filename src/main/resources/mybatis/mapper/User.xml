@@ -10,13 +10,13 @@
     VALUES (#{email}, #{name}, #{password}, #{phoneNumber})
   </insert>
 
-  <insert id="update" parameterType="com.happy.delivery.domain.user.User">
+  <update id="update" parameterType="com.happy.delivery.domain.user.User">
     UPDATE users
     SET email       = #{email},
         name        = #{name},
         phoneNumber = #{phoneNumber}
     WHERE id = #{id}
-  </insert>
+  </update>
 
   <select id="findById" resultType="com.happy.delivery.domain.user.User">
     SELECT id, email, name, password, phoneNumber
@@ -36,4 +36,12 @@
     WHERE id = #{id}
   </delete>
 
+  <update id="updateAddress" parameterType="com.happy.delivery.domain.user.User"
+    useGeneratedKeys="true" keyProperty="id">
+    UPDATE users
+    SET addressId     = #{addressId},
+        addressCode   = #{addressCode},
+        addressDetail = #{addressDetail}
+    WHERE id = #{id}
+  </update>
 </mapper>

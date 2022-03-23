@@ -1,6 +1,5 @@
 package com.happy.delivery.infra.mybatis;
 
-import com.happy.delivery.application.user.result.UserResult;
 import com.happy.delivery.domain.user.User;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,6 +12,8 @@ public interface UserMapper {
   void insert(User user);
 
   void update(User user);
+
+  void updateAddress(User user);
 
   User findById(Long id);
 

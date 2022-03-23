@@ -12,6 +12,9 @@ public class User {
   private String password;
   private String name;
   private String phoneNumber;
+  private Long addressId;
+  private String addressCode;
+  private String addressDetail;
 
   public User() {
   }
@@ -59,7 +62,6 @@ public class User {
    */
   public void changePassword(String changedPassword) {
     this.password = changedPassword;
-
   }
 
   public Long getId() {
@@ -84,6 +86,30 @@ public class User {
 
   public String getPhoneNumber() {
     return phoneNumber;
+  }
+
+  /**
+   * setAddress.
+   * user에 address값 넣어주기.
+   */
+  public void setAddress(Long addressId, String addressCode, String addressDetail) {
+    this.addressId = addressId;
+    this.addressCode = addressCode;
+    this.addressDetail = addressDetail;
+  }
+
+  @Override
+  public String toString() {
+    return "User{" +
+        "id=" + id +
+        ", email='" + email + '\'' +
+        ", password='" + password + '\'' +
+        ", name='" + name + '\'' +
+        ", phoneNumber='" + phoneNumber + '\'' +
+        ", addressId=" + addressId +
+        ", addressCode='" + addressCode + '\'' +
+        ", addressDetail='" + addressDetail + '\'' +
+        '}';
   }
 }
 
