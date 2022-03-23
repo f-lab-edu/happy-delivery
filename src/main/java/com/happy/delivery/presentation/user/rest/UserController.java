@@ -4,6 +4,7 @@ import com.happy.delivery.application.user.UserService;
 import com.happy.delivery.application.user.command.AddressCommand;
 import com.happy.delivery.application.user.result.UserAddressResult;
 import com.happy.delivery.application.user.result.UserResult;
+import com.happy.delivery.domain.exception.user.CanNotDeleteMainAddressException;
 import com.happy.delivery.infra.annotation.UserLoginCheck;
 import com.happy.delivery.infra.util.SessionUtil;
 import com.happy.delivery.presentation.common.response.ApiResponse;
@@ -63,6 +64,7 @@ public class UserController {
     UserResult userResult = userService.signin(request.toCommand());
     if (userResult != null) {
       SessionUtil.setLoginId(httpSession, userResult.getId());
+      SessionUtil.setAddressId(httpSession, userResult.getAddressId());
     }
     return ApiResponse.success(userResult);
   }
@@ -185,6 +187,9 @@ public class UserController {
   @ResponseStatus(code = HttpStatus.OK)
   @DeleteMapping("/addresses/{addressId}")
   public ApiResponse deleteAddress(@PathVariable Long addressId, HttpSession httpSession) {
+    if (SessionUtil.getAddressId(httpSession) == addressId) {
+      throw new CanNotDeleteMainAddressException("현재 주소와 삭제하려는 주소가 일치합니다.");
+    }
     return ApiResponse.success(
         userService.deleteAddress(new AddressCommand(addressId, SessionUtil.getLoginId(httpSession),
             null, null)));
