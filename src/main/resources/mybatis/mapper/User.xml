@@ -13,6 +13,7 @@
   <update id="update" parameterType="com.happy.delivery.domain.user.User">
     UPDATE users
     SET email       = #{email},
+        password    = #{password},
         name        = #{name},
         phoneNumber = #{phoneNumber}
     WHERE id = #{id}

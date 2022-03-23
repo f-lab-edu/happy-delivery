@@ -35,6 +35,7 @@ public class UserServiceV1 implements UserService {
   private final UserAddressRepository userAddressRepository;
   private final EncryptMapper encryptMapper;
 
+
   /**
    * UserServiceV1 Constructor.
    */
@@ -82,6 +83,7 @@ public class UserServiceV1 implements UserService {
     return UserResult.fromUser(user);
   }
 
+  @Transactional
   @Override
   @Transactional
   public UserResult updateMyAccount(MyAccountCommand myAccountCommand) {
@@ -93,9 +95,6 @@ public class UserServiceV1 implements UserService {
     //repo에 값이 있거나 기존 이메일과 변경하려는 이메일이 같지 않은경우
     if (byEmail != null && !myAccountCommand.getEmail().equals(user.getEmail())) {
       throw new UserAlreadyExistedException("이미 존재하는 계정 입니다.");
-    }
-    if (user.getId().equals(myAccountCommand.getId())) {
-      userRepository.deleteId(user.getId());
     }
     user.setMyAccountUpdate(myAccountCommand.getEmail(), myAccountCommand.getName(),
         myAccountCommand.getPhoneNumber());
