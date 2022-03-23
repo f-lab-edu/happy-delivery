@@ -15,6 +15,7 @@ import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
 import com.happy.delivery.domain.user.User;
 import com.happy.delivery.domain.user.UserAddress;
 import com.happy.delivery.domain.user.repository.UserAddressRepository;
+import com.happy.delivery.domain.user.repository.UserRepository;
 import com.happy.delivery.infra.encoder.EncryptMapper;
 import com.happy.delivery.infra.mybatis.UserMapper;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * UserServiceV1.
@@ -29,15 +31,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceV1 implements UserService {
 
-  private final UserMapper userRepository;
+  private final UserRepository userRepository;
   private final UserAddressRepository userAddressRepository;
   private final EncryptMapper encryptMapper;
+
 
   /**
    * UserServiceV1 Constructor.
    */
-  @Autowired
-  public UserServiceV1(UserMapper userRepository, UserAddressRepository userAddressRepository,
+  public UserServiceV1(UserRepository userRepository,
+      UserAddressRepository userAddressRepository,
       EncryptMapper encryptMapper) {
     this.userRepository = userRepository;
     this.userAddressRepository = userAddressRepository;
@@ -59,7 +62,7 @@ public class UserServiceV1 implements UserService {
         signCommand.getName(),
         signCommand.getPhoneNumber()
     );
-    userRepository.insert(userResult);
+    userRepository.save(userResult);
 
     return UserResult.fromUser(userResult);
   }
@@ -78,6 +81,7 @@ public class UserServiceV1 implements UserService {
     return UserResult.fromUser(user);
   }
 
+  @Transactional
   @Override
   public UserResult updateMyAccount(MyAccountCommand myAccountCommand) {
     // 경우 1. user1, user2 생성, user1로그인 -> user2의 이메일로 변경 ; (변경안됨)
@@ -89,12 +93,9 @@ public class UserServiceV1 implements UserService {
     if (byEmail != null && !myAccountCommand.getEmail().equals(user.getEmail())) {
       throw new UserAlreadyExistedException("이미 존재하는 계정 입니다.");
     }
-    if (user.getId().equals(myAccountCommand.getId())) {
-      userRepository.deleteId(user.getId());
-    }
     user.setMyAccountUpdate(myAccountCommand.getEmail(), myAccountCommand.getName(),
         myAccountCommand.getPhoneNumber());
-    userRepository.insert(user);
+    userRepository.save(user);
     return UserResult.fromUser(user);
   }
 
@@ -120,7 +121,7 @@ public class UserServiceV1 implements UserService {
       throw new PasswordIsNotMatchException("현재 패스워드가 일치하지 않습니다.");
     }
     user.changePassword(encryptMapper.encoder(passwordUpdateCommand.getChangedPassword()));
-    userRepository.insert(user);
+    userRepository.save(user);
     return UserResult.fromUser(user);
   }
 

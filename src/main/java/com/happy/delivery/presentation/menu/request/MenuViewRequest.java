@@ -1,10 +1,9 @@
 package com.happy.delivery.presentation.menu.request;
 
-import com.happy.delivery.application.menu.command.MenuAddCommand;
-import com.happy.delivery.application.user.command.AddressCommand;
-import com.happy.delivery.application.user.command.SignupCommand;
+import com.happy.delivery.application.menu.command.MenuViewCommand;
 
-public class MenuAddRequest {
+
+public class MenuViewRequest {
 
   private Long menuId;
 
@@ -14,21 +13,21 @@ public class MenuAddRequest {
 
   private Long menuPrice;
 
-  public MenuAddRequest(Long menuId, String menuName, String menuDetail, Long menuPrice) {
+  public MenuViewRequest(Long menuId, String menuName, String menuDetail, Long menuPrice) {
     this.menuId = menuId;
     this.menuName = menuName;
     this.menuDetail = menuDetail;
     this.menuPrice = menuPrice;
   }
 
-  public MenuAddCommand toCommand() {
-    MenuAddCommand menuAddCommand = new MenuAddCommand(
+  public MenuViewCommand toCommand(){
+    MenuViewCommand menuViewCommand = new MenuViewCommand(
         this.menuId,
         this.menuName,
         this.menuDetail,
         this.menuPrice
     );
-    return menuAddCommand;
+    return menuViewCommand;
   }
 
   public Long getMenuId() {
@@ -46,6 +45,4 @@ public class MenuAddRequest {
   public Long getMenuPrice() {
     return menuPrice;
   }
-
-
 }

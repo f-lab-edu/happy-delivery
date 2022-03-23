@@ -1,8 +1,9 @@
 package com.happy.delivery.application.menu;
 
-import com.happy.delivery.application.menu.command.MenuAddCommand;
-import com.happy.delivery.presentation.menu.response.MenuResponse;
+import com.happy.delivery.application.menu.command.MenuViewCommand;
+import com.happy.delivery.application.menu.result.MenuResult;
+import java.util.List;
 
 public interface MenuService {
-  MenuResponse menuAdd(MenuAddCommand menuAddCommand);
+  List<MenuResult> menuView(MenuViewCommand menuViewCommand);
 }

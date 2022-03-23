@@ -1,9 +1,6 @@
-package com.happy.delivery.application.menu.result;
+package com.happy.delivery.domain.user;
 
-import com.happy.delivery.domain.user.Menu;
-
-public class MenuResult {
-
+public class Menu {
   private Long menuId;
 
   private String menuName;
@@ -12,16 +9,7 @@ public class MenuResult {
 
   private Long menuPrice;
 
-  public static MenuResult fromMenu(Menu menu) {
-    return new MenuResult(
-        menu.getMenuId(),
-        menu.getMenuName(),
-        menu.getMenuDetail(),
-        menu.getMenuPrice()
-    );
-  }
-
-  public MenuResult(Long menuId, String menuName, String menuDetail, Long menuPrice) {
+  public Menu(Long menuId, String menuName, String menuDetail, Long menuPrice) {
     this.menuId = menuId;
     this.menuName = menuName;
     this.menuDetail = menuDetail;
