@@ -2,6 +2,9 @@ package com.happy.delivery.application.menu.result;
 
 import com.happy.delivery.domain.user.Menu;
 
+/**
+ * MenuResult.
+ */
 public class MenuResult {
 
   private Long menuId;
@@ -12,6 +15,9 @@ public class MenuResult {
 
   private Long menuPrice;
 
+  /**
+   * MenuResult fromMenu.
+   */
   public static MenuResult fromMenu(Menu menu) {
     return new MenuResult(
         menu.getMenuId(),
@@ -21,6 +27,9 @@ public class MenuResult {
     );
   }
 
+  /**
+   * MenuResult Constructor.
+   */
   public MenuResult(Long menuId, String menuName, String menuDetail, Long menuPrice) {
     this.menuId = menuId;
     this.menuName = menuName;
@@ -42,5 +51,15 @@ public class MenuResult {
 
   public Long getMenuPrice() {
     return menuPrice;
+  }
+
+  @Override
+  public String toString() {
+    return "MenuResult{" +
+        "menuId=" + menuId +
+        ", menuName='" + menuName + '\'' +
+        ", menuDetail='" + menuDetail + '\'' +
+        ", menuPrice=" + menuPrice +
+        '}';
   }
 }

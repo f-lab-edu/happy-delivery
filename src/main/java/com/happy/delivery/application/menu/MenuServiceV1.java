@@ -1,7 +1,5 @@
 package com.happy.delivery.application.menu;
 
-
-import com.happy.delivery.application.menu.command.MenuViewCommand;
 import com.happy.delivery.application.menu.result.MenuResult;
 import com.happy.delivery.domain.user.Menu;
 import com.happy.delivery.domain.user.repository.MenuRepository;
@@ -10,6 +8,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * MenuServiceV1.
+ */
 @Service
 public class MenuServiceV1 implements MenuService {
 
@@ -20,14 +21,13 @@ public class MenuServiceV1 implements MenuService {
     this.menuRepository = menuRepository;
   }
 
-
   @Override
-  public List<MenuResult> menuView(MenuViewCommand menuViewCommand) {
+  public List<MenuResult> menuView(Long storeId) {
     List<MenuResult> result = new ArrayList<>();
-    List<Menu> menus = menuRepository.MenuSelect(menuViewCommand.getMenuId());//대체 storeId;
+    List<Menu> menus = menuRepository.getAllByStoreId(storeId);
     for (Menu menu : menus) {
       result.add(MenuResult.fromMenu(menu));
     }
-    return null;
+    return result;
   }
 }

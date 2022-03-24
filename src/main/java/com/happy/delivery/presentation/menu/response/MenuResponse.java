@@ -1,5 +1,8 @@
 package com.happy.delivery.presentation.menu.response;
 
+/**
+ * MenuResponse.
+ */
 public class MenuResponse {
 
   private Long menuId;
