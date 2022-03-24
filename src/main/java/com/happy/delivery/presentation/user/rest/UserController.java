@@ -180,6 +180,22 @@ public class UserController {
   }
 
   /**
+   * setMainAddress.
+   * 현재 주소 설정.
+   */
+  @UserLoginCheck
+  @ResponseStatus(code = HttpStatus.OK)
+  @PatchMapping("/addresses/main/{addressId}")
+  public ApiResponse setMainAddress(@PathVariable Long addressId, HttpSession httpSession) {
+    UserResult userResult =
+        userService.setMainAddress(SessionUtil.getLoginId(httpSession), addressId);
+    if (userResult != null) {
+      SessionUtil.setAddressId(httpSession, userResult.getAddressId());
+    }
+    return ApiResponse.success(userResult);
+  }
+
+  /**
    * UserController delete /addresses.
    * 주소 삭제.
    */

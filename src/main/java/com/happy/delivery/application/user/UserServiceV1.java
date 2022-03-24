@@ -153,9 +153,25 @@ public class UserServiceV1 implements UserService {
 
   @Override
   @Transactional
-  public List<UserAddressResult> getListOfAllAddresses(Long loginId) {
+  public UserResult setMainAddress(Long userId, Long addressId) {
+    UserAddress byId = userAddressRepository.findById(addressId);
+    if (byId == null) {
+      throw new UserAddressNotExistedException("주소가 존재하지 않습니다.");
+    }
+    if (byId.getUserId() != userId) {
+      throw new NotAuthorizedException("현재 주소로 설정할 권한이 없습니다.");
+    }
+    User user = userRepository.findById(userId);
+    user.setAddressId(addressId);
+    userRepository.save(user);
+    return UserResult.fromUser(user);
+  }
+
+  @Override
+  @Transactional
+  public List<UserAddressResult> getListOfAllAddresses(Long userId) {
     List<UserAddressResult> result = new ArrayList<>();
-    List<UserAddress> addresses = userAddressRepository.findAllByUserId(loginId);
+    List<UserAddress> addresses = userAddressRepository.findAllByUserId(userId);
     for (UserAddress address : addresses) {
       result.add(UserAddressResult.fromUserAddress(address));
     }
