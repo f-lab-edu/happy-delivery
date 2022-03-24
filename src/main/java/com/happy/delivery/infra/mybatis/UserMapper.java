@@ -13,8 +13,6 @@ public interface UserMapper {
 
   void update(User user);
 
-  void updateAddressId(User user);
-
   User findById(Long id);
 
   User findByEmail(String email);

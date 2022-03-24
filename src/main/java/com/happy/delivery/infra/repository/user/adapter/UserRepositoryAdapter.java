@@ -42,10 +42,4 @@ public class UserRepositoryAdapter implements UserRepository {
   public boolean deleteId(Long id) {
     return userMapper.deleteId(id);
   }
-
-  @Override
-  public User saveAddressId(User user) {
-    userMapper.updateAddressId(user);
-    return user;
-  }
 }

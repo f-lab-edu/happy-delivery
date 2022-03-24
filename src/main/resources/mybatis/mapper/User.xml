@@ -15,7 +15,8 @@
     SET email       = #{email},
         password    = #{password},
         name        = #{name},
-        phoneNumber = #{phoneNumber}
+        phoneNumber = #{phoneNumber},
+        addressId   = #{addressId}
     WHERE id = #{id}
   </update>
 
@@ -36,11 +37,4 @@
     FROM users
     WHERE id = #{id}
   </delete>
-
-  <update id="updateAddressId" parameterType="com.happy.delivery.domain.user.User"
-    useGeneratedKeys="true" keyProperty="id">
-    UPDATE users
-    SET addressId = #{addressId}
-    WHERE id = #{id}
-  </update>
 </mapper>

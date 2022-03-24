@@ -14,7 +14,4 @@ public interface UserRepository {
   User findByEmail(String email);
 
   boolean deleteId(Long id);
-
-  User saveAddressId(User user);
-  
 }

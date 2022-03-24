@@ -18,22 +18,26 @@ public class User {
   /**
    * 회원가입 할 때 사용.
    */
-  public User(String email, String password, String name, String phoneNumber) {
+  public User(String email, String password, String name, String phoneNumber,
+      Long addressId) {
     this.email = email;
     this.password = password;
     this.name = name;
     this.phoneNumber = phoneNumber;
+    this.addressId = addressId;
   }
 
   /**
    * 보통의 경우.
    */
-  public User(Long id, String email, String password, String name, String phoneNumber) {
+  public User(Long id, String email, String password, String name, String phoneNumber,
+      Long addressId) {
     this.id = id;
     this.email = email;
     this.password = password;
     this.name = name;
     this.phoneNumber = phoneNumber;
+    this.addressId = addressId;
   }
 
 

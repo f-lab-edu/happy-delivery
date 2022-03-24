@@ -61,7 +61,8 @@ public class UserServiceV1 implements UserService {
         encryptMapper.encoder(signCommand.getPassword()),
         // 패스워드 암호화 로직
         signCommand.getName(),
-        signCommand.getPhoneNumber()
+        signCommand.getPhoneNumber(),
+        null
     );
     userRepository.save(userResult);
 
@@ -146,7 +147,7 @@ public class UserServiceV1 implements UserService {
       throw new NoUserIdException();
     }
     user.setAddressId(address.getId());
-    userRepository.saveAddressId(user);
+    userRepository.save(user);
     return UserAddressResult.fromUserAddress(address);
   }
 
