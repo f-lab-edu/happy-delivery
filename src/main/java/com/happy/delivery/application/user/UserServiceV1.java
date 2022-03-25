@@ -61,8 +61,7 @@ public class UserServiceV1 implements UserService {
         encryptMapper.encoder(signCommand.getPassword()),
         // 패스워드 암호화 로직
         signCommand.getName(),
-        signCommand.getPhoneNumber(),
-        null
+        signCommand.getPhoneNumber()
     );
     userRepository.save(userResult);
 
