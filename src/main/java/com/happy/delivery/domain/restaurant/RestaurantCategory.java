@@ -9,12 +9,6 @@ public class RestaurantCategory {
   private String name;
 
   /**
-   * RestaurantCategory default constructor.
-   */
-  public RestaurantCategory() {
-  }
-
-  /**
    * RestaurantCategory constructor.
    */
   public RestaurantCategory(Long id, String name) {

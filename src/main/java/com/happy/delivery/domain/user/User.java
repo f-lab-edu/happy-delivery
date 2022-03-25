@@ -12,19 +12,14 @@ public class User {
   private String phoneNumber;
   private Long addressId;
 
-  public User() {
-  }
-
   /**
    * 회원가입 할 때 사용.
    */
-  public User(String email, String password, String name, String phoneNumber,
-      Long addressId) {
+  public User(String email, String password, String name, String phoneNumber) {
     this.email = email;
     this.password = password;
     this.name = name;
     this.phoneNumber = phoneNumber;
-    this.addressId = addressId;
   }
 
   /**
@@ -39,7 +34,6 @@ public class User {
     this.phoneNumber = phoneNumber;
     this.addressId = addressId;
   }
-
 
   /**
    * 유저 정보 업데이트.
