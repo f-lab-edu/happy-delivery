@@ -1,11 +1,9 @@
-package com.happy.delivery.application.restaurant.result;
-
-import com.happy.delivery.domain.restaurant.Restaurant;
+package com.happy.delivery.domain.restaurant;
 
 /**
- * RestaurantResult.
+ * Restaurant.
  */
-public class RestaurantResult {
+public class Restaurant {
 
   private final Long id;
   private final String name;
@@ -13,9 +11,9 @@ public class RestaurantResult {
   private final String addressCode;
 
   /**
-   * RestaurantResult Constructor.
+   * Restaurant Constructor.
    */
-  public RestaurantResult(Long id, String name, int category, String addressCode) {
+  public Restaurant(Long id, String name, int category, String addressCode) {
     this.id = id;
     this.name = name;
     this.category = category;
@@ -38,22 +36,9 @@ public class RestaurantResult {
     return addressCode;
   }
 
-  /**
-   * fromRestaurant.
-   * Restaurant -> RestaurantResult.
-   */
-  public static RestaurantResult fromRestaurant(Restaurant restaurant) {
-    return new RestaurantResult(
-        restaurant.getId(),
-        restaurant.getName(),
-        restaurant.getCategory(),
-        restaurant.getAddressCode()
-    );
-  }
-
   @Override
   public String toString() {
-    return "RestaurantResult{" +
+    return "Restaurant{" +
         "id=" + id +
         ", name='" + name + '\'' +
         ", category='" + category + '\'' +

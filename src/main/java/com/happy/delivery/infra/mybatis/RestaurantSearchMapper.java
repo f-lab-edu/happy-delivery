@@ -1,5 +1,6 @@
 package com.happy.delivery.infra.mybatis;
 
+import com.happy.delivery.domain.restaurant.Restaurant;
 import com.happy.delivery.domain.restaurant.RestaurantCategory;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
@@ -11,4 +12,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface RestaurantSearchMapper {
 
   List<RestaurantCategory> getAllCategories();
+
+  List<Restaurant> getAllRestaurantsByCategory(Long category, String addressCode);
 }

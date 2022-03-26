@@ -11,5 +11,5 @@ public interface RestaurantService {
 
   List<RestaurantCategoryResult> getCategories();
 
-  List<RestaurantResult> restaurantSearchByCategory(Long categoryId, Long addressId);
+  List<RestaurantResult> restaurantSearchByCategory(Long category, Long addressId);
 }

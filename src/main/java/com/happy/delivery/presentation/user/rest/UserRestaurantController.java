@@ -1,9 +1,11 @@
 package com.happy.delivery.presentation.user.rest;
 
 import com.happy.delivery.application.restaurant.RestaurantService;
+import com.happy.delivery.application.restaurant.result.RestaurantResult;
 import com.happy.delivery.infra.annotation.UserLoginCheck;
 import com.happy.delivery.infra.util.SessionUtil;
 import com.happy.delivery.presentation.common.response.ApiResponse;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,12 +49,11 @@ public class UserRestaurantController {
    * 현재 주소 근처에 있는 식당을 카테고리별로 가져옴.
    */
   @UserLoginCheck
-  @GetMapping("/{categoryId}/shops")
+  @GetMapping("/{category}")
   public ApiResponse getRestaurantByCategoryIdAndTownCode(
-      @PathVariable Long categoryId, HttpSession session) {
-    //지금 main addressCode 가져오기
-    Long addressId = SessionUtil.getAddressId(session);
-    restaurantService.restaurantSearchByCategory(categoryId, addressId);
-    return null;
+      @PathVariable Long category, HttpSession session) {
+    List<RestaurantResult> restaurants =
+        restaurantService.restaurantSearchByCategory(category, SessionUtil.getAddressId(session));
+    return ApiResponse.success(restaurants);
   }
 }

@@ -1,5 +1,6 @@
 package com.happy.delivery.infra.repository.user.adapter;
 
+import com.happy.delivery.domain.restaurant.Restaurant;
 import com.happy.delivery.domain.restaurant.RestaurantCategory;
 import com.happy.delivery.domain.restaurant.repository.RestaurantSearchRepository;
 import com.happy.delivery.infra.mybatis.RestaurantSearchMapper;
@@ -21,5 +22,10 @@ public class RestaurantSearchAdapter implements RestaurantSearchRepository {
   @Override
   public List<RestaurantCategory> getAllCategories() {
     return restaurantSearchMapper.getAllCategories();
+  }
+
+  @Override
+  public List<Restaurant> getAllRestaurantsByCategory(Long category, String addressCode) {
+    return restaurantSearchMapper.getAllRestaurantsByCategory(category, addressCode);
   }
 }
