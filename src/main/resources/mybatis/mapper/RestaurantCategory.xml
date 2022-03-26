@@ -3,9 +3,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.happy.delivery.infra.mybatis.RestaurantSearchMapper">
+<mapper namespace="com.happy.delivery.infra.mybatis.UserRestaurantSearchMapper">
   <select id="getAllCategories" resultType="com.happy.delivery.domain.restaurant.RestaurantCategory">
     SELECT id, name
     FROM restaurant_categories
+  </select>
+
+  <select id="getAllRestaurantsByCategory" resultType="com.happy.delivery.domain.restaurant.Restaurant">
+    SELECT id, name, category, addressCode
+    FROM restaurants
+    WHERE category = #{category} AND addressCode = #{addressCode}
   </select>
 </mapper>

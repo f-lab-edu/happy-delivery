@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * MenuController.
  */
+
 @RestController
 @RequestMapping("/menu")
 public class MenuController {
