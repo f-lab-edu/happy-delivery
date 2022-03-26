@@ -20,13 +20,13 @@
 
   <select id="findById" parameterType="Long"
     resultType="com.happy.delivery.domain.user.UserAddress">
-    SELECT *
+    SELECT id, userId, addressCode, addressDetail
     FROM user_addresses
     WHERE id = #{id}
   </select>
 
   <select id="findAllByUserId" resultType="com.happy.delivery.domain.user.UserAddress">
-    SELECT *
+    SELECT id, userId, addressCode, addressDetail
     FROM user_addresses
     WHERE userId = #{userId}
   </select>

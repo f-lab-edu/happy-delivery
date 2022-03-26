@@ -2,7 +2,9 @@ package com.happy.delivery.presentation.menu.request;
 
 import com.happy.delivery.application.menu.command.MenuViewCommand;
 
-
+/**
+ * MenuViewRequest.
+ */
 public class MenuViewRequest {
 
   private Long menuId;
@@ -13,6 +15,9 @@ public class MenuViewRequest {
 
   private Long menuPrice;
 
+  /**
+   * MenuViewRequest Constructor.
+   */
   public MenuViewRequest(Long menuId, String menuName, String menuDetail, Long menuPrice) {
     this.menuId = menuId;
     this.menuName = menuName;
@@ -20,7 +25,10 @@ public class MenuViewRequest {
     this.menuPrice = menuPrice;
   }
 
-  public MenuViewCommand toCommand(){
+  /**
+   * MenuViewCommand toCommand.
+   */
+  public MenuViewCommand toCommand() {
     MenuViewCommand menuViewCommand = new MenuViewCommand(
         this.menuId,
         this.menuName,

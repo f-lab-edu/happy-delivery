@@ -13,9 +13,6 @@ public class UserAddress {
   @Nullable
   private String addressDetail;
 
-  public UserAddress() {
-  }
-
   /**
    * UserAddress savePassword Constructor.
    */

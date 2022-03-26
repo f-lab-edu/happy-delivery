@@ -28,6 +28,8 @@ public interface UserService {
 
   UserAddressResult saveAddress(AddressCommand address);
 
+  UserResult setMainAddress(Long userId, Long addressId);
+
   List<UserAddressResult> getListOfAllAddresses(Long loginId);
 
   UserAddressResult updateAddress(AddressCommand addressCommand);

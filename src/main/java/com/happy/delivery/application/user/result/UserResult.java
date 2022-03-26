@@ -11,15 +11,17 @@ public class UserResult {
   private final String email;
   private final String name;
   private final String phoneNumber;
+  private final Long addressId;
 
   /**
    * UserResult Constructor.
    */
-  public UserResult(Long id, String email, String name, String phoneNumber) {
+  public UserResult(Long id, String email, String name, String phoneNumber, Long addressId) {
     this.id = id;
     this.email = email;
     this.name = name;
     this.phoneNumber = phoneNumber;
+    this.addressId = addressId;
   }
 
   /**
@@ -30,7 +32,8 @@ public class UserResult {
         user.getId(),
         user.getEmail(),
         user.getName(),
-        user.getPhoneNumber()
+        user.getPhoneNumber(),
+        user.getAddressId()
     );
   }
 
@@ -50,6 +53,10 @@ public class UserResult {
     return phoneNumber;
   }
 
+  public Long getAddressId() {
+    return addressId;
+  }
+
   @Override
   public String toString() {
     return "UserResult{" +
@@ -57,6 +64,7 @@ public class UserResult {
         ", email='" + email + '\'' +
         ", name='" + name + '\'' +
         ", phoneNumber='" + phoneNumber + '\'' +
+        ", addressId=" + addressId +
         '}';
   }
 }

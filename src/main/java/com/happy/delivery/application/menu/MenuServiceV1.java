@@ -10,6 +10,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * MenuServiceV1.
+ */
 @Service
 public class MenuServiceV1 implements MenuService {
 
@@ -24,7 +27,8 @@ public class MenuServiceV1 implements MenuService {
   @Override
   public List<MenuResult> menuView(MenuViewCommand menuViewCommand) {
     List<MenuResult> result = new ArrayList<>();
-    List<Menu> menus = menuRepository.MenuSelect(menuViewCommand.getMenuId());//대체 storeId;
+    //대체 storeId;
+    List<Menu> menus = menuRepository.menuSelect(menuViewCommand.getMenuId());
     for (Menu menu : menus) {
       result.add(MenuResult.fromMenu(menu));
     }

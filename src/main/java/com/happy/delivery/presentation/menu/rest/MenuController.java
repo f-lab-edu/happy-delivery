@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * MenuController.
+ */
 @Controller
 @RequestMapping("/menu")
 public class MenuController {
@@ -22,7 +25,7 @@ public class MenuController {
   }
 
   @PostMapping("/view")
-  public ApiResponse MenuView(@RequestBody MenuViewRequest menuViewRequest){
+  public ApiResponse menuView(@RequestBody MenuViewRequest menuViewRequest) {
     List<MenuResult> menuResults = menuService.menuView(menuViewRequest.toCommand());
     return ApiResponse.success(menuResults);
   }

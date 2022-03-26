@@ -1,5 +1,8 @@
 package com.happy.delivery.domain.user;
 
+/**
+ * Menu.
+ */
 public class Menu {
   private Long menuId;
 
@@ -9,6 +12,9 @@ public class Menu {
 
   private Long menuPrice;
 
+  /**
+   * Menu Constructor.
+   */
   public Menu(Long menuId, String menuName, String menuDetail, Long menuPrice) {
     this.menuId = menuId;
     this.menuName = menuName;
