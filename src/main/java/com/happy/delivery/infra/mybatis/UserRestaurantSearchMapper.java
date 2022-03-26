@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
  * RestaurantSearchMapper.
  */
 @Mapper
-public interface RestaurantSearchMapper {
+public interface UserRestaurantSearchMapper {
 
   List<RestaurantCategory> getAllCategories();
 

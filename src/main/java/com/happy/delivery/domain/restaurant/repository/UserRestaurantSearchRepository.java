@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * RestaurantSearchRepository.
  */
-public interface RestaurantSearchRepository {
+public interface UserRestaurantSearchRepository {
 
   List<RestaurantCategory> getAllCategories();
 

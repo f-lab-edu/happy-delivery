@@ -1,6 +1,6 @@
 package com.happy.delivery.presentation.user.rest;
 
-import com.happy.delivery.application.restaurant.RestaurantService;
+import com.happy.delivery.application.restaurant.UserRestaurantService;
 import com.happy.delivery.application.restaurant.result.RestaurantResult;
 import com.happy.delivery.infra.annotation.UserLoginCheck;
 import com.happy.delivery.infra.util.SessionUtil;
@@ -23,14 +23,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserRestaurantController {
 
   private final Logger log = LoggerFactory.getLogger(UserRestaurantController.class);
-  private final RestaurantService restaurantService;
+  private final UserRestaurantService userRestaurantService;
 
   /**
    * UserRestaurantController Constructor.
    */
   @Autowired
-  public UserRestaurantController(RestaurantService restaurantService) {
-    this.restaurantService = restaurantService;
+  public UserRestaurantController(UserRestaurantService userRestaurantService) {
+    this.userRestaurantService = userRestaurantService;
   }
 
   /**
@@ -41,7 +41,7 @@ public class UserRestaurantController {
   @UserLoginCheck
   @GetMapping("/categories")
   public ApiResponse getRestaurantCategories() {
-    return ApiResponse.success(restaurantService.getCategories());
+    return ApiResponse.success(userRestaurantService.getCategories());
   }
 
   /**
@@ -53,7 +53,8 @@ public class UserRestaurantController {
   public ApiResponse getRestaurantByCategoryIdAndTownCode(
       @PathVariable Long category, HttpSession session) {
     List<RestaurantResult> restaurants =
-        restaurantService.restaurantSearchByCategory(category, SessionUtil.getAddressId(session));
+        userRestaurantService.restaurantSearchByCategory(category,
+            SessionUtil.getAddressId(session));
     return ApiResponse.success(restaurants);
   }
 }

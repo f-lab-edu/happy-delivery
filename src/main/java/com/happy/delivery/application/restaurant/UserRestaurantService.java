@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * UserRestaurantService.
  */
-public interface RestaurantService {
+public interface UserRestaurantService {
 
   List<RestaurantCategoryResult> getCategories();
 
