@@ -1,9 +1,9 @@
 package com.happy.delivery.application.menu.command;
 
+//layer에 맞는 dto 이름 사용, command partten을 많이 사용해서
+//각 계층별 api가 사용하는 dto가 다르기 때문에 dto를 분리
 /**
  * MenuViewCommand.
- * layer에 맞는 dto 이름 사용, command partten을 많이 사용해서,
- * 각 계층별 api가 사용하는 dto가 다르기 때문에 dto를 분리.
  */
 public class MenuViewCommand {
 
@@ -16,7 +16,7 @@ public class MenuViewCommand {
   private Long menuPrice;
 
   /**
-   * MenuViewCommand Constructor.
+   * MenuViewCommand Constuctor.
    */
   public MenuViewCommand(Long menuId, String menuName, String menuDetail, Long menuPrice) {
     this.menuId = menuId;

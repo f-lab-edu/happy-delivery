@@ -26,7 +26,7 @@ public class MenuViewRequest {
   }
 
   /**
-   * MenuViewCommand toCommand.
+   * MenuViewRequest toCommand.
    */
   public MenuViewCommand toCommand() {
     MenuViewCommand menuViewCommand = new MenuViewCommand(

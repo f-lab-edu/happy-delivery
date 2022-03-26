@@ -16,7 +16,7 @@ public class MenuResult {
   private Long menuPrice;
 
   /**
-   * fromMenu.
+   * MenuResult fromMenu.
    */
   public static MenuResult fromMenu(Menu menu) {
     return new MenuResult(
@@ -28,7 +28,7 @@ public class MenuResult {
   }
 
   /**
-   * MenuResult constructor.
+   * MenuResult Constructor.
    */
   public MenuResult(Long menuId, String menuName, String menuDetail, Long menuPrice) {
     this.menuId = menuId;
@@ -51,5 +51,15 @@ public class MenuResult {
 
   public Long getMenuPrice() {
     return menuPrice;
+  }
+
+  @Override
+  public String toString() {
+    return "MenuResult{" +
+        "menuId=" + menuId +
+        ", menuName='" + menuName + '\'' +
+        ", menuDetail='" + menuDetail + '\'' +
+        ", menuPrice=" + menuPrice +
+        '}';
   }
 }

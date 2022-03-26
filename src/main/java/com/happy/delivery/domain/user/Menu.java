@@ -37,4 +37,14 @@ public class Menu {
   public Long getMenuPrice() {
     return menuPrice;
   }
+
+  @Override
+  public String toString() {
+    return "Menu{" +
+        "menuId=" + menuId +
+        ", menuName='" + menuName + '\'' +
+        ", menuDetail='" + menuDetail + '\'' +
+        ", menuPrice=" + menuPrice +
+        '}';
+  }
 }

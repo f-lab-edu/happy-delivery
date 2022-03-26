@@ -1,7 +1,5 @@
 package com.happy.delivery.application.menu;
 
-
-import com.happy.delivery.application.menu.command.MenuViewCommand;
 import com.happy.delivery.application.menu.result.MenuResult;
 import com.happy.delivery.domain.user.Menu;
 import com.happy.delivery.domain.user.repository.MenuRepository;
@@ -23,15 +21,13 @@ public class MenuServiceV1 implements MenuService {
     this.menuRepository = menuRepository;
   }
 
-
   @Override
-  public List<MenuResult> menuView(MenuViewCommand menuViewCommand) {
+  public List<MenuResult> menuView(Long storeId) {
     List<MenuResult> result = new ArrayList<>();
-    //대체 storeId;
-    List<Menu> menus = menuRepository.menuSelect(menuViewCommand.getMenuId());
+    List<Menu> menus = menuRepository.getAllByStoreId(storeId);
     for (Menu menu : menus) {
       result.add(MenuResult.fromMenu(menu));
     }
-    return null;
+    return result;
   }
 }
