@@ -5,7 +5,6 @@ import com.happy.delivery.domain.user.repository.UserRepository;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
-import org.springframework.stereotype.Repository;
 
 /**
  * HashMapUserRepository. repository는 collection의 역할을 하기때문에 비지니스 로직이 들어가면 안된다.

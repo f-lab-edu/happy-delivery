@@ -8,6 +8,7 @@ import com.happy.delivery.application.user.command.SignupCommand;
 import com.happy.delivery.application.user.result.UserAddressResult;
 import com.happy.delivery.application.user.result.UserResult;
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
+import com.happy.delivery.domain.exception.user.NoUserIdException;
 import com.happy.delivery.domain.exception.user.NotAuthorizedException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
 import com.happy.delivery.domain.exception.user.UserAddressNotExistedException;
@@ -17,7 +18,6 @@ import com.happy.delivery.domain.user.UserAddress;
 import com.happy.delivery.domain.user.repository.UserAddressRepository;
 import com.happy.delivery.domain.user.repository.UserRepository;
 import com.happy.delivery.infra.encoder.EncryptMapper;
-import com.happy.delivery.infra.mybatis.UserMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -39,8 +39,8 @@ public class UserServiceV1 implements UserService {
   /**
    * UserServiceV1 Constructor.
    */
-  public UserServiceV1(UserRepository userRepository,
-      UserAddressRepository userAddressRepository,
+  @Autowired
+  public UserServiceV1(UserRepository userRepository, UserAddressRepository userAddressRepository,
       EncryptMapper encryptMapper) {
     this.userRepository = userRepository;
     this.userAddressRepository = userAddressRepository;
@@ -48,6 +48,7 @@ public class UserServiceV1 implements UserService {
   }
 
   @Override
+  @Transactional
   public UserResult signup(SignupCommand signCommand) {
     // email로 user 조회
     // null이 아니면, 이미 존재하는 계정이니 예외 발생
@@ -68,6 +69,7 @@ public class UserServiceV1 implements UserService {
   }
 
   @Override
+  @Transactional
   public UserResult signin(SigninCommand signinCommand) {
     // 1. repo에 저장된 비밀번호 가져오기
     User user = userRepository.findByEmail(signinCommand.getEmail());
@@ -81,8 +83,8 @@ public class UserServiceV1 implements UserService {
     return UserResult.fromUser(user);
   }
 
-  @Transactional
   @Override
+  @Transactional
   public UserResult updateMyAccount(MyAccountCommand myAccountCommand) {
     // 경우 1. user1, user2 생성, user1로그인 -> user2의 이메일로 변경 ; (변경안됨)
     // 경우 2. user1, user2 생성, user1로그인 -> user1의 이메일로 변경(그대로) 이름과 폰 번호만 변경 ; (변경됨)
@@ -100,21 +102,27 @@ public class UserServiceV1 implements UserService {
   }
 
   @Override
+  @Transactional
   public boolean deleteMyAccount(Long loinId) {
     return userRepository.deleteId(loinId);
   }
 
   @Override
+  @Transactional
   public UserResult getMyAccount(Long loginId) {
     User user = userRepository.findById(loginId);
     return UserResult.fromUser(user);
   }
 
   /**
-   * 비밀번호 변경 1) 변경 전 비밀번호 일치여부 검사. 2) 바꾸려는 비밀번호 암호화. 3) User 비밀번호값 바꾸기 : changePassword 4)
-   * repository 저장.
+   * 비밀번호 변경
+   * 1) 변경 전 비밀번호 일치여부 검사.
+   * 2) 바꾸려는 비밀번호 암호화.
+   * 3) User 비밀번호값 바꾸기 : changePassword
+   * 4) repository 저장.
    */
   @Override
+  @Transactional
   public UserResult updatePassword(Long id, PasswordUpdateCommand passwordUpdateCommand) {
     User user = userRepository.findById(id);
     if (!encryptMapper.isMatch(passwordUpdateCommand.getCurrentPassword(), user.getPassword())) {
@@ -126,18 +134,43 @@ public class UserServiceV1 implements UserService {
   }
 
   @Override
+  @Transactional
   public UserAddressResult saveAddress(AddressCommand addressCommand) {
-    UserAddress userAddress = new UserAddress(
-        addressCommand.getUserId(),
-        addressCommand.getAddressCode(),
-        addressCommand.getAddressDetail());
-    return UserAddressResult.fromUserAddress(userAddressRepository.save(userAddress));
+    UserAddress address = userAddressRepository.save(
+        new UserAddress(
+            addressCommand.getUserId(),
+            addressCommand.getAddressCode(),
+            addressCommand.getAddressDetail()));
+    User user = userRepository.findById(address.getUserId());
+    if (user == null) {
+      throw new NoUserIdException();
+    }
+    user.setAddressId(address.getId());
+    userRepository.save(user);
+    return UserAddressResult.fromUserAddress(address);
   }
 
   @Override
-  public List<UserAddressResult> getListOfAllAddresses(Long loginId) {
+  @Transactional
+  public UserResult setMainAddress(Long userId, Long addressId) {
+    UserAddress byId = userAddressRepository.findById(addressId);
+    if (byId == null) {
+      throw new UserAddressNotExistedException("주소가 존재하지 않습니다.");
+    }
+    if (byId.getUserId() != userId) {
+      throw new NotAuthorizedException("현재 주소로 설정할 권한이 없습니다.");
+    }
+    User user = userRepository.findById(userId);
+    user.setAddressId(addressId);
+    userRepository.save(user);
+    return UserResult.fromUser(user);
+  }
+
+  @Override
+  @Transactional
+  public List<UserAddressResult> getListOfAllAddresses(Long userId) {
     List<UserAddressResult> result = new ArrayList<>();
-    List<UserAddress> addresses = userAddressRepository.findAllByUserId(loginId);
+    List<UserAddress> addresses = userAddressRepository.findAllByUserId(userId);
     for (UserAddress address : addresses) {
       result.add(UserAddressResult.fromUserAddress(address));
     }
@@ -145,6 +178,7 @@ public class UserServiceV1 implements UserService {
   }
 
   @Override
+  @Transactional
   public UserAddressResult updateAddress(AddressCommand addressCommand) {
     UserAddress userAddress = userAddressRepository.findById(addressCommand.getAddressId());
     checkEmailExistence(userAddress);
@@ -154,6 +188,7 @@ public class UserServiceV1 implements UserService {
   }
 
   @Override
+  @Transactional
   public boolean deleteAddress(AddressCommand addressCommand) {
     UserAddress userAddress = userAddressRepository.findById(addressCommand.getAddressId());
     checkEmailExistence(userAddress);

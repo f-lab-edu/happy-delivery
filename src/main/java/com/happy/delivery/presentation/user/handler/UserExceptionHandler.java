@@ -1,5 +1,6 @@
 package com.happy.delivery.presentation.user.handler;
 
+import com.happy.delivery.domain.exception.user.CanNotDeleteMainAddressException;
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
 import com.happy.delivery.domain.exception.user.NoUserIdException;
 import com.happy.delivery.domain.exception.user.NotAuthorizedException;
@@ -79,5 +80,14 @@ public class UserExceptionHandler {
   @ExceptionHandler(NotAuthorizedException.class)
   public ApiResponse<?> notAuthorizedException(NotAuthorizedException ex) {
     return ApiResponse.fail("NOT_AUTHORIZED", ex.getMessage());
+  }
+
+  /**
+   * 현재 주소로 설정된 주소정보를 삭제하려고 한 경우.
+   * user에 들어있는 main address의 정보를 삭제하려고 한 경우.
+   */
+  @ExceptionHandler(CanNotDeleteMainAddressException.class)
+  public ApiResponse<?> canNotDeleteMainAddressException(CanNotDeleteMainAddressException ex) {
+    return ApiResponse.fail("CAN_NOT_DELETE_MAIN_ADDRESS", ex.getMessage());
   }
 }
