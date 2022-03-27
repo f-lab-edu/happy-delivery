@@ -9,5 +9,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface MenuMapper {
-  List<Menu> menuSelect(Long storeId);
+  List<Menu> getAllByStoreId(Long storeId);
 }

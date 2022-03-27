@@ -7,5 +7,5 @@ import java.util.List;
  * MenuRepository.
  */
 public interface MenuRepository {
-  List<Menu> menuSelect(Long storeId);
+  List<Menu> getAllByStoreId(Long storeId);
 }

@@ -16,7 +16,7 @@ public class MenuViewCommand {
   private Long menuPrice;
 
   /**
-   * MenuViewCommand Constructor.
+   * MenuViewCommand Constuctor.
    */
   public MenuViewCommand(Long menuId, String menuName, String menuDetail, Long menuPrice) {
     this.menuId = menuId;
