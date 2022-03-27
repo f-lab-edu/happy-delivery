@@ -103,8 +103,11 @@ public class UserServiceV1 implements UserService {
 
   @Override
   @Transactional
-  public boolean deleteMyAccount(Long loinId) {
-    return userRepository.deleteId(loinId);
+  public boolean deleteMyAccount(Long loginId) {
+    boolean flag = false;
+    flag = userAddressRepository.deleteAllByUserId(loginId);
+    flag = userRepository.deleteId(loginId);
+    return flag;
   }
 
   @Override

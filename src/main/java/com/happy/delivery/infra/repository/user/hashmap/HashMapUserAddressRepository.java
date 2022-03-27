@@ -2,6 +2,7 @@ package com.happy.delivery.infra.repository.user.hashmap;
 
 import com.happy.delivery.domain.user.UserAddress;
 import com.happy.delivery.domain.user.repository.UserAddressRepository;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -9,9 +10,9 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 /**
- * HashMapUserAddressRepository. repository는 collection의 역할을 하기때문에 비지니스 로직이 들어가면 안된다.
+ * HashMapUserAddressRepository.
+ * repository는 collection의 역할을 하기 때문에 비지니스 로직이 들어가면 안된다.
  */
-
 public class HashMapUserAddressRepository implements UserAddressRepository {
 
   private final Map<Long, UserAddress> map = new ConcurrentHashMap<>();
@@ -49,5 +50,21 @@ public class HashMapUserAddressRepository implements UserAddressRepository {
       flag = true;
     }
     return flag;
+  }
+
+  @Override
+  public boolean deleteAllByUserId(Long userId) {
+    boolean flag = false;
+    List<UserAddress> addressList = new ArrayList<>();
+    addressList = map.values()
+        .stream()
+        .filter(userAddress -> userId.equals(userAddress.getUserId()))
+        .collect(Collectors.toList());
+    for (UserAddress address : addressList) {
+      if (map.remove(address.getId()) != null) {
+        flag = true;
+      }
+    }
+    return false;
   }
 }

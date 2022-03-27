@@ -21,7 +21,6 @@ public class UserRepositoryAdapter implements UserRepository {
   public User save(User user) {
     if (user.getId() == null || user.getId() <= 0L) {
       userMapper.insert(user);
-      System.out.println(1);
       return user;
     }
     userMapper.update(user);
