@@ -6,18 +6,18 @@ import com.happy.delivery.domain.restaurant.RestaurantCategory;
  * RestaurantCategoryResult.
  */
 public class RestaurantCategoryResult {
-  private Long id;
+  private int id;
   private String name;
 
   /**
    * RestaurantCategoryResult constructor.
    */
-  public RestaurantCategoryResult(Long id, String name) {
+  public RestaurantCategoryResult(int id, String name) {
     this.id = id;
     this.name = name;
   }
 
-  public Long getId() {
+  public int getId() {
     return id;
   }
 
