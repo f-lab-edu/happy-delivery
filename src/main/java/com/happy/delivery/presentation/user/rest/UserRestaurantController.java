@@ -2,6 +2,7 @@ package com.happy.delivery.presentation.user.rest;
 
 import com.happy.delivery.application.restaurant.UserRestaurantService;
 import com.happy.delivery.application.restaurant.result.RestaurantResult;
+import com.happy.delivery.domain.exception.user.UserAddressNotExistedException;
 import com.happy.delivery.infra.annotation.UserLoginCheck;
 import com.happy.delivery.infra.util.SessionUtil;
 import com.happy.delivery.presentation.common.response.ApiResponse;
@@ -52,6 +53,9 @@ public class UserRestaurantController {
   @GetMapping("/{category}")
   public ApiResponse getRestaurantByCategoryIdAndTownCode(
       @PathVariable Long category, HttpSession session) {
+    if (SessionUtil.getAddressId(session) == null) {
+      throw new UserAddressNotExistedException("현재 주소가 존재하지 않습니다. 주소를 등록해주세요.");
+    }
     List<RestaurantResult> restaurants =
         userRestaurantService.restaurantSearchByCategory(category,
             SessionUtil.getAddressId(session));
