@@ -114,7 +114,7 @@ public class UserController {
    */
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
-  @DeleteMapping("my-account")
+  @DeleteMapping("/my-account")
   public ApiResponse<UserResult> deleteMyAccount(@Valid HttpSession httpSession) {
     userService.deleteMyAccount(SessionUtil.getLoginId(httpSession));
     SessionUtil.clear(httpSession);

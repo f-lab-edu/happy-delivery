@@ -14,7 +14,7 @@
   <update id="update" parameterType="com.happy.delivery.domain.user.UserAddress">
     UPDATE user_addresses
     SET addressCode = #{addressCode},
-    addressDetail = #{addressDetail}
+        addressDetail = #{addressDetail}
     WHERE id = #{id};
   </update>
 
@@ -37,4 +37,9 @@
     WHERE id = #{id}
   </delete>
 
+  <delete id="deleteAllByUserId" parameterType="Long">
+    DELETE
+    FROM user_addresses
+    WHERE userId = #{userId}
+  </delete>
 </mapper>

@@ -42,4 +42,9 @@ public class UserAddressRepositoryAdapter implements UserAddressRepository {
   public boolean deleteById(Long id) {
     return userAddressMapper.deleteById(id);
   }
+
+  @Override
+  public boolean deleteAllByUserId(Long userId) {
+    return userAddressMapper.deleteAllByUserId(userId);
+  }
 }
