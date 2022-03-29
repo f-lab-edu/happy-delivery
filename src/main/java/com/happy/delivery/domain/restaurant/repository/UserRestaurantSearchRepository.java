@@ -11,5 +11,5 @@ public interface UserRestaurantSearchRepository {
 
   List<RestaurantCategory> getAllCategories();
 
-  List<Restaurant> getAllRestaurantsByCategory(Long categoryId, String addressCode);
+  List<Restaurant> getAllRestaurantsByCategory(String categoryId, String addressCode);
 }

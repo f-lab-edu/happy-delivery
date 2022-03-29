@@ -25,7 +25,7 @@ public class UserRestaurantSearchAdapter implements UserRestaurantSearchReposito
   }
 
   @Override
-  public List<Restaurant> getAllRestaurantsByCategory(Long category, String addressCode) {
+  public List<Restaurant> getAllRestaurantsByCategory(String category, String addressCode) {
     return userRestaurantSearchMapper.getAllRestaurantsByCategory(category, addressCode);
   }
 }

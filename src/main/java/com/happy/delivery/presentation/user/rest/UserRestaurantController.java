@@ -52,7 +52,7 @@ public class UserRestaurantController {
   @UserLoginCheck
   @GetMapping("/{category}")
   public ApiResponse getRestaurantByCategoryIdAndTownCode(
-      @PathVariable Long category, HttpSession session) {
+      @PathVariable String category, HttpSession session) {
     if (SessionUtil.getAddressId(session) == null) {
       throw new UserAddressNotExistedException("현재 주소가 존재하지 않습니다. 주소를 등록해주세요.");
     }

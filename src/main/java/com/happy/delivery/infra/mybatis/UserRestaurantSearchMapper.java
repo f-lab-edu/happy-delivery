@@ -13,5 +13,5 @@ public interface UserRestaurantSearchMapper {
 
   List<RestaurantCategory> getAllCategories();
 
-  List<Restaurant> getAllRestaurantsByCategory(Long category, String addressCode);
+  List<Restaurant> getAllRestaurantsByCategory(String category, String addressCode);
 }

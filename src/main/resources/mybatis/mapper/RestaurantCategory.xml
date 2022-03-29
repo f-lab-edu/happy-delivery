@@ -7,6 +7,7 @@
   <select id="getAllCategories" resultType="com.happy.delivery.domain.restaurant.RestaurantCategory">
     SELECT id, name
     FROM restaurant_categories
+    ORDER BY id
   </select>
 
   <select id="getAllRestaurantsByCategory" resultType="com.happy.delivery.domain.restaurant.Restaurant">

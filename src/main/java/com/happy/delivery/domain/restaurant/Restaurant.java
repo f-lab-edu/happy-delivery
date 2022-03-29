@@ -7,13 +7,13 @@ public class Restaurant {
 
   private final Long id;
   private final String name;
-  private final int category;
+  private final String category;
   private final String addressCode;
 
   /**
    * Restaurant Constructor.
    */
-  public Restaurant(Long id, String name, int category, String addressCode) {
+  public Restaurant(Long id, String name, String category, String addressCode) {
     this.id = id;
     this.name = name;
     this.category = category;
@@ -28,7 +28,7 @@ public class Restaurant {
     return name;
   }
 
-  public int getCategory() {
+  public String getCategory() {
     return category;
   }
 

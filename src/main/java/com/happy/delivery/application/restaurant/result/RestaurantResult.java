@@ -9,13 +9,13 @@ public class RestaurantResult {
 
   private final Long id;
   private final String name;
-  private final int category;
+  private final String category;
   private final String addressCode;
 
   /**
    * RestaurantResult Constructor.
    */
-  public RestaurantResult(Long id, String name, int category, String addressCode) {
+  public RestaurantResult(Long id, String name, String category, String addressCode) {
     this.id = id;
     this.name = name;
     this.category = category;
@@ -30,7 +30,7 @@ public class RestaurantResult {
     return name;
   }
 
-  public int getCategory() {
+  public String getCategory() {
     return category;
   }
 

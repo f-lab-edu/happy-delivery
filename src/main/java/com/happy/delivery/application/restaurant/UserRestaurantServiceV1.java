@@ -44,7 +44,7 @@ public class UserRestaurantServiceV1 implements UserRestaurantService {
 
   @Override
   @Transactional
-  public List<RestaurantResult> restaurantSearchByCategory(Long category, Long addressId) {
+  public List<RestaurantResult> restaurantSearchByCategory(String category, Long addressId) {
     String addressCode = userAddressRepository.findById(addressId).getAddressCode();
     List<Restaurant> listOfRestaurant =
         userRestaurantSearchRepository.getAllRestaurantsByCategory(category, addressCode);
