@@ -11,5 +11,5 @@ public interface UserRestaurantService {
 
   List<RestaurantCategoryResult> getCategories();
 
-  List<RestaurantResult> restaurantSearchByCategory(String category, Long addressId);
+  List<RestaurantResult> restaurantSearchByCategory(String category, String addressCode);
 }

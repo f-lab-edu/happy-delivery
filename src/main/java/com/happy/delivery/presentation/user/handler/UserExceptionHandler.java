@@ -5,6 +5,7 @@ import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
 import com.happy.delivery.domain.exception.user.NoUserIdException;
 import com.happy.delivery.domain.exception.user.NotAuthorizedException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
+import com.happy.delivery.domain.exception.user.UnexpectedCategoryException;
 import com.happy.delivery.domain.exception.user.UserAddressNotExistedException;
 import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
 import com.happy.delivery.presentation.common.response.ApiResponse;
@@ -89,5 +90,13 @@ public class UserExceptionHandler {
   @ExceptionHandler(CanNotDeleteMainAddressException.class)
   public ApiResponse<?> canNotDeleteMainAddressException(CanNotDeleteMainAddressException ex) {
     return ApiResponse.fail("CAN_NOT_DELETE_MAIN_ADDRESS", ex.getMessage());
+  }
+
+  /**
+   * 범위 밖 카테고리를 사용한 경우.
+   */
+  @ExceptionHandler(UnexpectedCategoryException.class)
+  public ApiResponse<?> unexpectedCategoryException(UnexpectedCategoryException ex) {
+    return ApiResponse.fail("UNEXPECTED_CATEGORY", ex.getMessage());
   }
 }
