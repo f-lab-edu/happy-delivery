@@ -5,18 +5,18 @@ package com.happy.delivery.domain.restaurant;
  */
 public class RestaurantCategory {
 
-  private Long id;
+  private int id;
   private String name;
 
   /**
    * RestaurantCategory constructor.
    */
-  public RestaurantCategory(Long id, String name) {
+  public RestaurantCategory(int id, String name) {
     this.id = id;
     this.name = name;
   }
 
-  public Long getId() {
+  public int getId() {
     return id;
   }
 
