@@ -2,7 +2,6 @@ package com.happy.delivery.presentation.user.rest;
 
 import com.happy.delivery.application.restaurant.UserRestaurantService;
 import com.happy.delivery.application.restaurant.result.RestaurantResult;
-import com.happy.delivery.infra.util.CategoriesUtil;
 import com.happy.delivery.presentation.common.response.ApiResponse;
 import java.util.List;
 import org.slf4j.Logger;
@@ -45,10 +44,9 @@ public class UserRestaurantController {
    * getRestaurantByCategoryIdAndTownCode.
    * 현재 주소 근처에 있는 식당을 카테고리별로 가져옴.
    */
-  @GetMapping({"/{categoryId}/addresses/{addressCode}"})
+  @GetMapping({"/{category}/addresses/{addressCode}"})
   public ApiResponse getRestaurantByCategoryIdAndTownCode(
-      @PathVariable int categoryId, @PathVariable String addressCode) {
-    String category = CategoriesUtil.changeToStringCategory(categoryId);
+      @PathVariable String category, @PathVariable String addressCode) {
     List<RestaurantResult> restaurants =
         userRestaurantService.restaurantSearchByCategory(category, addressCode);
     return ApiResponse.success(restaurants);

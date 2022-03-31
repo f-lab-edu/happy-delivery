@@ -10,25 +10,25 @@ import org.springframework.lang.Nullable;
  */
 public class AddressRequest {
 
-  Long addressId;
+  private Long addressId;
+  private Long userId;
+  private Double longitude;
+  private Double latitude;
 
-  Long userId;
-
-  //우편주소
-  @NotBlank(message = "주소를 입력해주세요.")
-  @Pattern(regexp = "^[가-힣0-9\\s]*$", message = "형식이 맞지 않습니다. 한글과 숫자만 입력해주세요.")
-  private String addressCode;
-
-  // 상세 주소(xxx호)
-  @Nullable
+  /**
+   * 주소.
+   * 도로명주소와 지번주소 입력.
+   */
+  @NotBlank
   @Pattern(regexp = "^[ㄱ-ㅎ가-힣0-9\\s]*$", message = "형식이 맞지 않습니다. 한글과 숫자만 입력해주세요.")
   private String addressDetail;
 
   /**
    * AddressRequest Constructor.
    */
-  public AddressRequest(String addressCode, String addressDetail) {
-    this.addressCode = addressCode;
+  public AddressRequest(Double longitude, Double latitude, @Nullable String addressDetail) {
+    this.longitude = longitude;
+    this.latitude = latitude;
     this.addressDetail = addressDetail;
   }
 
@@ -39,7 +39,8 @@ public class AddressRequest {
     return new AddressCommand(
         addressId,
         userId,
-        this.addressCode,
+        this.longitude,
+        this.latitude,
         this.addressDetail
     );
   }
@@ -52,8 +53,12 @@ public class AddressRequest {
     return userId;
   }
 
-  public String getAddressCode() {
-    return addressCode;
+  public Double getLongitude() {
+    return longitude;
+  }
+
+  public Double getLatitude() {
+    return latitude;
   }
 
   @Nullable

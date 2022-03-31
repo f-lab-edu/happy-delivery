@@ -5,6 +5,7 @@ import com.happy.delivery.application.user.command.AddressCommand;
 import com.happy.delivery.application.user.result.UserAddressResult;
 import com.happy.delivery.application.user.result.UserResult;
 import com.happy.delivery.domain.exception.user.CanNotDeleteMainAddressException;
+import com.happy.delivery.domain.exception.user.UserLocationNullPointException;
 import com.happy.delivery.infra.annotation.UserLoginCheck;
 import com.happy.delivery.infra.util.SessionUtil;
 import com.happy.delivery.presentation.common.response.ApiResponse;
@@ -54,7 +55,7 @@ public class UserController {
     return ApiResponse.success(userResult);
   }
 
-  /**s
+  /**
    * signin.
    */
   @ResponseStatus(code = HttpStatus.OK)
@@ -85,7 +86,7 @@ public class UserController {
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @GetMapping("/my-account")
-  public ApiResponse<UserResult> getMyAccount(HttpSession httpSession) {
+  public ApiResponse getMyAccount(HttpSession httpSession) {
     Long userId = SessionUtil.getLoginId(httpSession);
     UserResult myAccount = userService.getMyAccount(userId);
     return ApiResponse.success(myAccount);
@@ -97,7 +98,7 @@ public class UserController {
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @PutMapping("/my-account")
-  public ApiResponse<UserResult> updateMyAccount(@Valid @RequestBody
+  public ApiResponse updateMyAccount(@Valid @RequestBody
       MyAccountRequest myAccountRequest, HttpSession httpSession) {
     MyAccountRequest myAccountInfo = new MyAccountRequest(
         SessionUtil.getLoginId(httpSession),
@@ -115,7 +116,7 @@ public class UserController {
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @DeleteMapping("/my-account")
-  public ApiResponse<UserResult> deleteMyAccount(@Valid HttpSession httpSession) {
+  public ApiResponse deleteMyAccount(@Valid HttpSession httpSession) {
     userService.deleteMyAccount(SessionUtil.getLoginId(httpSession));
     SessionUtil.clear(httpSession);
     return ApiResponse.success("DELETE_MY_ACCOUNT");
@@ -144,6 +145,7 @@ public class UserController {
   @PostMapping("/addresses")
   public ApiResponse saveAddress(@Valid @RequestBody AddressRequest address,
       HttpSession httpSession) {
+    locationNullCheck(address);
     UserAddressResult userAddressResult = userService.saveAddress(
         address.toCommand(null, SessionUtil.getLoginId(httpSession)));
     if (userAddressResult != null) {
@@ -174,6 +176,7 @@ public class UserController {
   @PatchMapping("/addresses/{addressId}")
   public ApiResponse updateAddress(@PathVariable Long addressId,
       @Valid @RequestBody AddressRequest addressRequest, HttpSession httpSession) {
+    locationNullCheck(addressRequest);
     UserAddressResult userAddressResult = userService.updateAddress(
         addressRequest.toCommand(addressId, SessionUtil.getLoginId(httpSession)));
     return ApiResponse.success(userAddressResult);
@@ -208,6 +211,16 @@ public class UserController {
     }
     return ApiResponse.success(
         userService.deleteAddress(new AddressCommand(addressId, SessionUtil.getLoginId(httpSession),
-            null, null)));
+            null, null, null)));
+  }
+
+  /**
+   * locationNullCheck.
+   * 경도 위도 null값 확인
+   */
+  private void locationNullCheck(AddressRequest addressRequest) {
+    if (addressRequest.getLongitude() == null || addressRequest.getLatitude() == null) {
+      throw new UserLocationNullPointException("경도 위도를 모두 작성해주세요.");
+    }
   }
 }

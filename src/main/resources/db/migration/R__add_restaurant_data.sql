@@ -1,27 +1,107 @@
-INSERT INTO restaurants (name, category, addressCode) VALUES ('하나일식', "JAPANESE", "1234");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('둘일식', "JAPANESE", "1234");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('셋일식', "JAPANESE", "4321");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('넷중식', "CHINESE", "4321");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('다섯중식', "CHINESE", "4321");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('여섯중식', "CHINESE", "1234");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('일곱치킨', "CHICKEN", "1234");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('여덟치킨', "CHICKEN", "4321");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('아홉치킨', "CHICKEN", "4321");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('열한식', "KOREAN", "1234");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('열하나한식', "KOREAN", "4321");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('열둘한식', "KOREAN", "1234");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('열셋디저트', "DESSERT", "4321");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('열넷디저트', "DESSERT", "1234");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('열다섯디저트', "DESSERT", "4321");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('열여섯분식', "SNACK", "4321");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('열일곱분식', "SNACK", "4321");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('열여덟분식', "SNACK", "1234");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('열아홉양식', "WESTERN", "4321");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('스물양식', "WESTERN", "4321");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('스물하나양식', "WESTERN", "1234");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('스물둘아시안', "ASIAN", "4321");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('스물셋아시안', "ASIAN", "4321");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('스물넷아시안', "ASIAN", "1234");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('스물다섯피자', "PIZZA", "1234");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('스물여섯피자', "PIZZA", "4321");
-INSERT INTO restaurants (name, category, addressCode) VALUES ('스물일곱피자', "PIZZA", "1234");
+INSERT INTO restaurants (name, category, location)
+VALUES ('하나일식', "JAPANESE",
+        ST_GeomFromText("point(127.04298707366922 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('둘일식', "JAPANESE",
+        ST_GeomFromText("point(127.04298707366922 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('셋일식', "JAPANESE",
+        ST_GeomFromText("point(127.04298707366922 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('넷중식', "CHINESE",
+        ST_GeomFromText("point(127.04298707366922 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('다섯중식', "CHINESE",
+        ST_GeomFromText("point(127.04298707366922 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('여섯중식', "CHINESE",
+        ST_GeomFromText("point(127.04298707366922 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('일곱치킨', "CHICKEN",
+        ST_GeomFromText("point(127.04298707366922 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('여덟치킨', "CHICKEN",
+        ST_GeomFromText("point(127.04298707366922 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('아홉치킨', "CHICKEN",
+        ST_GeomFromText("point(127.04298707366922 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('열한식', "KOREAN",
+        ST_GeomFromText("point(127.04298707366922 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('열하나한식', "KOREAN",
+        ST_GeomFromText("point(127.04298707366922 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('열둘한식', "KOREAN",
+        ST_GeomFromText("point(127.04298707366922 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('열셋디저트', "DESSERT",
+        ST_GeomFromText("point(127.03440857599458 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('열넷디저트', "DESSERT",
+        ST_GeomFromText("point(127.03440857599458 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('열다섯디저트', "DESSERT",
+        ST_GeomFromText("point(127.03440857599458 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('열여섯분식', "SNACK",
+        ST_GeomFromText("point(127.03440857599458 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('열일곱분식', "SNACK",
+        ST_GeomFromText("point(127.03440857599458 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('열여덟분식', "SNACK",
+        ST_GeomFromText("point(127.03440857599458 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('열아홉양식', "WESTERN",
+        ST_GeomFromText("point(127.03440857599458 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('스물양식', "WESTERN",
+        ST_GeomFromText("point(127.03440857599458 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('스물하나양식', "WESTERN",
+        ST_GeomFromText("point(127.03440857599458 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('스물둘아시안', "ASIAN",
+        ST_GeomFromText("point(127.03440857599458 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('스물셋아시안', "ASIAN",
+        ST_GeomFromText("point(127.03440857599458 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('스물넷아시안', "ASIAN",
+        ST_GeomFromText("point(127.03440857599458 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('스물다섯피자', "PIZZA",
+        ST_GeomFromText("point(127.03440857599458 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('스물여섯피자', "PIZZA",
+        ST_GeomFromText("point(127.03440857599458 37.512764805693074)"));
+
+INSERT INTO restaurants (name, category, location)
+VALUES ('스물일곱피자', "PIZZA",
+        ST_GeomFromText("point(127.03440857599458 37.512764805693074)"));

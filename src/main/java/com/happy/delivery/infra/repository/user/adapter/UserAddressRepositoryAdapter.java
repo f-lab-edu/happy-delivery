@@ -23,8 +23,9 @@ public class UserAddressRepositoryAdapter implements UserAddressRepository {
   public UserAddress save(UserAddress userAddress) {
     if ((userAddress.getId() == null) || (userAddress.getId() <= 0L)) {
       userAddressMapper.insert(userAddress);
+    } else {
+      userAddressMapper.update(userAddress);
     }
-    userAddressMapper.update(userAddress);
     return userAddress;
   }
 

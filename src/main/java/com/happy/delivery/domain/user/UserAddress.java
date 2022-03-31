@@ -9,16 +9,23 @@ public class UserAddress {
 
   private Long id;
   private Long userId;
-  private String addressCode;
+  private Double longitude;
+  private Double latitude;
+  private String location;
   @Nullable
   private String addressDetail;
 
+  public UserAddress() {
+  }
+
   /**
-   * UserAddress savePassword Constructor.
+   * UserAddress saveAddress Constructor.
    */
-  public UserAddress(Long userId, String addressCode, String addressDetail) {
+  public UserAddress(Long userId, Double longitude, Double latitude, String addressDetail) {
     this.userId = userId;
-    this.addressCode = addressCode;
+    this.longitude = longitude;
+    this.latitude = latitude;
+    setLocation(longitude, latitude);
     this.addressDetail = addressDetail;
   }
 
@@ -26,8 +33,10 @@ public class UserAddress {
    * changeAddress().
    * 주소 변경.
    */
-  public void changeAddress(String addressCode, String addressDetail) {
-    this.addressCode = addressCode;
+  public void changeAddress(Double longitude, Double latitude, String addressDetail) {
+    this.longitude = longitude;
+    this.latitude = latitude;
+    setLocation(longitude, latitude);
     this.addressDetail = addressDetail;
   }
 
@@ -43,12 +52,24 @@ public class UserAddress {
     return userId;
   }
 
-  public String getAddressCode() {
-    return addressCode;
+  public Double getLongitude() {
+    return longitude;
+  }
+
+  public Double getLatitude() {
+    return latitude;
   }
 
   public String getAddressDetail() {
     return addressDetail;
+  }
+
+  public String getLocation() {
+    return location;
+  }
+
+  public void setLocation(Double longitude, Double latitude) {
+    this.location = "point(" + longitude + " " + latitude + ")";
   }
 
   @Override
@@ -56,7 +77,9 @@ public class UserAddress {
     return "UserAddress{" +
         "id=" + id +
         ", userId=" + userId +
-        ", addressCode='" + addressCode + '\'' +
+        ", longitude=" + longitude +
+        ", latitude=" + latitude +
+        ", location='" + location + '\'' +
         ", addressDetail='" + addressDetail + '\'' +
         '}';
   }

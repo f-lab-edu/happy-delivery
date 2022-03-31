@@ -8,6 +8,7 @@ import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
 import com.happy.delivery.domain.exception.user.UnexpectedCategoryException;
 import com.happy.delivery.domain.exception.user.UserAddressNotExistedException;
 import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
+import com.happy.delivery.domain.exception.user.UserLocationNullPointException;
 import com.happy.delivery.presentation.common.response.ApiResponse;
 import java.util.HashMap;
 import java.util.Map;
@@ -98,5 +99,13 @@ public class UserExceptionHandler {
   @ExceptionHandler(UnexpectedCategoryException.class)
   public ApiResponse<?> unexpectedCategoryException(UnexpectedCategoryException ex) {
     return ApiResponse.fail("UNEXPECTED_CATEGORY", ex.getMessage());
+  }
+
+  /**
+   * 경도나 위도를 빠트린 경우.
+   */
+  @ExceptionHandler(UserLocationNullPointException.class)
+  public ApiResponse<?> userLocationNullPointException(UserLocationNullPointException ex) {
+    return ApiResponse.fail("LOCATION_NULL_VALUES", ex.getMessage());
   }
 }
