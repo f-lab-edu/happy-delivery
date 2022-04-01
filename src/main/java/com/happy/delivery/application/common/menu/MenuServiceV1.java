@@ -1,8 +1,8 @@
-package com.happy.delivery.application.menu;
+package com.happy.delivery.application.common.menu;
 
-import com.happy.delivery.application.menu.result.MenuResult;
-import com.happy.delivery.domain.user.Menu;
-import com.happy.delivery.domain.user.repository.MenuRepository;
+import com.happy.delivery.application.common.menu.result.MenuResult;
+import com.happy.delivery.domain.common.menu.Menu;
+import com.happy.delivery.domain.common.menu.repository.MenuRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

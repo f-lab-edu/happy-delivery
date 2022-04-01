@@ -1,6 +1,6 @@
-package com.happy.delivery.application.restaurant.result;
+package com.happy.delivery.application.common.restaurant.result;
 
-import com.happy.delivery.domain.restaurant.Restaurant;
+import com.happy.delivery.domain.common.restaurant.Restaurant;
 
 /**
  * RestaurantResult.
@@ -10,16 +10,16 @@ public class RestaurantResult {
   private final Long id;
   private final String name;
   private final String category;
-  private final String addressCode;
+  private final String addressDetail;
 
   /**
    * RestaurantResult Constructor.
    */
-  public RestaurantResult(Long id, String name, String category, String addressCode) {
+  public RestaurantResult(Long id, String name, String category, String addressDetail) {
     this.id = id;
     this.name = name;
     this.category = category;
-    this.addressCode = addressCode;
+    this.addressDetail = addressDetail;
   }
 
   public Long getId() {
@@ -35,7 +35,7 @@ public class RestaurantResult {
   }
 
   public String getAddressCode() {
-    return addressCode;
+    return addressDetail;
   }
 
   /**
@@ -47,7 +47,7 @@ public class RestaurantResult {
         restaurant.getId(),
         restaurant.getName(),
         restaurant.getCategory(),
-        restaurant.getAddressCode()
+        restaurant.getAddressDetail()
     );
   }
 
@@ -57,7 +57,7 @@ public class RestaurantResult {
         "id=" + id +
         ", name='" + name + '\'' +
         ", category='" + category + '\'' +
-        ", addressCode='" + addressCode + '\'' +
+        ", addressDetail='" + addressDetail + '\'' +
         '}';
   }
 }

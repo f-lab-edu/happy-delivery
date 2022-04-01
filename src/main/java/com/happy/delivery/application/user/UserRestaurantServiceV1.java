@@ -1,11 +1,13 @@
-package com.happy.delivery.application.restaurant;
+package com.happy.delivery.application.user;
 
-import com.happy.delivery.application.restaurant.result.RestaurantCategoryResult;
-import com.happy.delivery.application.restaurant.result.RestaurantResult;
-import com.happy.delivery.domain.restaurant.Restaurant;
-import com.happy.delivery.domain.restaurant.RestaurantCategory;
-import com.happy.delivery.domain.restaurant.repository.UserRestaurantSearchRepository;
+import com.happy.delivery.application.common.restaurant.command.RestaurantLocationCommand;
+import com.happy.delivery.application.common.restaurant.result.RestaurantCategoryResult;
+import com.happy.delivery.application.common.restaurant.result.RestaurantResult;
+import com.happy.delivery.domain.common.restaurant.Restaurant;
+import com.happy.delivery.domain.common.restaurant.RestaurantCategory;
+import com.happy.delivery.domain.common.restaurant.RestaurantLocation;
 import com.happy.delivery.domain.user.repository.UserAddressRepository;
+import com.happy.delivery.domain.user.repository.UserRestaurantSearchRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +46,12 @@ public class UserRestaurantServiceV1 implements UserRestaurantService {
 
   @Override
   @Transactional
-  public List<RestaurantResult> restaurantSearchByCategory(String category, String addressCode) {
+  public List<RestaurantResult> restaurantSearchByCategory(String category,
+      RestaurantLocationCommand locationCommand) {
+    RestaurantLocation restaurantLocation = locationCommand.toRestaurantLocation();
     List<Restaurant> listOfRestaurant =
-        userRestaurantSearchRepository.getAllRestaurantsByCategory(category, addressCode);
+        userRestaurantSearchRepository.getAllRestaurantsByCategory(category,
+            restaurantLocation.getLongitude(), restaurantLocation.getLatitude());
     List<RestaurantResult> result = new ArrayList<>();
     for (Restaurant restaurant : listOfRestaurant) {
       result.add(RestaurantResult.fromRestaurant(restaurant));

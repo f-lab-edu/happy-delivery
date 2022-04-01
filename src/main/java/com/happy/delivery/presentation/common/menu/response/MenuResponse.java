@@ -1,4 +1,4 @@
-package com.happy.delivery.presentation.menu.response;
+package com.happy.delivery.presentation.common.menu.response;
 
 /**
  * MenuResponse.

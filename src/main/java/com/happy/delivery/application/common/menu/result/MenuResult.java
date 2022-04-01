@@ -1,6 +1,6 @@
-package com.happy.delivery.application.menu.result;
+package com.happy.delivery.application.common.menu.result;
 
-import com.happy.delivery.domain.user.Menu;
+import com.happy.delivery.domain.common.menu.Menu;
 
 /**
  * MenuResult.

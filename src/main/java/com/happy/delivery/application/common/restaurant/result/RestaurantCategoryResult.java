@@ -1,6 +1,6 @@
-package com.happy.delivery.application.restaurant.result;
+package com.happy.delivery.application.common.restaurant.result;
 
-import com.happy.delivery.domain.restaurant.RestaurantCategory;
+import com.happy.delivery.domain.common.restaurant.RestaurantCategory;
 
 /**
  * RestaurantCategoryResult.

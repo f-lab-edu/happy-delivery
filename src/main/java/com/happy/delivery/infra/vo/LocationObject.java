@@ -1,12 +1,11 @@
 package com.happy.delivery.infra.vo;
 
-import java.awt.Point;
 import java.util.Objects;
 
 /**
  * Location.
  */
-public class Location {
+public class LocationObject {
 
   private Double longitude;
   private Double latitude;
@@ -15,7 +14,7 @@ public class Location {
   /**
    * Location constructor.
    */
-  public Location(Double longitude, Double latitude) {
+  public LocationObject(Double longitude, Double latitude) {
     this.longitude = longitude;
     this.latitude = latitude;
     this.location = String.format("POINT(%s %s)", longitude, latitude);
@@ -41,9 +40,9 @@ public class Location {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Location location1 = (Location) o;
-    return longitude.equals(location1.longitude) && latitude.equals(location1.latitude) &&
-        Objects.equals(location, location1.location);
+    LocationObject that = (LocationObject) o;
+    return longitude.equals(that.longitude) && latitude.equals(that.latitude) &&
+        Objects.equals(location, that.location);
   }
 
   @Override

@@ -1,9 +1,12 @@
-package com.happy.delivery.domain.user;
+package com.happy.delivery.application.common.menu.command;
 
 /**
- * Menu.
+ * MenuViewCommand.
+ * layer에 맞는 dto 이름 사용, command partten을 많이 사용해서,
+ * 각 계층별 api가 사용하는 dto가 다르기 때문에 dto를 분리.
  */
-public class Menu {
+public class MenuViewCommand {
+
   private Long menuId;
 
   private String menuName;
@@ -13,9 +16,9 @@ public class Menu {
   private Long menuPrice;
 
   /**
-   * Menu Constructor.
+   * MenuViewCommand Constuctor.
    */
-  public Menu(Long menuId, String menuName, String menuDetail, Long menuPrice) {
+  public MenuViewCommand(Long menuId, String menuName, String menuDetail, Long menuPrice) {
     this.menuId = menuId;
     this.menuName = menuName;
     this.menuDetail = menuDetail;
@@ -36,15 +39,5 @@ public class Menu {
 
   public Long getMenuPrice() {
     return menuPrice;
-  }
-
-  @Override
-  public String toString() {
-    return "Menu{" +
-        "menuId=" + menuId +
-        ", menuName='" + menuName + '\'' +
-        ", menuDetail='" + menuDetail + '\'' +
-        ", menuPrice=" + menuPrice +
-        '}';
   }
 }
