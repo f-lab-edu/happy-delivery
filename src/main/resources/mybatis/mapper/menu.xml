@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.happy.delivery.infra.mybatis.MenuMapper">
-  <select id="getAllByStoreId" resultType="com.happy.delivery.domain.user.Menu">
+  <select id="getAllByStoreId" resultType="com.happy.delivery.domain.common.menu.Menu">
     SELECT *
     FROM menus
     WHERE storeSid = ${storeId}

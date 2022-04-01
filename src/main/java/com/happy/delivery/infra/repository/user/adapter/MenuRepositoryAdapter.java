@@ -1,7 +1,7 @@
 package com.happy.delivery.infra.repository.user.adapter;
 
-import com.happy.delivery.domain.user.Menu;
-import com.happy.delivery.domain.user.repository.MenuRepository;
+import com.happy.delivery.domain.common.menu.Menu;
+import com.happy.delivery.domain.common.menu.repository.MenuRepository;
 import com.happy.delivery.infra.mybatis.MenuMapper;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
