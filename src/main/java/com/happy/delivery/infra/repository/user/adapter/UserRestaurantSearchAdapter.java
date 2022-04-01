@@ -1,8 +1,8 @@
 package com.happy.delivery.infra.repository.user.adapter;
 
-import com.happy.delivery.domain.restaurant.Restaurant;
-import com.happy.delivery.domain.restaurant.RestaurantCategory;
-import com.happy.delivery.domain.restaurant.repository.UserRestaurantSearchRepository;
+import com.happy.delivery.domain.common.restaurant.Restaurant;
+import com.happy.delivery.domain.common.restaurant.RestaurantCategory;
+import com.happy.delivery.domain.user.repository.UserRestaurantSearchRepository;
 import com.happy.delivery.infra.mybatis.UserRestaurantSearchMapper;
 import java.util.List;
 import org.springframework.stereotype.Repository;
@@ -25,7 +25,8 @@ public class UserRestaurantSearchAdapter implements UserRestaurantSearchReposito
   }
 
   @Override
-  public List<Restaurant> getAllRestaurantsByCategory(String category, String addressCode) {
-    return userRestaurantSearchMapper.getAllRestaurantsByCategory(category, addressCode);
+  public List<Restaurant> getAllRestaurantsByCategory(String category,
+      Double longitude, Double latitude) {
+    return userRestaurantSearchMapper.getAllRestaurantsByCategory(category, longitude, latitude);
   }
 }
