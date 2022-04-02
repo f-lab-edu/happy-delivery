@@ -51,6 +51,10 @@ public class RestaurantCommand {
     return addressDetail;
   }
 
+  /**
+   * toRestaurant.
+   * command -> entity.
+   */
   public Restaurant toRestaurant() {
     return new Restaurant(
         this.id,
