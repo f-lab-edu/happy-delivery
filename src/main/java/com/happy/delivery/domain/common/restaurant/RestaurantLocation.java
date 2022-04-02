@@ -1,31 +1,28 @@
 package com.happy.delivery.domain.common.restaurant;
 
+import com.happy.delivery.infra.vo.LocationObject;
+
 /**
  * RestaurantLocation.
  */
 public class RestaurantLocation {
 
-  private final Double longitude;
-  private final Double latitude;
+  private final LocationObject location;
 
+  /**
+   * RestaurantLocation Constructor.
+   */
   public RestaurantLocation(Double longitude, Double latitude) {
-    this.longitude = longitude;
-    this.latitude = latitude;
+    this.location = LocationObject.of(longitude, latitude);
   }
 
   public Double getLongitude() {
-    return longitude;
+    return this.location.getLongitude();
   }
 
   public Double getLatitude() {
-    return latitude;
+    return this.location.getLatitude();
   }
 
-  @Override
-  public String toString() {
-    return "RestaurantLocation{" +
-        "longitude=" + longitude +
-        ", latitude=" + latitude +
-        '}';
-  }
+
 }

@@ -1,6 +1,5 @@
 package com.happy.delivery.infra.vo;
 
-import com.happy.delivery.domain.exception.user.UserAddressNotExistedException;
 import com.happy.delivery.domain.exception.user.UserLocationNullPointException;
 import java.util.Objects;
 
@@ -38,6 +37,14 @@ public final class LocationObject {
   public String toString() {
     //"point(" + longitude + " " + latitude + ")"
     return String.format("point(%s %s)", longitude, latitude);
+  }
+
+  public Double getLongitude() {
+    return longitude;
+  }
+
+  public Double getLatitude() {
+    return latitude;
   }
 
   @Override
