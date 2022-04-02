@@ -145,7 +145,6 @@ public class UserController {
   @PostMapping("/addresses")
   public ApiResponse saveAddress(@Valid @RequestBody AddressRequest address,
       HttpSession httpSession) {
-    locationNullCheck(address);
     UserAddressResult userAddressResult = userService.saveAddress(
         address.toCommand(null, SessionUtil.getLoginId(httpSession)));
     if (userAddressResult != null) {
@@ -176,7 +175,6 @@ public class UserController {
   @PatchMapping("/addresses/{addressId}")
   public ApiResponse updateAddress(@PathVariable Long addressId,
       @Valid @RequestBody AddressRequest addressRequest, HttpSession httpSession) {
-    locationNullCheck(addressRequest);
     UserAddressResult userAddressResult = userService.updateAddress(
         addressRequest.toCommand(addressId, SessionUtil.getLoginId(httpSession)));
     return ApiResponse.success(userAddressResult);
@@ -212,15 +210,5 @@ public class UserController {
     return ApiResponse.success(
         userService.deleteAddress(new AddressCommand(addressId, SessionUtil.getLoginId(httpSession),
             null, null, null)));
-  }
-
-  /**
-   * locationNullCheck.
-   * 경도 위도 null값 확인
-   */
-  private void locationNullCheck(AddressRequest addressRequest) {
-    if (addressRequest.getLongitude() == null || addressRequest.getLatitude() == null) {
-      throw new UserLocationNullPointException("경도 위도를 모두 작성해주세요.");
-    }
   }
 }

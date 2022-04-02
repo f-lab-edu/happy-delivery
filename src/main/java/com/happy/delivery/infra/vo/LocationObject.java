@@ -1,35 +1,42 @@
 package com.happy.delivery.infra.vo;
 
+import com.happy.delivery.domain.exception.user.UserAddressNotExistedException;
 import java.util.Objects;
 
 /**
  * Location.
  */
-public class LocationObject {
+public final class LocationObject {
 
-  private Double longitude;
-  private Double latitude;
-  private String location;
+  private final Double longitude;
+  private final Double latitude;
 
   /**
    * Location constructor.
    */
-  public LocationObject(Double longitude, Double latitude) {
+  private LocationObject(Double longitude, Double latitude) {
     this.longitude = longitude;
     this.latitude = latitude;
-    this.location = String.format("POINT(%s %s)", longitude, latitude);
+    validateLongitudeAndLatitude();
   }
 
-  public Double getLongitude() {
-    return longitude;
+  public static LocationObject of(Double longitude, Double latitude) {
+    return new LocationObject(longitude, latitude);
   }
 
-  public Double getLatitude() {
-    return latitude;
+  private void validateLongitudeAndLatitude() {
+    if (this.longitude == null || this.latitude == null) {
+      throw new UserAddressNotExistedException("경도 위도를 모두 작성해주세요.");
+    }
   }
 
-  public String getLocation() {
-    return location;
+  /**
+   * toString.
+   * 내부 데이터를 추출하여 다른 유형으로 변환하기.
+   */
+  public String toString() {
+    //"point(" + longitude + " " + latitude + ")"
+    return String.format("point(%s %s)", longitude, latitude);
   }
 
   @Override
@@ -41,20 +48,11 @@ public class LocationObject {
       return false;
     }
     LocationObject that = (LocationObject) o;
-    return longitude.equals(that.longitude) && latitude.equals(that.latitude) &&
-        Objects.equals(location, that.location);
+    return longitude.equals(that.longitude) && latitude.equals(that.latitude);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(longitude, latitude, location);
-  }
-
-  @Override
-  public String toString() {
-    return "RestaurantLocationVO{" +
-        "longitude=" + longitude +
-        ", latitude=" + latitude +
-        '}';
+    return Objects.hash(longitude, latitude);
   }
 }
