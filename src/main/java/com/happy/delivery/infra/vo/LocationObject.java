@@ -1,6 +1,7 @@
 package com.happy.delivery.infra.vo;
 
 import com.happy.delivery.domain.exception.user.UserAddressNotExistedException;
+import com.happy.delivery.domain.exception.user.UserLocationNullPointException;
 import java.util.Objects;
 
 /**
@@ -26,7 +27,7 @@ public final class LocationObject {
 
   private void validateLongitudeAndLatitude() {
     if (this.longitude == null || this.latitude == null) {
-      throw new UserAddressNotExistedException("경도 위도를 모두 작성해주세요.");
+      throw new UserLocationNullPointException("경도 위도를 모두 작성해주세요.");
     }
   }
 
