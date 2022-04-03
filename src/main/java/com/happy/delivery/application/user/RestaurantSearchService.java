@@ -6,9 +6,9 @@ import com.happy.delivery.application.common.restaurant.result.RestaurantResult;
 import java.util.List;
 
 /**
- * UserRestaurantService.
+ * RestaurantSearchService.
  */
-public interface UserRestaurantService {
+public interface RestaurantSearchService {
 
   List<RestaurantCategoryResult> getCategories();
 

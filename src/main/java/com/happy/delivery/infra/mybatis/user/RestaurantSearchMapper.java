@@ -1,4 +1,4 @@
-package com.happy.delivery.infra.mybatis;
+package com.happy.delivery.infra.mybatis.user;
 
 import com.happy.delivery.domain.common.restaurant.Restaurant;
 import com.happy.delivery.domain.common.restaurant.RestaurantCategory;
@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
  * RestaurantSearchMapper.
  */
 @Mapper
-public interface UserRestaurantSearchMapper {
+public interface RestaurantSearchMapper {
 
   List<RestaurantCategory> getAllCategories();
 

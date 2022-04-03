@@ -3,7 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.happy.delivery.infra.mybatis.UserAddressMapper">
+<mapper namespace="com.happy.delivery.infra.mybatis.user.UserAddressMapper">
 
   <insert id="insert" parameterType="com.happy.delivery.domain.user.UserAddress"
     useGeneratedKeys="true" keyProperty="id">

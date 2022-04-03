@@ -2,7 +2,7 @@ package com.happy.delivery.infra.repository.user.adapter;
 
 import com.happy.delivery.domain.user.User;
 import com.happy.delivery.domain.user.repository.UserRepository;
-import com.happy.delivery.infra.mybatis.UserMapper;
+import com.happy.delivery.infra.mybatis.user.UserMapper;
 import org.springframework.stereotype.Repository;
 
 /**

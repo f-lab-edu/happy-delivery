@@ -1,7 +1,7 @@
 package com.happy.delivery.presentation.user.rest;
 
 import com.happy.delivery.application.common.restaurant.result.RestaurantResult;
-import com.happy.delivery.application.user.UserRestaurantService;
+import com.happy.delivery.application.user.RestaurantSearchService;
 import com.happy.delivery.presentation.common.response.ApiResponse;
 import com.happy.delivery.presentation.common.restaurant.request.RestaurantRequest;
 import java.util.List;
@@ -15,21 +15,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * UserRestaurantController.
+ * RestaurantSearchController.
  */
 @RestController
 @RequestMapping("/restaurants")
-public class UserRestaurantController {
+public class RestaurantSearchController {
 
-  private final Logger log = LoggerFactory.getLogger(UserRestaurantController.class);
-  private final UserRestaurantService userRestaurantService;
+  private final Logger log = LoggerFactory.getLogger(RestaurantSearchController.class);
+  private final RestaurantSearchService restaurantSearchService;
 
   /**
-   * UserRestaurantController Constructor.
+   * RestaurantSearchController Constructor.
    */
   @Autowired
-  public UserRestaurantController(UserRestaurantService userRestaurantService) {
-    this.userRestaurantService = userRestaurantService;
+  public RestaurantSearchController(RestaurantSearchService restaurantSearchService) {
+    this.restaurantSearchService = restaurantSearchService;
   }
 
   /**
@@ -39,7 +39,7 @@ public class UserRestaurantController {
    */
   @GetMapping("/categories")
   public ApiResponse getRestaurantCategories() {
-    return ApiResponse.success(userRestaurantService.getCategories());
+    return ApiResponse.success(restaurantSearchService.getCategories());
   }
 
   /**
@@ -50,7 +50,7 @@ public class UserRestaurantController {
   public ApiResponse getRestaurantByCategoryIdAndTownCode(@PathVariable String category,
       @RequestBody RestaurantRequest restaurantRequest) {
     List<RestaurantResult> restaurants =
-        userRestaurantService.restaurantSearchByCategory(category, restaurantRequest.toCommand());
+        restaurantSearchService.restaurantSearchByCategory(category, restaurantRequest.toCommand());
     return ApiResponse.success(restaurants);
   }
 }
