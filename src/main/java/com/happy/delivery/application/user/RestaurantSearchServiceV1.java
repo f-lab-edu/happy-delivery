@@ -1,6 +1,6 @@
 package com.happy.delivery.application.user;
 
-import com.happy.delivery.application.common.restaurant.command.RestaurantCommand;
+import com.happy.delivery.application.common.restaurant.command.RestaurantSearchCommand;
 import com.happy.delivery.application.common.restaurant.result.RestaurantCategoryResult;
 import com.happy.delivery.application.common.restaurant.result.RestaurantResult;
 import com.happy.delivery.domain.common.restaurant.Restaurant;
@@ -46,8 +46,8 @@ public class RestaurantSearchServiceV1 implements RestaurantSearchService {
   @Override
   @Transactional
   public List<RestaurantResult> restaurantSearchByCategory(String category,
-      RestaurantCommand restaurantCommand) {
-    Restaurant restaurantLocation = restaurantCommand.toRestaurant();
+      RestaurantSearchCommand restaurantSearchCommand) {
+    Restaurant restaurantLocation = restaurantSearchCommand.toRestaurant();
     List<Restaurant> listOfRestaurant =
         restaurantSearchRepository.getAllRestaurantsByCategory(category,
             restaurantLocation.getLongitude(), restaurantLocation.getLatitude());

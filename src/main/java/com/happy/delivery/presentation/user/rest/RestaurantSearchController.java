@@ -3,7 +3,7 @@ package com.happy.delivery.presentation.user.rest;
 import com.happy.delivery.application.common.restaurant.result.RestaurantResult;
 import com.happy.delivery.application.user.RestaurantSearchService;
 import com.happy.delivery.presentation.common.response.ApiResponse;
-import com.happy.delivery.presentation.common.restaurant.request.RestaurantRequest;
+import com.happy.delivery.presentation.common.restaurant.request.RestaurantSearchRequest;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,9 +48,10 @@ public class RestaurantSearchController {
    */
   @GetMapping({"/{category}"})
   public ApiResponse getRestaurantByCategoryIdAndTownCode(@PathVariable String category,
-      @RequestBody RestaurantRequest restaurantRequest) {
+      @RequestBody RestaurantSearchRequest restaurantSearchRequest) {
     List<RestaurantResult> restaurants =
-        restaurantSearchService.restaurantSearchByCategory(category, restaurantRequest.toCommand());
+        restaurantSearchService.restaurantSearchByCategory(category,
+            restaurantSearchRequest.toCommand());
     return ApiResponse.success(restaurants);
   }
 }
