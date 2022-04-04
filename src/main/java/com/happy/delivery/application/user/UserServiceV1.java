@@ -142,8 +142,11 @@ public class UserServiceV1 implements UserService {
     UserAddress address = userAddressRepository.save(
         new UserAddress(
             addressCommand.getUserId(),
-            addressCommand.getAddressCode(),
-            addressCommand.getAddressDetail()));
+            addressCommand.getLongitude(),
+            addressCommand.getLatitude(),
+            addressCommand.getAddressDetail()
+        )
+    );
     User user = userRepository.findById(address.getUserId());
     if (user == null) {
       throw new NoUserIdException();
@@ -186,7 +189,10 @@ public class UserServiceV1 implements UserService {
     UserAddress userAddress = userAddressRepository.findById(addressCommand.getAddressId());
     checkEmailExistence(userAddress);
     checkUserAuthority(addressCommand, userAddress);
-    userAddress.changeAddress(addressCommand.getAddressCode(), addressCommand.getAddressDetail());
+    userAddress.changeAddress(
+        addressCommand.getLatitude(),
+        addressCommand.getLongitude(),
+        addressCommand.getAddressDetail());
     return UserAddressResult.fromUserAddress(userAddressRepository.save(userAddress));
   }
 

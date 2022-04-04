@@ -1,6 +1,6 @@
 package com.happy.delivery.domain.user;
 
-import org.springframework.lang.Nullable;
+import com.happy.delivery.infra.vo.AddressObject;
 
 /**
  * UserAddress.
@@ -9,25 +9,33 @@ public class UserAddress {
 
   private Long id;
   private Long userId;
-  private String addressCode;
-  @Nullable
+  private AddressObject address;
   private String addressDetail;
 
   /**
-   * UserAddress savePassword Constructor.
+   * UserAddress MyBatis Constructor.
+   * Mybatis가 미리 result값을 넣엉줄 인스턴스를 생성한다.
+   * 하지만 UserAddress 엔티티에는 모든 인자가 포함된 생성자(Builder)만이 존재하기 때문에,
+   * 인스턴스를 생성할 수 없어 문제가 발생한다.
+   * 이것을 해결하기 위해서는 인자가 없는 생성자를 추가하면 된다.
    */
-  public UserAddress(Long userId, String addressCode, String addressDetail) {
+  public UserAddress() {
+  }
+
+  /**
+   * UserAddress saveAddress Constructor.
+   */
+  public UserAddress(Long userId, Double longitude, Double latitude, String addressDetail) {
     this.userId = userId;
-    this.addressCode = addressCode;
+    this.address = AddressObject.of(longitude, latitude);
     this.addressDetail = addressDetail;
   }
 
   /**
-   * changeAddress().
-   * 주소 변경.
+   * changeAddress(). 주소 변경.
    */
-  public void changeAddress(String addressCode, String addressDetail) {
-    this.addressCode = addressCode;
+  public void changeAddress(Double longitude, Double latitude, String addressDetail) {
+    this.address = AddressObject.of(longitude, latitude);
     this.addressDetail = addressDetail;
   }
 
@@ -43,21 +51,11 @@ public class UserAddress {
     return userId;
   }
 
-  public String getAddressCode() {
-    return addressCode;
+  public String getAddress() {
+    return this.address.toString();
   }
 
   public String getAddressDetail() {
     return addressDetail;
-  }
-
-  @Override
-  public String toString() {
-    return "UserAddress{" +
-        "id=" + id +
-        ", userId=" + userId +
-        ", addressCode='" + addressCode + '\'' +
-        ", addressDetail='" + addressDetail + '\'' +
-        '}';
   }
 }

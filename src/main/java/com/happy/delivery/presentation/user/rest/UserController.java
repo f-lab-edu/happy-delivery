@@ -54,7 +54,7 @@ public class UserController {
     return ApiResponse.success(userResult);
   }
 
-  /**s
+  /**
    * signin.
    */
   @ResponseStatus(code = HttpStatus.OK)
@@ -85,7 +85,7 @@ public class UserController {
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @GetMapping("/my-account")
-  public ApiResponse<UserResult> getMyAccount(HttpSession httpSession) {
+  public ApiResponse getMyAccount(HttpSession httpSession) {
     Long userId = SessionUtil.getLoginId(httpSession);
     UserResult myAccount = userService.getMyAccount(userId);
     return ApiResponse.success(myAccount);
@@ -97,7 +97,7 @@ public class UserController {
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @PutMapping("/my-account")
-  public ApiResponse<UserResult> updateMyAccount(@Valid @RequestBody
+  public ApiResponse updateMyAccount(@Valid @RequestBody
       MyAccountRequest myAccountRequest, HttpSession httpSession) {
     MyAccountRequest myAccountInfo = new MyAccountRequest(
         SessionUtil.getLoginId(httpSession),
@@ -115,7 +115,7 @@ public class UserController {
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @DeleteMapping("/my-account")
-  public ApiResponse<UserResult> deleteMyAccount(@Valid HttpSession httpSession) {
+  public ApiResponse deleteMyAccount(@Valid HttpSession httpSession) {
     userService.deleteMyAccount(SessionUtil.getLoginId(httpSession));
     SessionUtil.clear(httpSession);
     return ApiResponse.success("DELETE_MY_ACCOUNT");
@@ -208,6 +208,6 @@ public class UserController {
     }
     return ApiResponse.success(
         userService.deleteAddress(new AddressCommand(addressId, SessionUtil.getLoginId(httpSession),
-            null, null)));
+            null, null, null)));
   }
 }

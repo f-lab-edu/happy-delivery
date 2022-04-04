@@ -3,30 +3,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.happy.delivery.infra.mybatis.UserAddressMapper">
+<mapper namespace="com.happy.delivery.infra.mybatis.user.UserAddressMapper">
 
   <insert id="insert" parameterType="com.happy.delivery.domain.user.UserAddress"
     useGeneratedKeys="true" keyProperty="id">
-    INSERT INTO user_addresses (userId, addressCode, addressDetail)
-    VALUES (#{userId}, #{addressCode}, #{addressDetail})
+    INSERT INTO user_addresses (userId, address, addressDetail)
+    VALUES (#{userId}, ST_GeomFromText(#{address}), #{addressDetail,jdbcType=VARCHAR});
   </insert>
 
   <update id="update" parameterType="com.happy.delivery.domain.user.UserAddress">
     UPDATE user_addresses
-    SET addressCode = #{addressCode},
+    SET address = ST_GeomFromText(#{address}),
         addressDetail = #{addressDetail}
     WHERE id = #{id};
   </update>
 
-  <select id="findById" parameterType="Long"
-    resultType="com.happy.delivery.domain.user.UserAddress">
-    SELECT id, userId, addressCode, addressDetail
+  <select id="findById" parameterType="Long" resultType="com.happy.delivery.domain.user.UserAddress">
+    SELECT id, userId, addressDetail
     FROM user_addresses
     WHERE id = #{id}
   </select>
 
   <select id="findAllByUserId" resultType="com.happy.delivery.domain.user.UserAddress">
-    SELECT id, userId, addressCode, addressDetail
+    SELECT id, userId, addressDetail
     FROM user_addresses
     WHERE userId = #{userId}
   </select>

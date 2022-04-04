@@ -1,4 +1,4 @@
-package com.happy.delivery.infra.mybatis;
+package com.happy.delivery.infra.mybatis.user;
 
 import com.happy.delivery.domain.user.UserAddress;
 import java.util.List;

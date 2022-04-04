@@ -3,15 +3,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.happy.delivery.infra.mybatis.UserRestaurantSearchMapper">
-  <select id="getAllCategories" resultType="com.happy.delivery.domain.restaurant.RestaurantCategory">
+<mapper namespace="com.happy.delivery.infra.mybatis.user.RestaurantSearchMapper">
+  <select id="getAllCategories"
+    resultType="com.happy.delivery.domain.common.restaurant.RestaurantCategory">
     SELECT id, name
     FROM restaurant_categories
+    ORDER BY id
   </select>
 
-  <select id="getAllRestaurantsByCategory" resultType="com.happy.delivery.domain.restaurant.Restaurant">
-    SELECT id, name, category, addressCode
+  <select id="getAllRestaurantsByCategory"
+    resultType="com.happy.delivery.domain.common.restaurant.Restaurant">
+    SELECT id, name, category, addressDetail
     FROM restaurants
-    WHERE category = #{category} AND addressCode = #{addressCode}
+    where category = #{category}
+      AND ST_Distance_Sphere(address, point(#{longitude}, #{latitude})) <![CDATA[ < ]]> 10000;
   </select>
 </mapper>

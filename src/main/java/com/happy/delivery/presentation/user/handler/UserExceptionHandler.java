@@ -2,6 +2,7 @@ package com.happy.delivery.presentation.user.handler;
 
 import com.happy.delivery.domain.exception.user.CanNotDeleteMainAddressException;
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
+import com.happy.delivery.domain.exception.user.LongitudeOrLatitudeNullPointException;
 import com.happy.delivery.domain.exception.user.NoUserIdException;
 import com.happy.delivery.domain.exception.user.NotAuthorizedException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
@@ -89,5 +90,14 @@ public class UserExceptionHandler {
   @ExceptionHandler(CanNotDeleteMainAddressException.class)
   public ApiResponse<?> canNotDeleteMainAddressException(CanNotDeleteMainAddressException ex) {
     return ApiResponse.fail("CAN_NOT_DELETE_MAIN_ADDRESS", ex.getMessage());
+  }
+
+  /**
+   * 경도나 위도를 빠트린 경우.
+   */
+  @ExceptionHandler(LongitudeOrLatitudeNullPointException.class)
+  public ApiResponse<?> longitudeOrLatitudeNullPointException(
+      LongitudeOrLatitudeNullPointException ex) {
+    return ApiResponse.fail("LONGITUDE_OR_LATITUDE_NULL_VALUES", ex.getMessage());
   }
 }

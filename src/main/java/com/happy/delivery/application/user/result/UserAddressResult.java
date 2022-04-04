@@ -1,7 +1,6 @@
 package com.happy.delivery.application.user.result;
 
 import com.happy.delivery.domain.user.UserAddress;
-import java.time.Instant;
 
 /**
  * UserAddressResult.
@@ -10,16 +9,14 @@ public class UserAddressResult {
 
   private Long id;
   private Long userId;
-  private String addressCode;
   private String addressDetail;
 
   /**
    * UserAddressResult constructor.
    */
-  public UserAddressResult(Long id, Long userId, String addressCode, String addressDetail) {
+  public UserAddressResult(Long id, Long userId, String addressDetail) {
     this.id = id;
     this.userId = userId;
-    this.addressCode = addressCode;
     this.addressDetail = addressDetail;
   }
 
@@ -30,7 +27,6 @@ public class UserAddressResult {
     return new UserAddressResult(
         userAddress.getId(),
         userAddress.getUserId(),
-        userAddress.getAddressCode(),
         userAddress.getAddressDetail());
   }
 
@@ -42,10 +38,6 @@ public class UserAddressResult {
     return userId;
   }
 
-  public String getAddressCode() {
-    return addressCode;
-  }
-
   public String getAddressDetail() {
     return addressDetail;
   }
@@ -55,7 +47,6 @@ public class UserAddressResult {
     return "UserAddressResult{" +
         "id=" + id +
         ", userId=" + userId +
-        ", addressCode='" + addressCode + '\'' +
         ", addressDetail='" + addressDetail + '\'' +
         '}';
   }

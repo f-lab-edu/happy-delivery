@@ -1,6 +1,6 @@
-package com.happy.delivery.domain.user.repository;
+package com.happy.delivery.domain.menu.repository;
 
-import com.happy.delivery.domain.user.Menu;
+import com.happy.delivery.domain.menu.Menu;
 import java.util.List;
 
 /**

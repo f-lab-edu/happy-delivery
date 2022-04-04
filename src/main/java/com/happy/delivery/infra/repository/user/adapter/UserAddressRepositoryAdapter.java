@@ -2,7 +2,7 @@ package com.happy.delivery.infra.repository.user.adapter;
 
 import com.happy.delivery.domain.user.UserAddress;
 import com.happy.delivery.domain.user.repository.UserAddressRepository;
-import com.happy.delivery.infra.mybatis.UserAddressMapper;
+import com.happy.delivery.infra.mybatis.user.UserAddressMapper;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 
@@ -23,8 +23,9 @@ public class UserAddressRepositoryAdapter implements UserAddressRepository {
   public UserAddress save(UserAddress userAddress) {
     if ((userAddress.getId() == null) || (userAddress.getId() <= 0L)) {
       userAddressMapper.insert(userAddress);
+    } else {
+      userAddressMapper.update(userAddress);
     }
-    userAddressMapper.update(userAddress);
     return userAddress;
   }
 

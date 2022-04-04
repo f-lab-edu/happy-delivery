@@ -1,4 +1,4 @@
-package com.happy.delivery.domain.restaurant;
+package com.happy.delivery.domain.common.restaurant;
 
 /**
  * RestaurantCategory.
