@@ -1,8 +1,8 @@
 package com.happy.delivery.application.user;
 
-import com.happy.delivery.application.common.restaurant.command.RestaurantSearchCommand;
 import com.happy.delivery.application.common.restaurant.result.RestaurantCategoryResult;
 import com.happy.delivery.application.common.restaurant.result.RestaurantResult;
+import com.happy.delivery.application.user.command.RestaurantSearchCommand;
 import com.happy.delivery.domain.common.restaurant.Restaurant;
 import com.happy.delivery.domain.common.restaurant.RestaurantCategory;
 import com.happy.delivery.domain.user.repository.RestaurantSearchRepository;

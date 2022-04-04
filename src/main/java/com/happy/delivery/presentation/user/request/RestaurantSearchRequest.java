@@ -1,7 +1,7 @@
-package com.happy.delivery.presentation.common.restaurant.request;
+package com.happy.delivery.presentation.user.request;
 
 
-import com.happy.delivery.application.common.restaurant.command.RestaurantSearchCommand;
+import com.happy.delivery.application.user.command.RestaurantSearchCommand;
 
 /**
  * RestaurantSearchRequest.

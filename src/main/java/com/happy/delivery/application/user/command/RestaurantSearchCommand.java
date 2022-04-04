@@ -1,4 +1,4 @@
-package com.happy.delivery.application.common.restaurant.command;
+package com.happy.delivery.application.user.command;
 
 import com.happy.delivery.domain.common.restaurant.Restaurant;
 

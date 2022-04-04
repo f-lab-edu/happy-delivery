@@ -3,7 +3,7 @@ package com.happy.delivery.presentation.user.rest;
 import com.happy.delivery.application.common.restaurant.result.RestaurantResult;
 import com.happy.delivery.application.user.RestaurantSearchService;
 import com.happy.delivery.presentation.common.response.ApiResponse;
-import com.happy.delivery.presentation.common.restaurant.request.RestaurantSearchRequest;
+import com.happy.delivery.presentation.user.request.RestaurantSearchRequest;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
