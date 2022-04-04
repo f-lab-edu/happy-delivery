@@ -1,4 +1,4 @@
-package com.happy.delivery.domain.common.menu;
+package com.happy.delivery.domain.menu;
 
 /**
  * Menu.

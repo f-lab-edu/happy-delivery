@@ -1,6 +1,6 @@
-package com.happy.delivery.presentation.common.menu.request;
+package com.happy.delivery.presentation.menu.request;
 
-import com.happy.delivery.application.common.menu.command.MenuViewCommand;
+import com.happy.delivery.application.menu.command.MenuViewCommand;
 
 /**
  * MenuViewRequest.

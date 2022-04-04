@@ -1,7 +1,7 @@
-package com.happy.delivery.presentation.common.menu.rest;
+package com.happy.delivery.presentation.menu.rest;
 
-import com.happy.delivery.application.common.menu.MenuService;
-import com.happy.delivery.application.common.menu.result.MenuResult;
+import com.happy.delivery.application.menu.MenuService;
+import com.happy.delivery.application.menu.result.MenuResult;
 import com.happy.delivery.presentation.common.response.ApiResponse;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

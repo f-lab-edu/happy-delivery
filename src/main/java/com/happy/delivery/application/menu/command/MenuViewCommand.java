@@ -1,4 +1,4 @@
-package com.happy.delivery.application.common.menu.command;
+package com.happy.delivery.application.menu.command;
 
 /**
  * MenuViewCommand.
