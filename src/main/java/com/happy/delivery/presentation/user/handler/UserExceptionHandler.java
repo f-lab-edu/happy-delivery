@@ -2,12 +2,12 @@ package com.happy.delivery.presentation.user.handler;
 
 import com.happy.delivery.domain.exception.user.CanNotDeleteMainAddressException;
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
+import com.happy.delivery.domain.exception.user.LongitudeOrLatitudeNullPointException;
 import com.happy.delivery.domain.exception.user.NoUserIdException;
 import com.happy.delivery.domain.exception.user.NotAuthorizedException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
 import com.happy.delivery.domain.exception.user.UserAddressNotExistedException;
 import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
-import com.happy.delivery.domain.exception.user.UserLocationNullPointException;
 import com.happy.delivery.presentation.common.response.ApiResponse;
 import java.util.HashMap;
 import java.util.Map;
@@ -95,8 +95,9 @@ public class UserExceptionHandler {
   /**
    * 경도나 위도를 빠트린 경우.
    */
-  @ExceptionHandler(UserLocationNullPointException.class)
-  public ApiResponse<?> userLocationNullPointException(UserLocationNullPointException ex) {
-    return ApiResponse.fail("LOCATION_NULL_VALUES", ex.getMessage());
+  @ExceptionHandler(LongitudeOrLatitudeNullPointException.class)
+  public ApiResponse<?> longitudeOrLatitudeNullPointException(
+      LongitudeOrLatitudeNullPointException ex) {
+    return ApiResponse.fail("LONGITUDE_OR_LATITUDE_NULL_VALUES", ex.getMessage());
   }
 }

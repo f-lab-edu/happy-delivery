@@ -1,6 +1,6 @@
 package com.happy.delivery.domain.user;
 
-import com.happy.delivery.infra.vo.LocationObject;
+import com.happy.delivery.infra.vo.AddressObject;
 
 /**
  * UserAddress.
@@ -9,7 +9,7 @@ public class UserAddress {
 
   private Long id;
   private Long userId;
-  private LocationObject location;
+  private AddressObject address;
   private String addressDetail;
 
   /**
@@ -27,16 +27,15 @@ public class UserAddress {
    */
   public UserAddress(Long userId, Double longitude, Double latitude, String addressDetail) {
     this.userId = userId;
-    this.location = LocationObject.of(longitude, latitude);
+    this.address = AddressObject.of(longitude, latitude);
     this.addressDetail = addressDetail;
   }
 
   /**
-   * changeAddress().
-   * 주소 변경.
+   * changeAddress(). 주소 변경.
    */
   public void changeAddress(Double longitude, Double latitude, String addressDetail) {
-    this.location = LocationObject.of(longitude, latitude);
+    this.address = AddressObject.of(longitude, latitude);
     this.addressDetail = addressDetail;
   }
 
@@ -52,8 +51,8 @@ public class UserAddress {
     return userId;
   }
 
-  public String getLocation() {
-    return this.location.toString();
+  public String getAddress() {
+    return this.address.toString();
   }
 
   public String getAddressDetail() {

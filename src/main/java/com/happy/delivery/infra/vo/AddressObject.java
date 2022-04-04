@@ -1,12 +1,12 @@
 package com.happy.delivery.infra.vo;
 
-import com.happy.delivery.domain.exception.user.UserLocationNullPointException;
+import com.happy.delivery.domain.exception.user.LongitudeOrLatitudeNullPointException;
 import java.util.Objects;
 
 /**
  * Location.
  */
-public final class LocationObject {
+public final class AddressObject {
 
   private final Double longitude;
   private final Double latitude;
@@ -14,19 +14,19 @@ public final class LocationObject {
   /**
    * Location constructor.
    */
-  private LocationObject(Double longitude, Double latitude) {
+  private AddressObject(Double longitude, Double latitude) {
     this.longitude = longitude;
     this.latitude = latitude;
     validateLongitudeAndLatitude();
   }
 
-  public static LocationObject of(Double longitude, Double latitude) {
-    return new LocationObject(longitude, latitude);
+  public static AddressObject of(Double longitude, Double latitude) {
+    return new AddressObject(longitude, latitude);
   }
 
   private void validateLongitudeAndLatitude() {
     if (this.longitude == null || this.latitude == null) {
-      throw new UserLocationNullPointException("경도 위도를 모두 작성해주세요.");
+      throw new LongitudeOrLatitudeNullPointException("경도 위도를 모두 작성해주세요.");
     }
   }
 
@@ -55,7 +55,7 @@ public final class LocationObject {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    LocationObject that = (LocationObject) o;
+    AddressObject that = (AddressObject) o;
     return longitude.equals(that.longitude) && latitude.equals(that.latitude);
   }
 

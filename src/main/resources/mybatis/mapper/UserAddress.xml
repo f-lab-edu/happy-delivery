@@ -7,13 +7,13 @@
 
   <insert id="insert" parameterType="com.happy.delivery.domain.user.UserAddress"
     useGeneratedKeys="true" keyProperty="id">
-    INSERT INTO user_addresses (userId, location, addressDetail)
-    VALUES (#{userId}, ST_GeomFromText(#{location}), #{addressDetail,jdbcType=VARCHAR});
+    INSERT INTO user_addresses (userId, address, addressDetail)
+    VALUES (#{userId}, ST_GeomFromText(#{address}), #{addressDetail,jdbcType=VARCHAR});
   </insert>
 
   <update id="update" parameterType="com.happy.delivery.domain.user.UserAddress">
     UPDATE user_addresses
-    SET location = ST_GeomFromText(#{location}),
+    SET address = ST_GeomFromText(#{address}),
         addressDetail = #{addressDetail}
     WHERE id = #{id};
   </update>

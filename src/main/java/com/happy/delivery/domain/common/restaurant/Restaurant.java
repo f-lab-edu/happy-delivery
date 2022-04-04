@@ -1,6 +1,6 @@
 package com.happy.delivery.domain.common.restaurant;
 
-import com.happy.delivery.infra.vo.LocationObject;
+import com.happy.delivery.infra.vo.AddressObject;
 
 /**
  * Restaurant.
@@ -10,7 +10,7 @@ public class Restaurant {
   private Long id;
   private String name;
   private String category;
-  private LocationObject location;
+  private AddressObject address;
   private String addressDetail;
 
   /**
@@ -27,7 +27,7 @@ public class Restaurant {
     this.id = id;
     this.name = name;
     this.category = category;
-    this.location = LocationObject.of(longitude, latitude);
+    this.address = AddressObject.of(longitude, latitude);
     this.addressDetail = addressDetail;
   }
 
@@ -48,11 +48,11 @@ public class Restaurant {
   }
 
   public Double getLongitude() {
-    return this.location.getLongitude();
+    return this.address.getLongitude();
   }
 
   public Double getLatitude() {
-    return this.location.getLatitude();
+    return this.address.getLatitude();
   }
 
   @Override
@@ -61,7 +61,7 @@ public class Restaurant {
         "id=" + id +
         ", name='" + name + '\'' +
         ", category='" + category + '\'' +
-        ", location=" + location +
+        ", address=" + address +
         ", addressDetail='" + addressDetail + '\'' +
         '}';
   }
