@@ -3,19 +3,19 @@ package com.happy.delivery.application.ceo.command;
 /**
  * CeoCommand.
  */
-public class CeoCommand {
+public class CeoSigninCommand {
+
   private Long id;
   private String email;
   private String password;
-  private String name;
-  private String phoneNumber;
 
-  public CeoCommand(Long id, String email, String password, String name, String phoneNumber) {
+  /**
+   * CeoSigninCommand Constructor.
+   */
+  public CeoSigninCommand(Long id, String email, String password) {
     this.id = id;
     this.email = email;
     this.password = password;
-    this.name = name;
-    this.phoneNumber = phoneNumber;
   }
 
   public Long getId() {
@@ -28,13 +28,5 @@ public class CeoCommand {
 
   public String getPassword() {
     return password;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public String getPhoneNumber() {
-    return phoneNumber;
   }
 }

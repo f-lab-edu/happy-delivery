@@ -1,4 +1,4 @@
-package com.happy.delivery.domain.ceo.repository;
+package com.happy.delivery.domain.ceo;
 
 
 /**
@@ -18,6 +18,11 @@ public class Ceo {
     this.password = password;
   }
 
+  public Ceo(String email, String password) {
+    this.email = email;
+    this.password = password;
+  }
+
   public Long getId() {
     return id;
   }
@@ -28,5 +33,14 @@ public class Ceo {
 
   public String getPassword() {
     return password;
+  }
+
+  @Override
+  public String toString() {
+    return "Ceo{" +
+        "id=" + id +
+        ", email='" + email + '\'' +
+        ", password='" + password + '\'' +
+        '}';
   }
 }

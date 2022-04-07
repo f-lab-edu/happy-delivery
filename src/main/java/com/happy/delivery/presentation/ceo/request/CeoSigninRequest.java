@@ -1,19 +1,24 @@
 package com.happy.delivery.presentation.ceo.request;
 
-public class SigninRequest {
+import com.happy.delivery.application.ceo.command.CeoSigninCommand;
+import com.happy.delivery.application.user.command.SigninCommand;
+
+/**
+ * CeoSigninRequest.
+ */
+public class CeoSigninRequest {
   private Long id;
   private String email;
   private String password;
-  private String name;
-  private String phoneNumber;
 
-  public SigninRequest(Long id, String email, String password, String name,
+  /**
+   * CeoSigninRequest Constructor.
+   */
+  public CeoSigninRequest(Long id, String email, String password, String name,
       String phoneNumber) {
     this.id = id;
     this.email = email;
     this.password = password;
-    this.name = name;
-    this.phoneNumber = phoneNumber;
   }
 
   public Long getId() {
@@ -28,11 +33,14 @@ public class SigninRequest {
     return password;
   }
 
-  public String getName() {
-    return name;
-  }
-
-  public String getPhoneNumber() {
-    return phoneNumber;
+  /**
+   * CeoSigninRequest toCommand.
+   */
+  public CeoSigninCommand toCommand() {
+    return new CeoSigninCommand(
+        this.id,
+        this.email,
+        this.password
+    );
   }
 }

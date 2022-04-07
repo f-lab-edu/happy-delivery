@@ -1,17 +1,19 @@
-package com.happy.delivery.presentation.user.handler;
+package com.happy.delivery.presentation.ceo.handler;
 
 import com.happy.delivery.domain.exception.ceo.EmailDuplicateException;
 import com.happy.delivery.presentation.common.response.ApiResponse;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * CeoExceptionHandler.
  */
+@RestControllerAdvice
 public class CeoExceptionHandler {
 
-
   @ExceptionHandler(EmailDuplicateException.class)
-  public ApiResponse<?> EmailDuplicateException(EmailDuplicateException ex) {
-    return ApiResponse.fail("Email_ALREADY_EXISTED", ex.getMessage());
+  public ApiResponse<?> emailDuplicateException(EmailDuplicateException ex) {
+    return ApiResponse.fail("EMAIL_ALREADY_EXISTED", ex.getMessage());
   }
+
 }
