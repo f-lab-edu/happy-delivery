@@ -37,10 +37,10 @@ public class CeoServiceV1 implements CeoService {
   @Override
   public CeoResult ceoSignup(CeoSigninCommand ceoSigninCommand) {
     String useEmail = ceoSigninCommand.getEmail();
-    Ceo ceoEmail = ceoRepository.findByCeoEmail(useEmail);
-    User userEmail = userRepository.findByEmail(useEmail);
+    Ceo ceoByEmail = ceoRepository.findByCeoEmail(useEmail);
+    User userByEmail = userRepository.findByEmail(useEmail);
 
-    if (ceoEmail != null || userEmail != null) {
+    if (ceoByEmail != null || userByEmail != null) {
       throw new EmailDuplicateException("이미 존재하는 계정 입니다.");
     }
 
