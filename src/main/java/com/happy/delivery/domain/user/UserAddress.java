@@ -11,6 +11,7 @@ public class UserAddress {
   private Long userId;
   private AddressObject address;
   private String addressDetail;
+  private Boolean mainAddress;
 
   /**
    * UserAddress MyBatis Constructor.
@@ -57,5 +58,13 @@ public class UserAddress {
 
   public String getAddressDetail() {
     return addressDetail;
+  }
+
+  public Boolean getMainAddress() {
+    return mainAddress;
+  }
+
+  public void setMainAddress(Boolean mainAddress) {
+    this.mainAddress = mainAddress;
   }
 }

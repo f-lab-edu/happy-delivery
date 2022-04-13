@@ -14,9 +14,13 @@ public interface UserAddressMapper {
 
   void update(UserAddress userAddress);
 
+  void updateMainAddress(UserAddress userAddress);
+
   UserAddress findById(Long id);
 
   List<UserAddress> findAllByUserId(Long userId);
+
+  UserAddress findMainAddress(Long userId);
 
   boolean deleteById(Long id);
 
