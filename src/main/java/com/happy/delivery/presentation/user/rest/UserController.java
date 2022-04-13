@@ -62,10 +62,7 @@ public class UserController {
   public ApiResponse signin(@Valid @RequestBody SigninRequest request,
       HttpSession httpSession) {
     UserResult userResult = userService.signin(request.toCommand());
-    if (userResult != null) {
-      SessionUtil.setLoginId(httpSession, userResult.getId());
-      SessionUtil.setAddressId(httpSession, userResult.getAddressId());
-    }
+    SessionUtil.setLoginId(httpSession, userResult.getId());
     return ApiResponse.success(userResult);
   }
 
@@ -190,7 +187,7 @@ public class UserController {
     UserResult userResult =
         userService.setMainAddress(SessionUtil.getLoginId(httpSession), addressId);
     if (userResult != null) {
-      SessionUtil.setAddressId(httpSession, userResult.getAddressId());
+      //SessionUtil.setAddressId(httpSession, userResult.getAddressId());
     }
     return ApiResponse.success(userResult);
   }

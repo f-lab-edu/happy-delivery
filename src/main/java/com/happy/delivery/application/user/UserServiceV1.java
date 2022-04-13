@@ -74,11 +74,11 @@ public class UserServiceV1 implements UserService {
     // 1. repo에 저장된 비밀번호 가져오기
     User user = userRepository.findByEmail(signinCommand.getEmail());
     if (user == null) {
-      throw new EmailIsNotMatchException("이메일이 일치하지 않습니다."); //EmailIsNotMatch
+      throw new EmailIsNotMatchException("이메일이 일치하지 않습니다.");
     }
     // 2. 비밀번호 맞는지 확인
     if (!encryptMapper.isMatch(signinCommand.getPassword(), user.getPassword())) {
-      throw new PasswordIsNotMatchException("패스워드가 일치하지 않습니다."); //password
+      throw new PasswordIsNotMatchException("패스워드가 일치하지 않습니다.");
     }
     return UserResult.fromUser(user);
   }
@@ -151,7 +151,7 @@ public class UserServiceV1 implements UserService {
     if (user == null) {
       throw new NoUserIdException();
     }
-    user.setAddressId(address.getId());
+    //user.setAddressId(address.getId());
     userRepository.save(user);
     return UserAddressResult.fromUserAddress(address);
   }
@@ -167,7 +167,7 @@ public class UserServiceV1 implements UserService {
       throw new NotAuthorizedException("현재 주소로 설정할 권한이 없습니다.");
     }
     User user = userRepository.findById(userId);
-    user.setAddressId(addressId);
+    //user.setAddressId(addressId);
     userRepository.save(user);
     return UserResult.fromUser(user);
   }
