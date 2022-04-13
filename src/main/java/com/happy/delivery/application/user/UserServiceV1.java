@@ -85,6 +85,13 @@ public class UserServiceV1 implements UserService {
 
   @Override
   @Transactional
+  public UserResult getMyAccount(Long loginId) {
+    User user = userRepository.findById(loginId);
+    return UserResult.fromUser(user);
+  }
+
+  @Override
+  @Transactional
   public UserResult updateMyAccount(MyAccountCommand myAccountCommand) {
     // 경우 1. user1, user2 생성, user1로그인 -> user2의 이메일로 변경 ; (변경안됨)
     // 경우 2. user1, user2 생성, user1로그인 -> user1의 이메일로 변경(그대로) 이름과 폰 번호만 변경 ; (변경됨)
@@ -108,13 +115,6 @@ public class UserServiceV1 implements UserService {
     flag = userAddressRepository.deleteAllByUserId(loginId);
     flag = userRepository.deleteId(loginId);
     return flag;
-  }
-
-  @Override
-  @Transactional
-  public UserResult getMyAccount(Long loginId) {
-    User user = userRepository.findById(loginId);
-    return UserResult.fromUser(user);
   }
 
   /**

@@ -18,11 +18,11 @@ public interface UserService {
 
   UserResult signin(SigninCommand signinCommand);
 
+  UserResult getMyAccount(Long loginId);
+
   UserResult updateMyAccount(MyAccountCommand myAccountCommand);
 
   boolean deleteMyAccount(Long loinid);
-
-  UserResult getMyAccount(Long loginId);
 
   UserResult updatePassword(Long id, PasswordUpdateCommand passwordUpdateCommand);
 
