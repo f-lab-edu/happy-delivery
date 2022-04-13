@@ -22,9 +22,9 @@ public interface UserService {
 
   UserResult updateMyAccount(MyAccountCommand myAccountCommand);
 
-  boolean deleteMyAccount(Long loinid);
-
   UserResult updatePassword(Long id, PasswordUpdateCommand passwordUpdateCommand);
+
+  boolean deleteMyAccount(Long loinid);
 
   UserAddressResult saveAddress(AddressCommand address);
 

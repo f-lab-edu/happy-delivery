@@ -103,6 +103,20 @@ public class UserController {
   }
 
   /**
+   * my-account/password.
+   * update password.
+   */
+  @UserLoginCheck
+  @ResponseStatus(code = HttpStatus.CREATED)
+  @PatchMapping("/my-account/password")
+  public ApiResponse updatePassword(@Valid @RequestBody PasswordUpdateRequest request,
+      HttpSession httpSession) {
+    UserResult userResult =
+        userService.updatePassword(SessionUtil.getLoginId(httpSession), request.toCommand());
+    return ApiResponse.success(userResult);
+  }
+
+  /**
    * myAccount delete.
    */
   @UserLoginCheck
@@ -112,19 +126,6 @@ public class UserController {
     userService.deleteMyAccount(SessionUtil.getLoginId(httpSession));
     SessionUtil.clear(httpSession);
     return ApiResponse.success("DELETE_MY_ACCOUNT");
-  }
-
-  /**
-   * UserController my-account/password.
-   */
-  @UserLoginCheck
-  @ResponseStatus(code = HttpStatus.CREATED)
-  @PatchMapping("/my-account/password")
-  public ApiResponse updatePassword(@Valid @RequestBody PasswordUpdateRequest request,
-      HttpSession httpSession) {
-    UserResult userResult = userService.updatePassword(SessionUtil.getLoginId(httpSession),
-        request.toCommand());
-    return ApiResponse.success(userResult);
   }
 
   /**

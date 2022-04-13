@@ -108,15 +108,6 @@ public class UserServiceV1 implements UserService {
     return UserResult.fromUser(user);
   }
 
-  @Override
-  @Transactional
-  public boolean deleteMyAccount(Long loginId) {
-    boolean flag = false;
-    flag = userAddressRepository.deleteAllByUserId(loginId);
-    flag = userRepository.deleteId(loginId);
-    return flag;
-  }
-
   /**
    * 비밀번호 변경
    * 1) 변경 전 비밀번호 일치여부 검사.
@@ -134,6 +125,15 @@ public class UserServiceV1 implements UserService {
     user.changePassword(encryptMapper.encoder(passwordUpdateCommand.getChangedPassword()));
     userRepository.save(user);
     return UserResult.fromUser(user);
+  }
+
+  @Override
+  @Transactional
+  public boolean deleteMyAccount(Long loginId) {
+    boolean flag = false;
+    flag = userAddressRepository.deleteAllByUserId(loginId);
+    flag = userRepository.deleteId(loginId);
+    return flag;
   }
 
   @Override
