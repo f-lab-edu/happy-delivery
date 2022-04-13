@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
  */
 public class MyAccountRequest {
 
-  private final Long id;
+  private Long id;
 
   @NotBlank
   @Email
@@ -62,5 +62,13 @@ public class MyAccountRequest {
 
   public String getPhoneNumber() {
     return phoneNumber;
+  }
+
+  /**
+   * addSessionLoginId.
+   * session에 들어있는 회원 식별자 넣어주는 메서드.
+   */
+  public void addSessionLoginId(Long sessionLoginId) {
+    this. id = sessionLoginId;
   }
 }

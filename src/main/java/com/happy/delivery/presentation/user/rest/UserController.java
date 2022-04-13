@@ -78,6 +78,7 @@ public class UserController {
 
   /**
    * myAccount view.
+   * 계정 보여주기.
    */
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
@@ -94,15 +95,10 @@ public class UserController {
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @PutMapping("/my-account")
-  public ApiResponse updateMyAccount(@Valid @RequestBody
-      MyAccountRequest myAccountRequest, HttpSession httpSession) {
-    MyAccountRequest myAccountInfo = new MyAccountRequest(
-        SessionUtil.getLoginId(httpSession),
-        myAccountRequest.getEmail(),
-        myAccountRequest.getName(),
-        myAccountRequest.getPhoneNumber()
-    );
-    UserResult myaccountResult = userService.updateMyAccount(myAccountInfo.toCommand());
+  public ApiResponse updateMyAccount(@Valid @RequestBody MyAccountRequest myAccountRequest,
+      HttpSession httpSession) {
+    myAccountRequest.addSessionLoginId(SessionUtil.getLoginId(httpSession));
+    UserResult myaccountResult = userService.updateMyAccount(myAccountRequest.toCommand());
     return ApiResponse.success(myaccountResult);
   }
 
