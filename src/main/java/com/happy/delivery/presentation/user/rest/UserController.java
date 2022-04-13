@@ -11,6 +11,7 @@ import com.happy.delivery.presentation.common.response.ApiResponse;
 import com.happy.delivery.presentation.user.request.AddressRequest;
 import com.happy.delivery.presentation.user.request.MyAccountRequest;
 import com.happy.delivery.presentation.user.request.PasswordUpdateRequest;
+import com.happy.delivery.presentation.user.request.SaveAddressRequest;
 import com.happy.delivery.presentation.user.request.SigninRequest;
 import com.happy.delivery.presentation.user.request.SignupRequest;
 import java.util.List;
@@ -130,19 +131,15 @@ public class UserController {
 
   /**
    * UserController PostMapping /addresses.
-   * 주소 저장 및 추가 .
-   * || 새로고침하면 중복 저장되는 문제 ||
+   * 주소 저장
    */
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.CREATED)
   @PostMapping("/addresses")
-  public ApiResponse saveAddress(@Valid @RequestBody AddressRequest address,
+  public ApiResponse saveAddress(@Valid @RequestBody SaveAddressRequest addressSaveRequest,
       HttpSession httpSession) {
     UserAddressResult userAddressResult = userService.saveAddress(
-        address.toCommand(null, SessionUtil.getLoginId(httpSession)));
-    if (userAddressResult != null) {
-      SessionUtil.setAddressId(httpSession, userAddressResult.getId());
-    }
+        SessionUtil.getLoginId(httpSession), addressSaveRequest.toCommand());
     return ApiResponse.success(userAddressResult);
   }
 

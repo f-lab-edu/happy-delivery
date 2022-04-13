@@ -3,12 +3,12 @@ package com.happy.delivery.application.user;
 import com.happy.delivery.application.user.command.AddressCommand;
 import com.happy.delivery.application.user.command.MyAccountCommand;
 import com.happy.delivery.application.user.command.PasswordUpdateCommand;
+import com.happy.delivery.application.user.command.SaveAddressCommand;
 import com.happy.delivery.application.user.command.SigninCommand;
 import com.happy.delivery.application.user.command.SignupCommand;
 import com.happy.delivery.application.user.result.UserAddressResult;
 import com.happy.delivery.application.user.result.UserResult;
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
-import com.happy.delivery.domain.exception.user.NoUserIdException;
 import com.happy.delivery.domain.exception.user.NotAuthorizedException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
 import com.happy.delivery.domain.exception.user.UserAddressNotExistedException;
@@ -130,29 +130,20 @@ public class UserServiceV1 implements UserService {
   @Override
   @Transactional
   public boolean deleteMyAccount(Long loginId) {
-    boolean flag = false;
-    flag = userAddressRepository.deleteAllByUserId(loginId);
-    flag = userRepository.deleteId(loginId);
-    return flag;
+    return userRepository.deleteId(loginId);
   }
 
   @Override
   @Transactional
-  public UserAddressResult saveAddress(AddressCommand addressCommand) {
+  public UserAddressResult saveAddress(Long userId, SaveAddressCommand saveAddressCommand) {
     UserAddress address = userAddressRepository.save(
         new UserAddress(
-            addressCommand.getUserId(),
-            addressCommand.getLongitude(),
-            addressCommand.getLatitude(),
-            addressCommand.getAddressDetail()
+            userId,
+            saveAddressCommand.getLongitude(),
+            saveAddressCommand.getLatitude(),
+            saveAddressCommand.getAddressDetail()
         )
     );
-    User user = userRepository.findById(address.getUserId());
-    if (user == null) {
-      throw new NoUserIdException();
-    }
-    //user.setAddressId(address.getId());
-    userRepository.save(user);
     return UserAddressResult.fromUserAddress(address);
   }
 
