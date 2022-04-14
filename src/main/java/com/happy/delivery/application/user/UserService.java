@@ -35,5 +35,5 @@ public interface UserService {
 
   UserAddressResult updateAddress(Long addressId, Long userId, SaveAddressCommand addressCommand);
 
-  boolean deleteAddress(AddressCommand addressCommand);
+  boolean deleteAddress(Long addressId, Long userId);
 }

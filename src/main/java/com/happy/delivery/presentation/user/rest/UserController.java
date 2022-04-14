@@ -191,11 +191,7 @@ public class UserController {
   @ResponseStatus(code = HttpStatus.OK)
   @DeleteMapping("/addresses/{addressId}")
   public ApiResponse deleteAddress(@PathVariable Long addressId, HttpSession httpSession) {
-    if (SessionUtil.getAddressId(httpSession) == addressId) {
-      throw new CanNotDeleteMainAddressException("현재 주소와 삭제하려는 주소가 일치합니다.");
-    }
-    return ApiResponse.success(
-        userService.deleteAddress(new AddressCommand(addressId, SessionUtil.getLoginId(httpSession),
-            null, null, null)));
+    boolean result = userService.deleteAddress(addressId, SessionUtil.getLoginId(httpSession));
+    return ApiResponse.success(result);
   }
 }
