@@ -26,10 +26,12 @@ public class UserAddress {
   /**
    * UserAddress saveAddress Constructor.
    */
-  public UserAddress(Long userId, Double longitude, Double latitude, String addressDetail) {
+  public UserAddress(Long userId, Double longitude, Double latitude, String addressDetail,
+      Boolean mainAddress) {
     this.userId = userId;
     this.address = AddressObject.of(longitude, latitude);
     this.addressDetail = addressDetail;
+    this.mainAddress = mainAddress;
   }
 
   /**

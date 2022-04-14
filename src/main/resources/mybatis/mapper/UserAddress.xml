@@ -15,14 +15,14 @@
   <insert id="insert" parameterType="com.happy.delivery.domain.user.UserAddress"
     useGeneratedKeys="true" keyProperty="id">
     insert into user_addresses (user_id, address, address_detail, main_address)
-    values (#{userId}, ST_GeomFromText(#{address}), #{addressDetail}, true)
+    values (#{userId}, ST_GeomFromText(#{address}), #{addressDetail}, #{mainAddress})
   </insert>
 
   <update id="update" parameterType="com.happy.delivery.domain.user.UserAddress">
     update user_addresses
     set address = ST_GeomFromText(#{address}),
         address_detail = #{addressDetail},
-        main_address = true
+        main_address = #{mainAddress}
     where user_address_id = #{id}
   </update>
 

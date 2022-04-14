@@ -136,15 +136,21 @@ public class UserServiceV1 implements UserService {
   @Override
   @Transactional
   public UserAddressResult saveAddress(Long userId, SaveAddressCommand saveAddressCommand) {
-    UserAddress address = userAddressRepository.save(
+    UserAddress mainAddress = userAddressRepository.findMainAddress(userId);
+    if (mainAddress != null) {
+      mainAddress.setMainAddress(false);
+      userAddressRepository.save(mainAddress);
+    }
+    UserAddress newAddress = userAddressRepository.save(
         new UserAddress(
             userId,
             saveAddressCommand.getLongitude(),
             saveAddressCommand.getLatitude(),
-            saveAddressCommand.getAddressDetail()
+            saveAddressCommand.getAddressDetail(),
+            true
         )
     );
-    return UserAddressResult.fromUserAddress(address);
+    return UserAddressResult.fromUserAddress(newAddress);
   }
 
   @Override

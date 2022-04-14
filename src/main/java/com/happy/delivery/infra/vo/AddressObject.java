@@ -32,8 +32,6 @@ public final class AddressObject {
   public static AddressObject of(String address) {
     String strLongitude = address.substring(address.indexOf('(') + 1, address.indexOf(' '));
     String strLatitude = address.substring(address.indexOf(' ') + 1, address.indexOf(')'));
-    System.out.println("strLongitude = " + strLongitude);
-    System.out.println("strLatitude = " + strLatitude);
     return new AddressObject(Double.parseDouble(strLongitude), Double.parseDouble(strLatitude));
   }
 
