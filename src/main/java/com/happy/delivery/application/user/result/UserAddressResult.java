@@ -10,14 +10,16 @@ public class UserAddressResult {
   private Long id;
   private Long userId;
   private String addressDetail;
+  private Boolean mainAddress;
 
   /**
    * UserAddressResult constructor.
    */
-  public UserAddressResult(Long id, Long userId, String addressDetail) {
+  public UserAddressResult(Long id, Long userId, String addressDetail, Boolean mainAddress) {
     this.id = id;
     this.userId = userId;
     this.addressDetail = addressDetail;
+    this.mainAddress = mainAddress;
   }
 
   /**
@@ -27,7 +29,8 @@ public class UserAddressResult {
     return new UserAddressResult(
         userAddress.getId(),
         userAddress.getUserId(),
-        userAddress.getAddressDetail());
+        userAddress.getAddressDetail(),
+        userAddress.getMainAddress());
   }
 
   public Long getId() {
@@ -42,12 +45,17 @@ public class UserAddressResult {
     return addressDetail;
   }
 
+  public Boolean getMainAddress() {
+    return mainAddress;
+  }
+
   @Override
   public String toString() {
     return "UserAddressResult{" +
         "id=" + id +
         ", userId=" + userId +
         ", addressDetail='" + addressDetail + '\'' +
+        ", mainAddress=" + mainAddress +
         '}';
   }
 }

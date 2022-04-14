@@ -151,8 +151,8 @@ public class UserController {
   @ResponseStatus(code = HttpStatus.OK)
   @GetMapping("/addresses")
   public ApiResponse getListOfAllAddresses(HttpSession httpSession) {
-    List<UserAddressResult> listOfAllAddresses = userService
-        .getListOfAllAddresses(SessionUtil.getLoginId(httpSession));
+    List<UserAddressResult> listOfAllAddresses =
+        userService.getListOfAllAddresses(SessionUtil.getLoginId(httpSession));
     return ApiResponse.success(listOfAllAddresses);
   }
 

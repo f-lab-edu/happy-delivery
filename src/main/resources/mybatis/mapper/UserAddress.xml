@@ -26,26 +26,20 @@
     where user_address_id = #{id}
   </update>
 
-  <update id="updateMainAddress" parameterType="com.happy.delivery.domain.user.UserAddress">
-    update user_addresses
-    set main_address = #{mainAddress}
-    where user_address_id = #{id}
-  </update>
-
   <select id="findById" parameterType="Long" resultMap="userAddressMap">
-    select user_address_id, user_id, address_detail, main_address
+    select user_address_id, user_id, address_detail, main_address, ST_ASTEXT(address) as address
     from user_addresses
     where user_address_id = #{id}
   </select>
 
   <select id="findAllByUserId" resultMap="userAddressMap">
-    select user_address_id, user_id, address_detail, main_address
+    select user_address_id, user_id, address_detail, main_address, ST_ASTEXT(address) as address
     from user_addresses
     where user_id = #{userId}
   </select>
 
   <select id="findMainAddress" resultMap="userAddressMap">
-    select user_address_id, user_id, address_detail, main_address
+    select user_address_id, user_id, address_detail, main_address, ST_ASTEXT(address) as address
     from user_addresses
     where user_id = #{userId} and main_address = true;
   </select>

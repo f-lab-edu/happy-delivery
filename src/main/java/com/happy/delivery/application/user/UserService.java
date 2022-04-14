@@ -29,9 +29,9 @@ public interface UserService {
 
   UserAddressResult saveAddress(Long userId, SaveAddressCommand saveAddressCommand);
 
-  UserResult setMainAddress(Long userId, Long addressId);
-
   List<UserAddressResult> getListOfAllAddresses(Long loginId);
+
+  UserResult setMainAddress(Long userId, Long addressId);
 
   UserAddressResult updateAddress(AddressCommand addressCommand);
 

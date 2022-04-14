@@ -149,6 +149,17 @@ public class UserServiceV1 implements UserService {
 
   @Override
   @Transactional
+  public List<UserAddressResult> getListOfAllAddresses(Long userId) {
+    List<UserAddressResult> result = new ArrayList<>();
+    List<UserAddress> addresses = userAddressRepository.findAllByUserId(userId);
+    for (UserAddress address : addresses) {
+      result.add(UserAddressResult.fromUserAddress(address));
+    }
+    return result;
+  }
+
+  @Override
+  @Transactional
   public UserResult setMainAddress(Long userId, Long addressId) {
     UserAddress byId = userAddressRepository.findById(addressId);
     if (byId == null) {
@@ -161,17 +172,6 @@ public class UserServiceV1 implements UserService {
     //user.setAddressId(addressId);
     userRepository.save(user);
     return UserResult.fromUser(user);
-  }
-
-  @Override
-  @Transactional
-  public List<UserAddressResult> getListOfAllAddresses(Long userId) {
-    List<UserAddressResult> result = new ArrayList<>();
-    List<UserAddress> addresses = userAddressRepository.findAllByUserId(userId);
-    for (UserAddress address : addresses) {
-      result.add(UserAddressResult.fromUserAddress(address));
-    }
-    return result;
   }
 
   @Override
