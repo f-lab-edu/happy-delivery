@@ -159,14 +159,13 @@ public class UserServiceV1 implements UserService {
   }
 
   /**
-   * 현재 주소 변경하기.
+   * <p>현재 주소 변경하기.
    * updateMainAddress(Long userId, Long addressId).
-   *
    * mainAddress로 지정하고 싶은 주소의 식별자 받아옴.
    * userAddressRepository.findById()로 해당 주소값 가져옴.
    * 해당 주소가 존재하는지, mainAddress로 지정할 권한이 있는지 확인.
    * 지금 mainAddress로 설정되어 있는 주소 해제.
-   * 내가 원하는 주소를 mainAddress로 지정 및 저장.
+   * 내가 원하는 주소를 mainAddress로 지정 및 저장.</p>
    */
   @Override
   @Transactional
