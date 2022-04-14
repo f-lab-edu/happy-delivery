@@ -1,17 +1,14 @@
 package com.happy.delivery.presentation.user.rest;
 
 import com.happy.delivery.application.user.UserService;
-import com.happy.delivery.application.user.command.AddressCommand;
 import com.happy.delivery.application.user.result.UserAddressResult;
 import com.happy.delivery.application.user.result.UserResult;
-import com.happy.delivery.domain.exception.user.CanNotDeleteMainAddressException;
 import com.happy.delivery.infra.annotation.UserLoginCheck;
 import com.happy.delivery.infra.util.SessionUtil;
 import com.happy.delivery.presentation.common.response.ApiResponse;
 import com.happy.delivery.presentation.user.request.AddressRequest;
 import com.happy.delivery.presentation.user.request.MyAccountRequest;
 import com.happy.delivery.presentation.user.request.PasswordUpdateRequest;
-import com.happy.delivery.presentation.user.request.SaveAddressRequest;
 import com.happy.delivery.presentation.user.request.SigninRequest;
 import com.happy.delivery.presentation.user.request.SignupRequest;
 import java.util.List;
@@ -136,10 +133,10 @@ public class UserController {
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.CREATED)
   @PostMapping("/addresses")
-  public ApiResponse saveAddress(@Valid @RequestBody SaveAddressRequest addressSaveRequest,
+  public ApiResponse saveAddress(@Valid @RequestBody AddressRequest addressRequest,
       HttpSession httpSession) {
     UserAddressResult userAddressResult = userService.saveAddress(
-        SessionUtil.getLoginId(httpSession), addressSaveRequest.toCommand());
+        SessionUtil.getLoginId(httpSession), addressRequest.toCommand());
     return ApiResponse.success(userAddressResult);
   }
 
@@ -164,14 +161,14 @@ public class UserController {
   @ResponseStatus(code = HttpStatus.CREATED)
   @PatchMapping("/addresses/{addressId}")
   public ApiResponse updateAddress(@PathVariable Long addressId, HttpSession httpSession,
-      @Valid @RequestBody SaveAddressRequest addressCommand) {
+      @Valid @RequestBody AddressRequest addressCommand) {
     UserAddressResult userAddressResult = userService.updateAddress(addressId,
             SessionUtil.getLoginId(httpSession), addressCommand.toCommand());
     return ApiResponse.success(userAddressResult);
   }
 
   /**
-   * setMainAddress.
+   * updateMainAddress.
    * 현재 주소 설정.
    */
   @UserLoginCheck
@@ -184,7 +181,7 @@ public class UserController {
   }
 
   /**
-   * UserController delete /addresses.
+   * deleteAddress.
    * 주소 삭제.
    */
   @UserLoginCheck

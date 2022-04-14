@@ -10,8 +10,6 @@ import org.springframework.lang.Nullable;
  */
 public class AddressRequest {
 
-  private Long addressId;
-  private Long userId;
   private Double longitude;
   private Double latitude;
 
@@ -35,22 +33,12 @@ public class AddressRequest {
   /**
    * AddressRequest --> AddressCommand.
    */
-  public AddressCommand toCommand(Long addressId, Long userId) {
+  public AddressCommand toCommand() {
     return new AddressCommand(
-        addressId,
-        userId,
         this.longitude,
         this.latitude,
         this.addressDetail
     );
-  }
-
-  public Long getAddressId() {
-    return addressId;
-  }
-
-  public Long getUserId() {
-    return userId;
   }
 
   public Double getLongitude() {

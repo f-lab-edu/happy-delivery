@@ -3,7 +3,6 @@ package com.happy.delivery.application.user;
 import com.happy.delivery.application.user.command.AddressCommand;
 import com.happy.delivery.application.user.command.MyAccountCommand;
 import com.happy.delivery.application.user.command.PasswordUpdateCommand;
-import com.happy.delivery.application.user.command.SaveAddressCommand;
 import com.happy.delivery.application.user.command.SigninCommand;
 import com.happy.delivery.application.user.command.SignupCommand;
 import com.happy.delivery.application.user.result.UserAddressResult;
@@ -27,13 +26,13 @@ public interface UserService {
 
   boolean deleteMyAccount(Long userId);
 
-  UserAddressResult saveAddress(Long userId, SaveAddressCommand addressCommand);
+  UserAddressResult saveAddress(Long userId, AddressCommand addressCommand);
 
   List<UserAddressResult> getListOfAllAddresses(Long userId);
 
   UserAddressResult updateMainAddress(Long userId, Long addressId);
 
-  UserAddressResult updateAddress(Long addressId, Long userId, SaveAddressCommand addressCommand);
+  UserAddressResult updateAddress(Long addressId, Long userId, AddressCommand addressCommand);
 
   boolean deleteAddress(Long addressId, Long userId);
 }

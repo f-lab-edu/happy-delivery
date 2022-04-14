@@ -1,8 +1,8 @@
 package com.happy.delivery.application.user;
 
+import com.happy.delivery.application.user.command.AddressCommand;
 import com.happy.delivery.application.user.command.MyAccountCommand;
 import com.happy.delivery.application.user.command.PasswordUpdateCommand;
-import com.happy.delivery.application.user.command.SaveAddressCommand;
 import com.happy.delivery.application.user.command.SigninCommand;
 import com.happy.delivery.application.user.command.SignupCommand;
 import com.happy.delivery.application.user.result.UserAddressResult;
@@ -135,14 +135,14 @@ public class UserServiceV1 implements UserService {
 
   @Override
   @Transactional
-  public UserAddressResult saveAddress(Long userId, SaveAddressCommand saveAddressCommand) {
+  public UserAddressResult saveAddress(Long userId, AddressCommand addressCommand) {
     makeCurrentMainAddressFalse(userId);
     UserAddress newAddress = userAddressRepository.save(
         new UserAddress(
             userId,
-            saveAddressCommand.getLongitude(),
-            saveAddressCommand.getLatitude(),
-            saveAddressCommand.getAddressDetail(),
+            addressCommand.getLongitude(),
+            addressCommand.getLatitude(),
+            addressCommand.getAddressDetail(),
             true));
     return UserAddressResult.fromUserAddress(newAddress);
   }
@@ -185,7 +185,7 @@ public class UserServiceV1 implements UserService {
   @Override
   @Transactional
   public UserAddressResult updateAddress(Long addressId, Long userId,
-      SaveAddressCommand addressCommand) {
+      AddressCommand addressCommand) {
 
     UserAddress userAddress = userAddressRepository.findById(addressId);
     checkUserAddressExistence(userAddress);
