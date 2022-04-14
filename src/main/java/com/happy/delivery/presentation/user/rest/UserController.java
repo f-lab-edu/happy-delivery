@@ -177,13 +177,10 @@ public class UserController {
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @PatchMapping("/addresses/main/{addressId}")
-  public ApiResponse setMainAddress(@PathVariable Long addressId, HttpSession httpSession) {
-    UserResult userResult =
-        userService.setMainAddress(SessionUtil.getLoginId(httpSession), addressId);
-    if (userResult != null) {
-      //SessionUtil.setAddressId(httpSession, userResult.getAddressId());
-    }
-    return ApiResponse.success(userResult);
+  public ApiResponse updateMainAddress(@PathVariable Long addressId, HttpSession httpSession) {
+    UserAddressResult userAddressResult =
+        userService.updateMainAddress(SessionUtil.getLoginId(httpSession), addressId);
+    return ApiResponse.success(userAddressResult);
   }
 
   /**

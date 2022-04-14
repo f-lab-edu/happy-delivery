@@ -31,7 +31,7 @@ public interface UserService {
 
   List<UserAddressResult> getListOfAllAddresses(Long userId);
 
-  UserResult setMainAddress(Long userId, Long addressId);
+  UserAddressResult updateMainAddress(Long userId, Long addressId);
 
   UserAddressResult updateAddress(Long addressId, Long userId, SaveAddressCommand addressCommand);
 

@@ -117,8 +117,8 @@ public class UserServiceV1 implements UserService {
    */
   @Override
   @Transactional
-  public UserResult updatePassword(Long id, PasswordUpdateCommand passwordUpdateCommand) {
-    User user = userRepository.findById(id);
+  public UserResult updatePassword(Long userId, PasswordUpdateCommand passwordUpdateCommand) {
+    User user = userRepository.findById(userId);
     if (!encryptMapper.isMatch(passwordUpdateCommand.getCurrentPassword(), user.getPassword())) {
       throw new PasswordIsNotMatchException("현재 패스워드가 일치하지 않습니다.");
     }
@@ -158,20 +158,33 @@ public class UserServiceV1 implements UserService {
     return result;
   }
 
+  /**
+   * 현재 주소 변경하기.
+   * updateMainAddress(Long userId, Long addressId).
+   *
+   * mainAddress로 지정하고 싶은 주소의 식별자 받아옴.
+   * userAddressRepository.findById()로 해당 주소값 가져옴.
+   * 해당 주소가 존재하는지, mainAddress로 지정할 권한이 있는지 확인.
+   * 지금 mainAddress로 설정되어 있는 주소 해제.
+   * 내가 원하는 주소를 mainAddress로 지정 및 저장.
+   */
   @Override
   @Transactional
-  public UserResult setMainAddress(Long userId, Long addressId) {
-    UserAddress byId = userAddressRepository.findById(addressId);
-    if (byId == null) {
+  public UserAddressResult updateMainAddress(Long userId, Long addressId) {
+    UserAddress userAddress = userAddressRepository.findById(addressId);
+    if (userAddress == null) {
       throw new UserAddressNotExistedException("주소가 존재하지 않습니다.");
     }
-    if (byId.getUserId() != userId) {
-      throw new NotAuthorizedException("현재 주소로 설정할 권한이 없습니다.");
+    if (userAddress.getUserId() != userId) {
+      throw new NotAuthorizedException("현재 주소로 지정할 권한이 없습니다.");
     }
-    User user = userRepository.findById(userId);
-    //user.setAddressId(addressId);
-    userRepository.save(user);
-    return UserResult.fromUser(user);
+
+    makeCurrentMainAddressFalse(userId);
+
+    userAddress.setMainAddress(true);
+    UserAddress result = userAddressRepository.save(userAddress);
+
+    return UserAddressResult.fromUserAddress(result);
   }
 
   @Override
