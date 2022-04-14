@@ -37,9 +37,11 @@ public class UserAddress {
   /**
    * changeAddress(). 주소 변경.
    */
-  public void changeAddress(Double longitude, Double latitude, String addressDetail) {
+  public void changeAddress(Double longitude, Double latitude, String addressDetail,
+      Boolean mainAddress) {
     this.address = AddressObject.of(longitude, latitude);
     this.addressDetail = addressDetail;
+    this.mainAddress = mainAddress;
   }
 
   public Long getId() {

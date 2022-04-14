@@ -163,10 +163,10 @@ public class UserController {
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.CREATED)
   @PatchMapping("/addresses/{addressId}")
-  public ApiResponse updateAddress(@PathVariable Long addressId,
-      @Valid @RequestBody AddressRequest addressRequest, HttpSession httpSession) {
-    UserAddressResult userAddressResult = userService.updateAddress(
-        addressRequest.toCommand(addressId, SessionUtil.getLoginId(httpSession)));
+  public ApiResponse updateAddress(@PathVariable Long addressId, HttpSession httpSession,
+      @Valid @RequestBody SaveAddressRequest addressCommand) {
+    UserAddressResult userAddressResult = userService.updateAddress(addressId,
+            SessionUtil.getLoginId(httpSession), addressCommand.toCommand());
     return ApiResponse.success(userAddressResult);
   }
 

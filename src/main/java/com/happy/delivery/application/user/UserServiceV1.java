@@ -85,8 +85,8 @@ public class UserServiceV1 implements UserService {
 
   @Override
   @Transactional
-  public UserResult getMyAccount(Long loginId) {
-    User user = userRepository.findById(loginId);
+  public UserResult getMyAccount(Long userId) {
+    User user = userRepository.findById(userId);
     return UserResult.fromUser(user);
   }
 
@@ -129,27 +129,21 @@ public class UserServiceV1 implements UserService {
 
   @Override
   @Transactional
-  public boolean deleteMyAccount(Long loginId) {
-    return userRepository.deleteId(loginId);
+  public boolean deleteMyAccount(Long userId) {
+    return userRepository.deleteId(userId);
   }
 
   @Override
   @Transactional
   public UserAddressResult saveAddress(Long userId, SaveAddressCommand saveAddressCommand) {
-    UserAddress mainAddress = userAddressRepository.findMainAddress(userId);
-    if (mainAddress != null) {
-      mainAddress.setMainAddress(false);
-      userAddressRepository.save(mainAddress);
-    }
+    makeCurrentMainAddressFalse(userId);
     UserAddress newAddress = userAddressRepository.save(
         new UserAddress(
             userId,
             saveAddressCommand.getLongitude(),
             saveAddressCommand.getLatitude(),
             saveAddressCommand.getAddressDetail(),
-            true
-        )
-    );
+            true));
     return UserAddressResult.fromUserAddress(newAddress);
   }
 
@@ -182,15 +176,23 @@ public class UserServiceV1 implements UserService {
 
   @Override
   @Transactional
-  public UserAddressResult updateAddress(AddressCommand addressCommand) {
-    UserAddress userAddress = userAddressRepository.findById(addressCommand.getAddressId());
+  public UserAddressResult updateAddress(Long addressId, Long userId,
+      SaveAddressCommand addressCommand) {
+
+    UserAddress userAddress = userAddressRepository.findById(addressId);
     checkEmailExistence(userAddress);
-    checkUserAuthority(addressCommand, userAddress);
+    checkUserAuthority(userId, userAddress);
+
+    makeCurrentMainAddressFalse(userId);
+
     userAddress.changeAddress(
         addressCommand.getLatitude(),
         addressCommand.getLongitude(),
-        addressCommand.getAddressDetail());
-    return UserAddressResult.fromUserAddress(userAddressRepository.save(userAddress));
+        addressCommand.getAddressDetail(),
+        true);
+
+    UserAddress changedUserAddress = userAddressRepository.save(userAddress);
+    return UserAddressResult.fromUserAddress(changedUserAddress);
   }
 
   @Override
@@ -198,7 +200,7 @@ public class UserServiceV1 implements UserService {
   public boolean deleteAddress(AddressCommand addressCommand) {
     UserAddress userAddress = userAddressRepository.findById(addressCommand.getAddressId());
     checkEmailExistence(userAddress);
-    checkUserAuthority(addressCommand, userAddress);
+    //checkUserAuthority(addressCommand, userAddress);
     return userAddressRepository.deleteById(addressCommand.getAddressId());
   }
 
@@ -214,9 +216,20 @@ public class UserServiceV1 implements UserService {
   /**
    * 수정과 삭제 권한 처리.
    */
-  private void checkUserAuthority(AddressCommand addressCommand, UserAddress userAddress) {
-    if (!Objects.equals(addressCommand.getUserId(), userAddress.getUserId())) {
+  private void checkUserAuthority(Long userId, UserAddress userAddress) {
+    if (!Objects.equals(userId, userAddress.getUserId())) {
       throw new NotAuthorizedException("권한이 없습니다.");
+    }
+  }
+
+  /**
+   * 기존의 mainAddress를 false로 변경.
+   */
+  private void makeCurrentMainAddressFalse(Long userId) {
+    UserAddress currentMainAddress = userAddressRepository.findMainAddress(userId);
+    if (currentMainAddress != null) {
+      currentMainAddress.setMainAddress(false);
+      userAddressRepository.save(currentMainAddress);
     }
   }
 }

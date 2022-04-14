@@ -19,21 +19,21 @@ public interface UserService {
 
   UserResult signin(SigninCommand signinCommand);
 
-  UserResult getMyAccount(Long loginId);
+  UserResult getMyAccount(Long userId);
 
   UserResult updateMyAccount(MyAccountCommand myAccountCommand);
 
-  UserResult updatePassword(Long id, PasswordUpdateCommand passwordUpdateCommand);
+  UserResult updatePassword(Long userId, PasswordUpdateCommand passwordUpdateCommand);
 
-  boolean deleteMyAccount(Long loinid);
+  boolean deleteMyAccount(Long userId);
 
-  UserAddressResult saveAddress(Long userId, SaveAddressCommand saveAddressCommand);
+  UserAddressResult saveAddress(Long userId, SaveAddressCommand addressCommand);
 
-  List<UserAddressResult> getListOfAllAddresses(Long loginId);
+  List<UserAddressResult> getListOfAllAddresses(Long userId);
 
   UserResult setMainAddress(Long userId, Long addressId);
 
-  UserAddressResult updateAddress(AddressCommand addressCommand);
+  UserAddressResult updateAddress(Long addressId, Long userId, SaveAddressCommand addressCommand);
 
   boolean deleteAddress(AddressCommand addressCommand);
 }
