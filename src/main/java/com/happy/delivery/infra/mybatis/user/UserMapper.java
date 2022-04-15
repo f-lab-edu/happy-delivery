@@ -17,6 +17,6 @@ public interface UserMapper {
 
   User findByEmail(String email);
 
-  boolean deleteId(Long id);
+  boolean deleteById(Long id);
 
 }

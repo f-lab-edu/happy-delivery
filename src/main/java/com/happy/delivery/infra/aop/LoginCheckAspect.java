@@ -1,6 +1,6 @@
 package com.happy.delivery.infra.aop;
 
-import com.happy.delivery.domain.exception.user.NoUserIdException;
+import com.happy.delivery.domain.exception.user.NoUserException;
 import com.happy.delivery.infra.util.SessionUtil;
 import javax.servlet.http.HttpSession;
 import org.aspectj.lang.annotation.Aspect;
@@ -20,13 +20,13 @@ public class LoginCheckAspect {
    * loginCheck advise.
    */
   @Before("@annotation(com.happy.delivery.infra.annotation.UserLoginCheck)")
-  public void userLoginCheck() throws NoUserIdException {
+  public void userLoginCheck() throws NoUserException {
     HttpSession httpSession =
         ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes()))
             .getRequest()
             .getSession();
     if (SessionUtil.getLoginId(httpSession) == null) {
-      throw new NoUserIdException("로그인이 필요한 서비스입니다.");
+      throw new NoUserException("로그인이 필요한 서비스입니다.");
     }
   }
 }

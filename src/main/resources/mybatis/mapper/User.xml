@@ -37,7 +37,7 @@
     where email = #{email}
   </select>
 
-  <delete id="deleteId" parameterType="Long">
+  <delete id="deleteById" parameterType="Long">
     delete
     from users
     where user_id = #{id}

@@ -9,6 +9,7 @@ import com.happy.delivery.application.user.result.UserAddressResult;
 import com.happy.delivery.application.user.result.UserResult;
 import com.happy.delivery.domain.exception.user.CanNotDeleteMainAddressException;
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
+import com.happy.delivery.domain.exception.user.NoUserException;
 import com.happy.delivery.domain.exception.user.NotAuthorizedException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
 import com.happy.delivery.domain.exception.user.UserAddressNotExistedException;
@@ -21,6 +22,7 @@ import com.happy.delivery.infra.encoder.EncryptMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -86,8 +88,9 @@ public class UserServiceV1 implements UserService {
   @Override
   @Transactional
   public UserResult getMyAccount(Long userId) {
-    User user = userRepository.findById(userId);
-    return UserResult.fromUser(user);
+    Optional<User> user = userRepository.findById(userId);
+    checkUserExistence(user);
+    return UserResult.fromUser(user.get());
   }
 
   @Override
@@ -97,7 +100,9 @@ public class UserServiceV1 implements UserService {
     // 경우 2. user1, user2 생성, user1로그인 -> user1의 이메일로 변경(그대로) 이름과 폰 번호만 변경 ; (변경됨)
     // 경우 3. user1, user2 생성, user1로그인 -> user3의 이메일 신규 생성 ; (변경됨)
     User byEmail = userRepository.findByEmail(myAccountCommand.getEmail());
-    User user = userRepository.findById(myAccountCommand.getId());
+    Optional<User> optionalUser = userRepository.findById(myAccountCommand.getId());
+    checkUserExistence(optionalUser);
+    User user = optionalUser.get();
     //repo에 값이 있거나 기존 이메일과 변경하려는 이메일이 같지 않은경우
     if (byEmail != null && !myAccountCommand.getEmail().equals(user.getEmail())) {
       throw new UserAlreadyExistedException("이미 존재하는 계정 입니다.");
@@ -118,7 +123,9 @@ public class UserServiceV1 implements UserService {
   @Override
   @Transactional
   public UserResult updatePassword(Long userId, PasswordUpdateCommand passwordUpdateCommand) {
-    User user = userRepository.findById(userId);
+    Optional<User> optionalUser = userRepository.findById(userId);
+    checkUserExistence(optionalUser);
+    User user = optionalUser.get();
     if (!encryptMapper.isMatch(passwordUpdateCommand.getCurrentPassword(), user.getPassword())) {
       throw new PasswordIsNotMatchException("현재 패스워드가 일치하지 않습니다.");
     }
@@ -130,7 +137,8 @@ public class UserServiceV1 implements UserService {
   @Override
   @Transactional
   public boolean deleteMyAccount(Long userId) {
-    return userRepository.deleteId(userId);
+    userRepository.deleteById(userId);
+    return true;
   }
 
   @Override
@@ -209,7 +217,7 @@ public class UserServiceV1 implements UserService {
     UserAddress userAddress = userAddressRepository.findById(addressId);
     checkUserAddressExistence(userAddress);
     checkUserAuthority(userId, userAddress);
-    if (userAddress.getId() == userAddressRepository.findMainAddress(userId).getId()) {
+    if (userAddress.getId().equals(userAddressRepository.findMainAddress(userId).getId())) {
       throw new CanNotDeleteMainAddressException("현재 주소와 삭제하려는 주소가 일치합니다.");
     }
     return userAddressRepository.deleteById(addressId);
@@ -230,6 +238,15 @@ public class UserServiceV1 implements UserService {
   private void checkUserAuthority(Long userId, UserAddress userAddress) {
     if (!Objects.equals(userId, userAddress.getUserId())) {
       throw new NotAuthorizedException("권한이 없습니다.");
+    }
+  }
+
+  /**
+   * repository에 해당 user가 있는지 확인.
+   */
+  private void checkUserExistence(Optional<User> user) {
+    if (user.isEmpty()) {
+      throw new NoUserException();
     }
   }
 

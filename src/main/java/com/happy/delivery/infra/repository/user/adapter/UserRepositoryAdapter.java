@@ -1,14 +1,13 @@
 package com.happy.delivery.infra.repository.user.adapter;
 
 import com.happy.delivery.domain.user.User;
-import com.happy.delivery.domain.user.repository.UserRepository;
 import com.happy.delivery.infra.mybatis.user.UserMapper;
-import org.springframework.stereotype.Repository;
+import java.util.Optional;
 
 /**
  * UserRepositoryAdapter.
  */
-public class UserRepositoryAdapter implements UserRepository {
+public class UserRepositoryAdapter {
 
   private final UserMapper userMapper;
 
@@ -16,7 +15,10 @@ public class UserRepositoryAdapter implements UserRepository {
     this.userMapper = userMapper;
   }
 
-  @Override
+  /**
+   * save.
+   * 주소 저장 및 수정.
+   */
   public User save(User user) {
     if (user.getId() == null || user.getId() <= 0L) {
       userMapper.insert(user);
@@ -26,18 +28,28 @@ public class UserRepositoryAdapter implements UserRepository {
     return user;
   }
 
-  @Override
-  public User findById(Long id) {
-    return userMapper.findById(id);
+  /**
+   * findById.
+   * 식별자로 값 찾기.
+   */
+  public Optional<User> findById(Long id) {
+    User user = userMapper.findById(id);
+    return Optional.of(user);
   }
 
-  @Override
+  /**
+   * findByEmail.
+   * 이메일로 값 찾기.
+   */
   public User findByEmail(String email) {
     return userMapper.findByEmail(email);
   }
 
-  @Override
-  public boolean deleteId(Long id) {
-    return userMapper.deleteId(id);
+  /**
+   * deleteById.
+   * 식별자로 삭제하기.
+   */
+  public void deleteById(Long id) {
+    userMapper.deleteById(id);
   }
 }
