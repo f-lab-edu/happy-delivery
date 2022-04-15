@@ -1,14 +1,35 @@
 package com.happy.delivery.domain.user;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import net.bytebuddy.dynamic.loading.InjectionClassLoader.Strategy;
+
 /**
  * User.
  */
+@Entity(name = "User")
+@Table(name = "users")
 public class User {
 
+  @Id
+  @Column(name = "user_id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  @Column
   private String email;
+
+  @Column
   private String password;
+
+  @Column
   private String name;
+
+  @Column(name = "phone_number")
   private String phoneNumber;
 
   /**
@@ -71,16 +92,32 @@ public class User {
     return email;
   }
 
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
   public String getPassword() {
     return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
   }
 
   public String getName() {
     return name;
   }
 
+  public void setName(String name) {
+    this.name = name;
+  }
+
   public String getPhoneNumber() {
     return phoneNumber;
+  }
+
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
   }
 
   @Override

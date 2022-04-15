@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 /**
  * UserRepositoryAdapter.
  */
-@Repository
 public class UserRepositoryAdapter implements UserRepository {
 
   private final UserMapper userMapper;
