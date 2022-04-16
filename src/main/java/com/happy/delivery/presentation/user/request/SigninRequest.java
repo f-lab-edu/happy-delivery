@@ -9,8 +9,6 @@ import javax.validation.constraints.NotBlank;
  */
 public class SigninRequest {
 
-  private final Long id;
-
   @NotBlank
   @Email
   private String email;
@@ -21,18 +19,9 @@ public class SigninRequest {
   /**
    * SigninRequest Constructor.
    */
-  public SigninRequest(Long id, String email, String password) {
-    this.id = id;
+  public SigninRequest(String email, String password) {
     this.email = email;
     this.password = password;
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public String getEmail() {
-    return email;
   }
 
   /**

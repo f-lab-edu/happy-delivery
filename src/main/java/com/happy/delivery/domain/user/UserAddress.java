@@ -11,6 +11,7 @@ public class UserAddress {
   private Long userId;
   private AddressObject address;
   private String addressDetail;
+  private Boolean mainAddress;
 
   /**
    * UserAddress MyBatis Constructor.
@@ -25,18 +26,22 @@ public class UserAddress {
   /**
    * UserAddress saveAddress Constructor.
    */
-  public UserAddress(Long userId, Double longitude, Double latitude, String addressDetail) {
+  public UserAddress(Long userId, Double longitude, Double latitude, String addressDetail,
+      Boolean mainAddress) {
     this.userId = userId;
     this.address = AddressObject.of(longitude, latitude);
     this.addressDetail = addressDetail;
+    this.mainAddress = mainAddress;
   }
 
   /**
    * changeAddress(). 주소 변경.
    */
-  public void changeAddress(Double longitude, Double latitude, String addressDetail) {
+  public void changeAddress(Double longitude, Double latitude, String addressDetail,
+      Boolean mainAddress) {
     this.address = AddressObject.of(longitude, latitude);
     this.addressDetail = addressDetail;
+    this.mainAddress = mainAddress;
   }
 
   public Long getId() {
@@ -55,7 +60,25 @@ public class UserAddress {
     return this.address.toString();
   }
 
+  /**
+   * setAddress.
+   * DB에서 POINT값을 ST_ASTEXT를 이용해 String으로 바꿔서 보내주면,
+   * Mybatis가 UserAddress의 setAddress를 이용해서 객체에 값을 주입시켜줌.
+   * String address 형태 : POINT(127.04298707366922 37.512764805693074)
+   */
+  public void setAddress(String address) {
+    this.address = AddressObject.of(address);
+  }
+
   public String getAddressDetail() {
     return addressDetail;
+  }
+
+  public Boolean getMainAddress() {
+    return mainAddress;
+  }
+
+  public void setMainAddress(Boolean mainAddress) {
+    this.mainAddress = mainAddress;
   }
 }

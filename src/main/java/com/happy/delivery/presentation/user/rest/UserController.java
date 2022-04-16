@@ -1,10 +1,8 @@
 package com.happy.delivery.presentation.user.rest;
 
 import com.happy.delivery.application.user.UserService;
-import com.happy.delivery.application.user.command.AddressCommand;
 import com.happy.delivery.application.user.result.UserAddressResult;
 import com.happy.delivery.application.user.result.UserResult;
-import com.happy.delivery.domain.exception.user.CanNotDeleteMainAddressException;
 import com.happy.delivery.infra.annotation.UserLoginCheck;
 import com.happy.delivery.infra.util.SessionUtil;
 import com.happy.delivery.presentation.common.response.ApiResponse;
@@ -62,10 +60,7 @@ public class UserController {
   public ApiResponse signin(@Valid @RequestBody SigninRequest request,
       HttpSession httpSession) {
     UserResult userResult = userService.signin(request.toCommand());
-    if (userResult != null) {
-      SessionUtil.setLoginId(httpSession, userResult.getId());
-      SessionUtil.setAddressId(httpSession, userResult.getAddressId());
-    }
+    SessionUtil.setLoginId(httpSession, userResult.getId());
     return ApiResponse.success(userResult);
   }
 
@@ -81,6 +76,7 @@ public class UserController {
 
   /**
    * myAccount view.
+   * 계정 보여주기.
    */
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
@@ -97,16 +93,25 @@ public class UserController {
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @PutMapping("/my-account")
-  public ApiResponse updateMyAccount(@Valid @RequestBody
-      MyAccountRequest myAccountRequest, HttpSession httpSession) {
-    MyAccountRequest myAccountInfo = new MyAccountRequest(
-        SessionUtil.getLoginId(httpSession),
-        myAccountRequest.getEmail(),
-        myAccountRequest.getName(),
-        myAccountRequest.getPhoneNumber()
-    );
-    UserResult myaccountResult = userService.updateMyAccount(myAccountInfo.toCommand());
+  public ApiResponse updateMyAccount(@Valid @RequestBody MyAccountRequest myAccountRequest,
+      HttpSession httpSession) {
+    myAccountRequest.addSessionLoginId(SessionUtil.getLoginId(httpSession));
+    UserResult myaccountResult = userService.updateMyAccount(myAccountRequest.toCommand());
     return ApiResponse.success(myaccountResult);
+  }
+
+  /**
+   * my-account/password.
+   * update password.
+   */
+  @UserLoginCheck
+  @ResponseStatus(code = HttpStatus.CREATED)
+  @PatchMapping("/my-account/password")
+  public ApiResponse updatePassword(@Valid @RequestBody PasswordUpdateRequest request,
+      HttpSession httpSession) {
+    UserResult userResult =
+        userService.updatePassword(SessionUtil.getLoginId(httpSession), request.toCommand());
+    return ApiResponse.success(userResult);
   }
 
   /**
@@ -122,33 +127,16 @@ public class UserController {
   }
 
   /**
-   * UserController my-account/password.
-   */
-  @UserLoginCheck
-  @ResponseStatus(code = HttpStatus.CREATED)
-  @PatchMapping("/my-account/password")
-  public ApiResponse updatePassword(@Valid @RequestBody PasswordUpdateRequest request,
-      HttpSession httpSession) {
-    UserResult userResult = userService.updatePassword(SessionUtil.getLoginId(httpSession),
-        request.toCommand());
-    return ApiResponse.success(userResult);
-  }
-
-  /**
    * UserController PostMapping /addresses.
-   * 주소 저장 및 추가 .
-   * || 새로고침하면 중복 저장되는 문제 ||
+   * 주소 저장
    */
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.CREATED)
   @PostMapping("/addresses")
-  public ApiResponse saveAddress(@Valid @RequestBody AddressRequest address,
+  public ApiResponse saveAddress(@Valid @RequestBody AddressRequest addressRequest,
       HttpSession httpSession) {
     UserAddressResult userAddressResult = userService.saveAddress(
-        address.toCommand(null, SessionUtil.getLoginId(httpSession)));
-    if (userAddressResult != null) {
-      SessionUtil.setAddressId(httpSession, userAddressResult.getId());
-    }
+        SessionUtil.getLoginId(httpSession), addressRequest.toCommand());
     return ApiResponse.success(userAddressResult);
   }
 
@@ -160,8 +148,8 @@ public class UserController {
   @ResponseStatus(code = HttpStatus.OK)
   @GetMapping("/addresses")
   public ApiResponse getListOfAllAddresses(HttpSession httpSession) {
-    List<UserAddressResult> listOfAllAddresses = userService
-        .getListOfAllAddresses(SessionUtil.getLoginId(httpSession));
+    List<UserAddressResult> listOfAllAddresses =
+        userService.getListOfAllAddresses(SessionUtil.getLoginId(httpSession));
     return ApiResponse.success(listOfAllAddresses);
   }
 
@@ -172,42 +160,35 @@ public class UserController {
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.CREATED)
   @PatchMapping("/addresses/{addressId}")
-  public ApiResponse updateAddress(@PathVariable Long addressId,
-      @Valid @RequestBody AddressRequest addressRequest, HttpSession httpSession) {
-    UserAddressResult userAddressResult = userService.updateAddress(
-        addressRequest.toCommand(addressId, SessionUtil.getLoginId(httpSession)));
+  public ApiResponse updateAddress(@PathVariable Long addressId, HttpSession httpSession,
+      @Valid @RequestBody AddressRequest addressCommand) {
+    UserAddressResult userAddressResult = userService.updateAddress(addressId,
+            SessionUtil.getLoginId(httpSession), addressCommand.toCommand());
     return ApiResponse.success(userAddressResult);
   }
 
   /**
-   * setMainAddress.
+   * updateMainAddress.
    * 현재 주소 설정.
    */
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @PatchMapping("/addresses/main/{addressId}")
-  public ApiResponse setMainAddress(@PathVariable Long addressId, HttpSession httpSession) {
-    UserResult userResult =
-        userService.setMainAddress(SessionUtil.getLoginId(httpSession), addressId);
-    if (userResult != null) {
-      SessionUtil.setAddressId(httpSession, userResult.getAddressId());
-    }
-    return ApiResponse.success(userResult);
+  public ApiResponse updateMainAddress(@PathVariable Long addressId, HttpSession httpSession) {
+    UserAddressResult userAddressResult =
+        userService.updateMainAddress(SessionUtil.getLoginId(httpSession), addressId);
+    return ApiResponse.success(userAddressResult);
   }
 
   /**
-   * UserController delete /addresses.
+   * deleteAddress.
    * 주소 삭제.
    */
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @DeleteMapping("/addresses/{addressId}")
   public ApiResponse deleteAddress(@PathVariable Long addressId, HttpSession httpSession) {
-    if (SessionUtil.getAddressId(httpSession) == addressId) {
-      throw new CanNotDeleteMainAddressException("현재 주소와 삭제하려는 주소가 일치합니다.");
-    }
-    return ApiResponse.success(
-        userService.deleteAddress(new AddressCommand(addressId, SessionUtil.getLoginId(httpSession),
-            null, null, null)));
+    boolean result = userService.deleteAddress(addressId, SessionUtil.getLoginId(httpSession));
+    return ApiResponse.success(result);
   }
 }

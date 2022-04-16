@@ -24,6 +24,17 @@ public final class AddressObject {
     return new AddressObject(longitude, latitude);
   }
 
+  /**
+   * UserAddress setAddress()를 위해서 만듦.
+   * String address를 받아
+   * 파싱해서 longitude, latitude에 넣어주는 메서드.
+   */
+  public static AddressObject of(String address) {
+    String strLongitude = address.substring(address.indexOf('(') + 1, address.indexOf(' '));
+    String strLatitude = address.substring(address.indexOf(' ') + 1, address.indexOf(')'));
+    return new AddressObject(Double.parseDouble(strLongitude), Double.parseDouble(strLatitude));
+  }
+
   private void validateLongitudeAndLatitude() {
     if (this.longitude == null || this.latitude == null) {
       throw new LongitudeOrLatitudeNullPointException("경도 위도를 모두 작성해주세요.");

@@ -5,40 +5,48 @@
 
 <mapper namespace="com.happy.delivery.infra.mybatis.user.UserAddressMapper">
 
+  <resultMap id="userAddressMap" type="com.happy.delivery.domain.user.UserAddress">
+    <result column="user_address_id" property="id"/>
+    <result column="user_id" property="userId"/>
+    <result column="address_detail" property="addressDetail"/>
+    <result column="main_address" property="mainAddress" jdbcType="TINYINT" javaType="Boolean"/>
+  </resultMap>
+
   <insert id="insert" parameterType="com.happy.delivery.domain.user.UserAddress"
     useGeneratedKeys="true" keyProperty="id">
-    INSERT INTO user_addresses (userId, address, addressDetail)
-    VALUES (#{userId}, ST_GeomFromText(#{address}), #{addressDetail,jdbcType=VARCHAR});
+    insert into user_addresses (user_id, address, address_detail, main_address)
+    values (#{userId}, ST_GeomFromText(#{address}), #{addressDetail}, #{mainAddress})
   </insert>
 
   <update id="update" parameterType="com.happy.delivery.domain.user.UserAddress">
-    UPDATE user_addresses
-    SET address = ST_GeomFromText(#{address}),
-        addressDetail = #{addressDetail}
-    WHERE id = #{id};
+    update user_addresses
+    set address = ST_GeomFromText(#{address}),
+        address_detail = #{addressDetail},
+        main_address = #{mainAddress}
+    where user_address_id = #{id}
   </update>
 
-  <select id="findById" parameterType="Long" resultType="com.happy.delivery.domain.user.UserAddress">
-    SELECT id, userId, addressDetail
-    FROM user_addresses
-    WHERE id = #{id}
+  <select id="findById" parameterType="Long" resultMap="userAddressMap">
+    select user_address_id, user_id, address_detail, main_address, ST_ASTEXT(address) as address
+    from user_addresses
+    where user_address_id = #{id}
   </select>
 
-  <select id="findAllByUserId" resultType="com.happy.delivery.domain.user.UserAddress">
-    SELECT id, userId, addressDetail
-    FROM user_addresses
-    WHERE userId = #{userId}
+  <select id="findAllByUserId" resultMap="userAddressMap">
+    select user_address_id, user_id, address_detail, main_address, ST_ASTEXT(address) as address
+    from user_addresses
+    where user_id = #{userId}
+  </select>
+
+  <select id="findMainAddress" resultMap="userAddressMap">
+    select user_address_id, user_id, address_detail, main_address, ST_ASTEXT(address) as address
+    from user_addresses
+    where user_id = #{userId} and main_address = true;
   </select>
 
   <delete id="deleteById" parameterType="Long">
     DELETE
     FROM user_addresses
-    WHERE id = #{id}
-  </delete>
-
-  <delete id="deleteAllByUserId" parameterType="Long">
-    DELETE
-    FROM user_addresses
-    WHERE userId = #{userId}
+    where user_address_id = #{id}
   </delete>
 </mapper>

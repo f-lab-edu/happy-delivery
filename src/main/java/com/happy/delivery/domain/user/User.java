@@ -10,7 +10,12 @@ public class User {
   private String password;
   private String name;
   private String phoneNumber;
-  private Long addressId;
+
+  /**
+   * 기본 생성자.
+   */
+  public User() {
+  }
 
   /**
    * 회원가입 할 때 사용.
@@ -32,7 +37,6 @@ public class User {
     this.password = password;
     this.name = name;
     this.phoneNumber = phoneNumber;
-    this.addressId = addressId;
   }
 
   /**
@@ -79,14 +83,6 @@ public class User {
     return phoneNumber;
   }
 
-  public Long getAddressId() {
-    return addressId;
-  }
-
-  public void setAddressId(Long addressId) {
-    this.addressId = addressId;
-  }
-
   @Override
   public String toString() {
     return "User{" +
@@ -95,7 +91,6 @@ public class User {
         ", password='" + password + '\'' +
         ", name='" + name + '\'' +
         ", phoneNumber='" + phoneNumber + '\'' +
-        ", addressId=" + addressId +
         '}';
   }
 }

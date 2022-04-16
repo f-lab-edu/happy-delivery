@@ -7,8 +7,6 @@ import org.springframework.lang.Nullable;
  */
 public class AddressCommand {
 
-  private Long addressId;
-  private final Long userId;
   private Double longitude;
   private Double latitude;
   @Nullable
@@ -17,21 +15,10 @@ public class AddressCommand {
   /**
    * AddressCommand Constructor.
    */
-  public AddressCommand(Long addressId, Long userId, Double longitude, Double latitude,
-      @Nullable String addressDetail) {
-    this.addressId = addressId;
-    this.userId = userId;
+  public AddressCommand(Double longitude, Double latitude, @Nullable String addressDetail) {
     this.longitude = longitude;
     this.latitude = latitude;
     this.addressDetail = addressDetail;
-  }
-
-  public Long getAddressId() {
-    return addressId;
-  }
-
-  public Long getUserId() {
-    return userId;
   }
 
   public Double getLongitude() {
@@ -49,10 +36,8 @@ public class AddressCommand {
 
   @Override
   public String toString() {
-    return "AddressCommand{" +
-        "addressId=" + addressId +
-        ", userId=" + userId +
-        ", longitude=" + longitude +
+    return "AddressSaveCommand{" +
+        "longitude=" + longitude +
         ", latitude=" + latitude +
         ", addressDetail='" + addressDetail + '\'' +
         '}';

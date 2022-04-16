@@ -18,7 +18,7 @@ public interface UserAddressMapper {
 
   List<UserAddress> findAllByUserId(Long userId);
 
-  boolean deleteById(Long id);
+  UserAddress findMainAddress(Long userId);
 
-  boolean deleteAllByUserId(Long userId);
+  boolean deleteById(Long id);
 }

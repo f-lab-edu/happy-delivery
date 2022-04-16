@@ -2,9 +2,9 @@ package com.happy.delivery.infra.repository.user.hashmap;
 
 import com.happy.delivery.domain.user.UserAddress;
 import com.happy.delivery.domain.user.repository.UserAddressRepository;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
@@ -44,6 +44,16 @@ public class HashMapUserAddressRepository implements UserAddressRepository {
   }
 
   @Override
+  public UserAddress findMainAddress(Long userId) {
+    Optional<UserAddress> mainAddress = map.values()
+        .stream()
+        .filter(userAddress -> userId.equals(userAddress.getUserId()))
+        .filter(userAddress -> userAddress.getMainAddress() == true)
+        .findFirst();
+    return mainAddress.get();
+  }
+
+  @Override
   public boolean deleteById(Long id) {
     boolean flag = false;
     if (map.remove(id) != null) {
@@ -52,19 +62,20 @@ public class HashMapUserAddressRepository implements UserAddressRepository {
     return flag;
   }
 
-  @Override
-  public boolean deleteAllByUserId(Long userId) {
-    boolean flag = false;
-    List<UserAddress> addressList = new ArrayList<>();
-    addressList = map.values()
-        .stream()
-        .filter(userAddress -> userId.equals(userAddress.getUserId()))
-        .collect(Collectors.toList());
-    for (UserAddress address : addressList) {
-      if (map.remove(address.getId()) != null) {
-        flag = true;
-      }
-    }
-    return false;
-  }
+  // DB에 foreign key를 적용하면서 더이상 사용할 필요가 없어짐.
+  //  @Override
+  //  public boolean deleteAllByUserId(Long userId) {
+  //    boolean flag = false;
+  //    List<UserAddress> addressList = new ArrayList<>();
+  //    addressList = map.values()
+  //        .stream()
+  //        .filter(userAddress -> userId.equals(userAddress.getUserId()))
+  //        .collect(Collectors.toList());
+  //    for (UserAddress address : addressList) {
+  //      if (map.remove(address.getId()) != null) {
+  //        flag = true;
+  //      }
+  //    }
+  //    return false;
+  //  }
 }

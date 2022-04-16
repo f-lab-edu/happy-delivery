@@ -14,8 +14,7 @@ public class UserAddressRepositoryAdapter implements UserAddressRepository {
 
   private final UserAddressMapper userAddressMapper;
 
-  public UserAddressRepositoryAdapter(
-      UserAddressMapper userAddressMapper) {
+  public UserAddressRepositoryAdapter(UserAddressMapper userAddressMapper) {
     this.userAddressMapper = userAddressMapper;
   }
 
@@ -40,12 +39,12 @@ public class UserAddressRepositoryAdapter implements UserAddressRepository {
   }
 
   @Override
-  public boolean deleteById(Long id) {
-    return userAddressMapper.deleteById(id);
+  public UserAddress findMainAddress(Long userId) {
+    return userAddressMapper.findMainAddress(userId);
   }
 
   @Override
-  public boolean deleteAllByUserId(Long userId) {
-    return userAddressMapper.deleteAllByUserId(userId);
+  public boolean deleteById(Long id) {
+    return userAddressMapper.deleteById(id);
   }
 }

@@ -7,8 +7,8 @@ import com.happy.delivery.application.user.command.SigninCommand;
 import com.happy.delivery.application.user.command.SignupCommand;
 import com.happy.delivery.application.user.result.UserAddressResult;
 import com.happy.delivery.application.user.result.UserResult;
+import com.happy.delivery.domain.exception.user.CanNotDeleteMainAddressException;
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
-import com.happy.delivery.domain.exception.user.NoUserIdException;
 import com.happy.delivery.domain.exception.user.NotAuthorizedException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
 import com.happy.delivery.domain.exception.user.UserAddressNotExistedException;
@@ -74,12 +74,19 @@ public class UserServiceV1 implements UserService {
     // 1. repo에 저장된 비밀번호 가져오기
     User user = userRepository.findByEmail(signinCommand.getEmail());
     if (user == null) {
-      throw new EmailIsNotMatchException("이메일이 일치하지 않습니다."); //EmailIsNotMatch
+      throw new EmailIsNotMatchException("이메일이 일치하지 않습니다.");
     }
     // 2. 비밀번호 맞는지 확인
     if (!encryptMapper.isMatch(signinCommand.getPassword(), user.getPassword())) {
-      throw new PasswordIsNotMatchException("패스워드가 일치하지 않습니다."); //password
+      throw new PasswordIsNotMatchException("패스워드가 일치하지 않습니다.");
     }
+    return UserResult.fromUser(user);
+  }
+
+  @Override
+  @Transactional
+  public UserResult getMyAccount(Long userId) {
+    User user = userRepository.findById(userId);
     return UserResult.fromUser(user);
   }
 
@@ -101,22 +108,6 @@ public class UserServiceV1 implements UserService {
     return UserResult.fromUser(user);
   }
 
-  @Override
-  @Transactional
-  public boolean deleteMyAccount(Long loginId) {
-    boolean flag = false;
-    flag = userAddressRepository.deleteAllByUserId(loginId);
-    flag = userRepository.deleteId(loginId);
-    return flag;
-  }
-
-  @Override
-  @Transactional
-  public UserResult getMyAccount(Long loginId) {
-    User user = userRepository.findById(loginId);
-    return UserResult.fromUser(user);
-  }
-
   /**
    * 비밀번호 변경
    * 1) 변경 전 비밀번호 일치여부 검사.
@@ -126,8 +117,8 @@ public class UserServiceV1 implements UserService {
    */
   @Override
   @Transactional
-  public UserResult updatePassword(Long id, PasswordUpdateCommand passwordUpdateCommand) {
-    User user = userRepository.findById(id);
+  public UserResult updatePassword(Long userId, PasswordUpdateCommand passwordUpdateCommand) {
+    User user = userRepository.findById(userId);
     if (!encryptMapper.isMatch(passwordUpdateCommand.getCurrentPassword(), user.getPassword())) {
       throw new PasswordIsNotMatchException("현재 패스워드가 일치하지 않습니다.");
     }
@@ -138,38 +129,22 @@ public class UserServiceV1 implements UserService {
 
   @Override
   @Transactional
-  public UserAddressResult saveAddress(AddressCommand addressCommand) {
-    UserAddress address = userAddressRepository.save(
-        new UserAddress(
-            addressCommand.getUserId(),
-            addressCommand.getLongitude(),
-            addressCommand.getLatitude(),
-            addressCommand.getAddressDetail()
-        )
-    );
-    User user = userRepository.findById(address.getUserId());
-    if (user == null) {
-      throw new NoUserIdException();
-    }
-    user.setAddressId(address.getId());
-    userRepository.save(user);
-    return UserAddressResult.fromUserAddress(address);
+  public boolean deleteMyAccount(Long userId) {
+    return userRepository.deleteId(userId);
   }
 
   @Override
   @Transactional
-  public UserResult setMainAddress(Long userId, Long addressId) {
-    UserAddress byId = userAddressRepository.findById(addressId);
-    if (byId == null) {
-      throw new UserAddressNotExistedException("주소가 존재하지 않습니다.");
-    }
-    if (byId.getUserId() != userId) {
-      throw new NotAuthorizedException("현재 주소로 설정할 권한이 없습니다.");
-    }
-    User user = userRepository.findById(userId);
-    user.setAddressId(addressId);
-    userRepository.save(user);
-    return UserResult.fromUser(user);
+  public UserAddressResult saveAddress(Long userId, AddressCommand addressCommand) {
+    makeCurrentMainAddressFalse(userId);
+    UserAddress newAddress = userAddressRepository.save(
+        new UserAddress(
+            userId,
+            addressCommand.getLongitude(),
+            addressCommand.getLatitude(),
+            addressCommand.getAddressDetail(),
+            true));
+    return UserAddressResult.fromUserAddress(newAddress);
   }
 
   @Override
@@ -183,32 +158,67 @@ public class UserServiceV1 implements UserService {
     return result;
   }
 
+  /**
+   * <p>현재 주소 변경하기.
+   * updateMainAddress(Long userId, Long addressId).
+   * mainAddress로 지정하고 싶은 주소의 식별자 받아옴.
+   * userAddressRepository.findById()로 해당 주소값 가져옴.
+   * 해당 주소가 존재하는지, mainAddress로 지정할 권한이 있는지 확인.
+   * 지금 mainAddress로 설정되어 있는 주소 해제.
+   * 내가 원하는 주소를 mainAddress로 지정 및 저장.</p>
+   */
   @Override
   @Transactional
-  public UserAddressResult updateAddress(AddressCommand addressCommand) {
-    UserAddress userAddress = userAddressRepository.findById(addressCommand.getAddressId());
-    checkEmailExistence(userAddress);
-    checkUserAuthority(addressCommand, userAddress);
-    userAddress.changeAddress(
-        addressCommand.getLatitude(),
-        addressCommand.getLongitude(),
-        addressCommand.getAddressDetail());
-    return UserAddressResult.fromUserAddress(userAddressRepository.save(userAddress));
+  public UserAddressResult updateMainAddress(Long userId, Long addressId) {
+    UserAddress userAddress = userAddressRepository.findById(addressId);
+    checkUserAddressExistence(userAddress);
+    checkUserAuthority(userId, userAddress);
+
+    makeCurrentMainAddressFalse(userId);
+
+    userAddress.setMainAddress(true);
+    UserAddress result = userAddressRepository.save(userAddress);
+
+    return UserAddressResult.fromUserAddress(result);
   }
 
   @Override
   @Transactional
-  public boolean deleteAddress(AddressCommand addressCommand) {
-    UserAddress userAddress = userAddressRepository.findById(addressCommand.getAddressId());
-    checkEmailExistence(userAddress);
-    checkUserAuthority(addressCommand, userAddress);
-    return userAddressRepository.deleteById(addressCommand.getAddressId());
+  public UserAddressResult updateAddress(Long addressId, Long userId,
+      AddressCommand addressCommand) {
+
+    UserAddress userAddress = userAddressRepository.findById(addressId);
+    checkUserAddressExistence(userAddress);
+    checkUserAuthority(userId, userAddress);
+
+    makeCurrentMainAddressFalse(userId);
+
+    userAddress.changeAddress(
+        addressCommand.getLatitude(),
+        addressCommand.getLongitude(),
+        addressCommand.getAddressDetail(),
+        true);
+
+    UserAddress changedUserAddress = userAddressRepository.save(userAddress);
+    return UserAddressResult.fromUserAddress(changedUserAddress);
+  }
+
+  @Override
+  @Transactional
+  public boolean deleteAddress(Long addressId, Long userId) {
+    UserAddress userAddress = userAddressRepository.findById(addressId);
+    checkUserAddressExistence(userAddress);
+    checkUserAuthority(userId, userAddress);
+    if (userAddress.getId() == userAddressRepository.findMainAddress(userId).getId()) {
+      throw new CanNotDeleteMainAddressException("현재 주소와 삭제하려는 주소가 일치합니다.");
+    }
+    return userAddressRepository.deleteById(addressId);
   }
 
   /**
    * 주소 존재 여부 확인.
    */
-  private void checkEmailExistence(UserAddress userAddress) {
+  private void checkUserAddressExistence(UserAddress userAddress) {
     if (userAddress == null) {
       throw new UserAddressNotExistedException("존재하지 않는 주소입니다.");
     }
@@ -217,9 +227,20 @@ public class UserServiceV1 implements UserService {
   /**
    * 수정과 삭제 권한 처리.
    */
-  private void checkUserAuthority(AddressCommand addressCommand, UserAddress userAddress) {
-    if (!Objects.equals(addressCommand.getUserId(), userAddress.getUserId())) {
+  private void checkUserAuthority(Long userId, UserAddress userAddress) {
+    if (!Objects.equals(userId, userAddress.getUserId())) {
       throw new NotAuthorizedException("권한이 없습니다.");
+    }
+  }
+
+  /**
+   * 기존의 mainAddress를 false로 변경.
+   */
+  private void makeCurrentMainAddressFalse(Long userId) {
+    UserAddress currentMainAddress = userAddressRepository.findMainAddress(userId);
+    if (currentMainAddress != null) {
+      currentMainAddress.setMainAddress(false);
+      userAddressRepository.save(currentMainAddress);
     }
   }
 }
