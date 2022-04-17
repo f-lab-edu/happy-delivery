@@ -1,16 +1,36 @@
 package com.happy.delivery.domain.user;
 
-import com.happy.delivery.infra.vo.AddressObject;
+import com.happy.delivery.infra.vo.Address;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * UserAddress.
  */
+@Entity
+@Table(name = "user_addresses")
 public class UserAddress {
 
+  @Id
+  @Column(name = "user_address_id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  @Column(name = "user_id")
   private Long userId;
-  private AddressObject address;
+
+  @Embedded
+  private Address address;
+
+  @Column(name = "address_detail")
   private String addressDetail;
+
+  @Column(name = "main_address")
   private Boolean mainAddress;
 
   /**
@@ -29,7 +49,7 @@ public class UserAddress {
   public UserAddress(Long userId, Double longitude, Double latitude, String addressDetail,
       Boolean mainAddress) {
     this.userId = userId;
-    this.address = AddressObject.of(longitude, latitude);
+    this.address = Address.of(longitude, latitude);
     this.addressDetail = addressDetail;
     this.mainAddress = mainAddress;
   }
@@ -39,7 +59,7 @@ public class UserAddress {
    */
   public void changeAddress(Double longitude, Double latitude, String addressDetail,
       Boolean mainAddress) {
-    this.address = AddressObject.of(longitude, latitude);
+    this.address = Address.of(longitude, latitude);
     this.addressDetail = addressDetail;
     this.mainAddress = mainAddress;
   }
@@ -67,7 +87,7 @@ public class UserAddress {
    * String address 형태 : POINT(127.04298707366922 37.512764805693074)
    */
   public void setAddress(String address) {
-    this.address = AddressObject.of(address);
+    this.address = Address.of(address);
   }
 
   public String getAddressDetail() {

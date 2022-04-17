@@ -136,9 +136,8 @@ public class UserServiceV1 implements UserService {
 
   @Override
   @Transactional
-  public boolean deleteMyAccount(Long userId) {
+  public void deleteMyAccount(Long userId) {
     userRepository.deleteById(userId);
-    return true;
   }
 
   @Override
@@ -159,7 +158,7 @@ public class UserServiceV1 implements UserService {
   @Transactional
   public List<UserAddressResult> getListOfAllAddresses(Long userId) {
     List<UserAddressResult> result = new ArrayList<>();
-    List<UserAddress> addresses = userAddressRepository.findAllByUserId(userId);
+    List<UserAddress> addresses = userAddressRepository.findByUserId(userId);
     for (UserAddress address : addresses) {
       result.add(UserAddressResult.fromUserAddress(address));
     }
@@ -178,7 +177,8 @@ public class UserServiceV1 implements UserService {
   @Override
   @Transactional
   public UserAddressResult updateMainAddress(Long userId, Long addressId) {
-    UserAddress userAddress = userAddressRepository.findById(addressId);
+    Optional<UserAddress> optionalUserAddress = userAddressRepository.findById(addressId);
+    UserAddress userAddress = optionalUserAddress.get();
     checkUserAddressExistence(userAddress);
     checkUserAuthority(userId, userAddress);
 
@@ -195,7 +195,8 @@ public class UserServiceV1 implements UserService {
   public UserAddressResult updateAddress(Long addressId, Long userId,
       AddressCommand addressCommand) {
 
-    UserAddress userAddress = userAddressRepository.findById(addressId);
+    Optional<UserAddress> optionalUserAddress = userAddressRepository.findById(addressId);
+    UserAddress userAddress = optionalUserAddress.get();
     checkUserAddressExistence(userAddress);
     checkUserAuthority(userId, userAddress);
 
@@ -213,14 +214,15 @@ public class UserServiceV1 implements UserService {
 
   @Override
   @Transactional
-  public boolean deleteAddress(Long addressId, Long userId) {
-    UserAddress userAddress = userAddressRepository.findById(addressId);
+  public void deleteAddress(Long addressId, Long userId) {
+    Optional<UserAddress> optionalUserAddress = userAddressRepository.findById(addressId);
+    UserAddress userAddress = optionalUserAddress.get();
     checkUserAddressExistence(userAddress);
     checkUserAuthority(userId, userAddress);
     if (userAddress.getId().equals(userAddressRepository.findMainAddress(userId).getId())) {
       throw new CanNotDeleteMainAddressException("현재 주소와 삭제하려는 주소가 일치합니다.");
     }
-    return userAddressRepository.deleteById(addressId);
+    userAddressRepository.deleteById(addressId);
   }
 
   /**

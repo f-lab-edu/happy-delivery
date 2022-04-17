@@ -2,26 +2,38 @@ package com.happy.delivery.infra.vo;
 
 import com.happy.delivery.domain.exception.user.LongitudeOrLatitudeNullPointException;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 /**
- * Location.
+ * Address.
  */
-public final class AddressObject {
+@Embeddable
+public final class Address {
 
-  private final Double longitude;
-  private final Double latitude;
+  @Column
+  private Double longitude;
+
+  @Column
+  private Double latitude;
 
   /**
-   * Location constructor.
+   * Address default constructor.
    */
-  private AddressObject(Double longitude, Double latitude) {
+  public Address() {
+  }
+
+  /**
+   * Address constructor.
+   */
+  private Address(Double longitude, Double latitude) {
     this.longitude = longitude;
     this.latitude = latitude;
     validateLongitudeAndLatitude();
   }
 
-  public static AddressObject of(Double longitude, Double latitude) {
-    return new AddressObject(longitude, latitude);
+  public static Address of(Double longitude, Double latitude) {
+    return new Address(longitude, latitude);
   }
 
   /**
@@ -29,10 +41,10 @@ public final class AddressObject {
    * String address를 받아
    * 파싱해서 longitude, latitude에 넣어주는 메서드.
    */
-  public static AddressObject of(String address) {
+  public static Address of(String address) {
     String strLongitude = address.substring(address.indexOf('(') + 1, address.indexOf(' '));
     String strLatitude = address.substring(address.indexOf(' ') + 1, address.indexOf(')'));
-    return new AddressObject(Double.parseDouble(strLongitude), Double.parseDouble(strLatitude));
+    return new Address(Double.parseDouble(strLongitude), Double.parseDouble(strLatitude));
   }
 
   private void validateLongitudeAndLatitude() {
@@ -66,7 +78,7 @@ public final class AddressObject {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AddressObject that = (AddressObject) o;
+    Address that = (Address) o;
     return longitude.equals(that.longitude) && latitude.equals(that.latitude);
   }
 

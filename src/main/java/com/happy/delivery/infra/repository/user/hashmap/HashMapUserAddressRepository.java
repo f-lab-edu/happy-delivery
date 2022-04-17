@@ -31,12 +31,13 @@ public class HashMapUserAddressRepository implements UserAddressRepository {
   }
 
   @Override
-  public UserAddress findById(Long id) {
-    return map.get(id);
+  public Optional<UserAddress> findById(Long id) {
+    UserAddress userAddress = map.get(id);
+    return Optional.of(userAddress);
   }
 
   @Override
-  public List<UserAddress> findAllByUserId(Long userId) {
+  public List<UserAddress> findByUserId(Long userId) {
     return map.values()
         .stream()
         .filter(userAddress -> userId.equals(userAddress.getUserId()))
@@ -54,12 +55,8 @@ public class HashMapUserAddressRepository implements UserAddressRepository {
   }
 
   @Override
-  public boolean deleteById(Long id) {
-    boolean flag = false;
-    if (map.remove(id) != null) {
-      flag = true;
-    }
-    return flag;
+  public void deleteById(Long id) {
+    map.remove(id);
   }
 
   // DB에 foreign key를 적용하면서 더이상 사용할 필요가 없어짐.

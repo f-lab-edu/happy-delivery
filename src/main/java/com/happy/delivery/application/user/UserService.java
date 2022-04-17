@@ -24,7 +24,7 @@ public interface UserService {
 
   UserResult updatePassword(Long userId, PasswordUpdateCommand passwordUpdateCommand);
 
-  boolean deleteMyAccount(Long userId);
+  void deleteMyAccount(Long userId);
 
   UserAddressResult saveAddress(Long userId, AddressCommand addressCommand);
 
@@ -34,5 +34,5 @@ public interface UserService {
 
   UserAddressResult updateAddress(Long addressId, Long userId, AddressCommand addressCommand);
 
-  boolean deleteAddress(Long addressId, Long userId);
+  void deleteAddress(Long addressId, Long userId);
 }

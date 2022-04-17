@@ -4,6 +4,7 @@ import com.happy.delivery.domain.user.UserAddress;
 import com.happy.delivery.domain.user.repository.UserAddressRepository;
 import com.happy.delivery.infra.mybatis.user.UserAddressMapper;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -29,13 +30,14 @@ public class UserAddressRepositoryAdapter implements UserAddressRepository {
   }
 
   @Override
-  public UserAddress findById(Long id) {
-    return userAddressMapper.findById(id);
+  public Optional<UserAddress> findById(Long id) {
+    UserAddress userAddress = userAddressMapper.findById(id);
+    return Optional.of(userAddress);
   }
 
   @Override
-  public List<UserAddress> findAllByUserId(Long userId) {
-    return userAddressMapper.findAllByUserId(userId);
+  public List<UserAddress> findByUserId(Long userId) {
+    return userAddressMapper.findByUserId(userId);
   }
 
   @Override
@@ -44,7 +46,7 @@ public class UserAddressRepositoryAdapter implements UserAddressRepository {
   }
 
   @Override
-  public boolean deleteById(Long id) {
-    return userAddressMapper.deleteById(id);
+  public void deleteById(Long id) {
+    userAddressMapper.deleteById(id);
   }
 }

@@ -188,7 +188,7 @@ public class UserController {
   @ResponseStatus(code = HttpStatus.OK)
   @DeleteMapping("/addresses/{addressId}")
   public ApiResponse deleteAddress(@PathVariable Long addressId, HttpSession httpSession) {
-    boolean result = userService.deleteAddress(addressId, SessionUtil.getLoginId(httpSession));
-    return ApiResponse.success(result);
+    userService.deleteAddress(addressId, SessionUtil.getLoginId(httpSession));
+    return ApiResponse.success("DELETE_ADDRESS_SUCCESS");
   }
 }
