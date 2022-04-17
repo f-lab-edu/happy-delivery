@@ -32,7 +32,7 @@
     where user_address_id = #{id}
   </select>
 
-  <select id="findAllByUserId" resultMap="userAddressMap">
+  <select id="findByUserId" resultMap="userAddressMap">
     select user_address_id, user_id, address_detail, main_address, ST_ASTEXT(address) as address
     from user_addresses
     where user_id = #{userId}
