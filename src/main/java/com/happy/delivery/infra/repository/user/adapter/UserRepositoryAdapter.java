@@ -34,7 +34,7 @@ public class UserRepositoryAdapter {
    */
   public Optional<User> findById(Long id) {
     User user = userMapper.findById(id);
-    return Optional.of(user);
+    return Optional.ofNullable(user);
   }
 
   /**

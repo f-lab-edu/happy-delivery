@@ -178,8 +178,8 @@ public class UserServiceV1 implements UserService {
   @Transactional
   public UserAddressResult updateMainAddress(Long userId, Long addressId) {
     Optional<UserAddress> optionalUserAddress = userAddressRepository.findById(addressId);
+    checkUserAddressExistence(optionalUserAddress);
     UserAddress userAddress = optionalUserAddress.get();
-    checkUserAddressExistence(userAddress);
     checkUserAuthority(userId, userAddress);
 
     makeCurrentMainAddressFalse(userId);
@@ -196,8 +196,8 @@ public class UserServiceV1 implements UserService {
       AddressCommand addressCommand) {
 
     Optional<UserAddress> optionalUserAddress = userAddressRepository.findById(addressId);
+    checkUserAddressExistence(optionalUserAddress);
     UserAddress userAddress = optionalUserAddress.get();
-    checkUserAddressExistence(userAddress);
     checkUserAuthority(userId, userAddress);
 
     makeCurrentMainAddressFalse(userId);
@@ -216,8 +216,8 @@ public class UserServiceV1 implements UserService {
   @Transactional
   public void deleteAddress(Long addressId, Long userId) {
     Optional<UserAddress> optionalUserAddress = userAddressRepository.findById(addressId);
+    checkUserAddressExistence(optionalUserAddress);
     UserAddress userAddress = optionalUserAddress.get();
-    checkUserAddressExistence(userAddress);
     checkUserAuthority(userId, userAddress);
     if (userAddress.getId().equals(userAddressRepository.findMainAddress(userId).getId())) {
       throw new CanNotDeleteMainAddressException("현재 주소와 삭제하려는 주소가 일치합니다.");
@@ -228,8 +228,8 @@ public class UserServiceV1 implements UserService {
   /**
    * 주소 존재 여부 확인.
    */
-  private void checkUserAddressExistence(UserAddress userAddress) {
-    if (userAddress == null) {
+  private void checkUserAddressExistence(Optional<UserAddress> userAddress) {
+    if (userAddress.isEmpty()) {
       throw new UserAddressNotExistedException("존재하지 않는 주소입니다.");
     }
   }

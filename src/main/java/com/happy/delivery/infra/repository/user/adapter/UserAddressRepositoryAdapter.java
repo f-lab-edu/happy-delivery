@@ -32,7 +32,7 @@ public class UserAddressRepositoryAdapter implements UserAddressRepository {
   @Override
   public Optional<UserAddress> findById(Long id) {
     UserAddress userAddress = userAddressMapper.findById(id);
-    return Optional.of(userAddress);
+    return Optional.ofNullable(userAddress);
   }
 
   @Override

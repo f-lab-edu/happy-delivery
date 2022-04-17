@@ -36,7 +36,7 @@ public class HashMapUserRepository {
    */
   public Optional<User> findById(Long id) {
     User user = hashmap.get(id);
-    return Optional.of(user);
+    return Optional.ofNullable(user);
 
   }
 
