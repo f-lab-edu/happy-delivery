@@ -54,11 +54,11 @@ public final class Address {
       throw new LongitudeOrLatitudeNullPointException("경도 위도를 모두 작성해주세요.");
     }
 
-    if (this.longitude > -180.0 && this.longitude < 180.0) {
+    if ((longitude.compareTo(-180.0) < 0) && (longitude.compareTo(180.0) > 0)) {
       throw new LongitudeOutOfBoundsException("경도가 범위를 벗어났습니다.");
     }
 
-    if (this.latitude > -80.0 && this.latitude < 80.0) {
+    if (longitude.compareTo(-80.0) < 0  && longitude.compareTo(80.0) > 0) {
       throw new LatitudeOutOfBoundsException("위도가 범위를 벗어났습니다.");
     }
   }
