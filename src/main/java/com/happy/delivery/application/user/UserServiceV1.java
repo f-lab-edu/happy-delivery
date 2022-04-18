@@ -219,7 +219,9 @@ public class UserServiceV1 implements UserService {
     checkUserAddressExistence(optionalUserAddress);
     UserAddress userAddress = optionalUserAddress.get();
     checkUserAuthority(userId, userAddress);
-    if (userAddress.getId().equals(userAddressRepository.findMainAddress(userId).getId())) {
+
+    if (userAddress.getId() == userAddressRepository.findByUserIdAndMainAddressIsTrue(userId)
+        .getId()) {
       throw new CanNotDeleteMainAddressException("현재 주소와 삭제하려는 주소가 일치합니다.");
     }
     userAddressRepository.deleteById(addressId);
@@ -256,7 +258,7 @@ public class UserServiceV1 implements UserService {
    * 기존의 mainAddress를 false로 변경.
    */
   private void makeCurrentMainAddressFalse(Long userId) {
-    UserAddress currentMainAddress = userAddressRepository.findMainAddress(userId);
+    UserAddress currentMainAddress = userAddressRepository.findByUserIdAndMainAddressIsTrue(userId);
     if (currentMainAddress != null) {
       currentMainAddress.setMainAddress(false);
       userAddressRepository.save(currentMainAddress);

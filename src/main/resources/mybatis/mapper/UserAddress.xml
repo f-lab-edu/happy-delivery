@@ -38,7 +38,7 @@
     where user_id = #{userId}
   </select>
 
-  <select id="findMainAddress" resultMap="userAddressMap">
+  <select id="findByUserIdAndMainAddressIsTrue" resultMap="userAddressMap">
     select user_address_id, user_id, address_detail, main_address, ST_ASTEXT(address) as address
     from user_addresses
     where user_id = #{userId} and main_address = true;

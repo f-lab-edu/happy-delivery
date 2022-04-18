@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
  * UserAddressRepositoryAdapter.
  */
 @Repository
-public class UserAddressRepositoryAdapter implements UserAddressRepository {
+public class UserAddressRepositoryAdapter {
 
   private final UserAddressMapper userAddressMapper;
 
@@ -19,7 +19,10 @@ public class UserAddressRepositoryAdapter implements UserAddressRepository {
     this.userAddressMapper = userAddressMapper;
   }
 
-  @Override
+  /**
+   * save.
+   * 주소 저장 및 변경.
+   */
   public UserAddress save(UserAddress userAddress) {
     if ((userAddress.getId() == null) || (userAddress.getId() <= 0L)) {
       userAddressMapper.insert(userAddress);
@@ -29,23 +32,35 @@ public class UserAddressRepositoryAdapter implements UserAddressRepository {
     return userAddress;
   }
 
-  @Override
+  /**
+   * findById.
+   * 식별자를 통해 주소 검색.
+   */
   public Optional<UserAddress> findById(Long id) {
     UserAddress userAddress = userAddressMapper.findById(id);
     return Optional.ofNullable(userAddress);
   }
 
-  @Override
+  /**
+   * findByUserId.
+   * 회원 식별자를 통해 주소 검색.
+   */
   public List<UserAddress> findByUserId(Long userId) {
     return userAddressMapper.findByUserId(userId);
   }
 
-  @Override
-  public UserAddress findMainAddress(Long userId) {
-    return userAddressMapper.findMainAddress(userId);
+  /**
+   * findByUserIdAndMainAddressIsTrue.
+   * 현재 주소로 지정된 주소 가져오는 메서드.
+   */
+  public UserAddress findByUserIdAndMainAddressIsTrue(Long userId) {
+    return userAddressMapper.findByUserIdAndMainAddressIsTrue(userId);
   }
 
-  @Override
+  /**
+   * deleteById.
+   * 식별자로 주소 삭제.
+   */
   public void deleteById(Long id) {
     userAddressMapper.deleteById(id);
   }

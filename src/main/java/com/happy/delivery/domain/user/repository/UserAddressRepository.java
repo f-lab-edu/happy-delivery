@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * UserAddressRepository.
  */
-public interface UserAddressRepository {
+public interface UserAddressRepository extends JpaRepository<UserAddress, Long> {
 
   UserAddress save(UserAddress userAddress);
 
@@ -16,7 +16,7 @@ public interface UserAddressRepository {
 
   List<UserAddress> findByUserId(Long userId);
 
-  UserAddress findMainAddress(Long userId);
+  UserAddress findByUserIdAndMainAddressIsTrue(Long userId);
 
   void deleteById(Long id);
 }
