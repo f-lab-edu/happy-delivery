@@ -35,7 +35,7 @@ public class UserAddress {
 
   /**
    * UserAddress MyBatis Constructor.
-   * Mybatis가 미리 result값을 넣엉줄 인스턴스를 생성한다.
+   * Mybatis가 미리 result값을 넣어줄 인스턴스를 생성한다.
    * 하지만 UserAddress 엔티티에는 모든 인자가 포함된 생성자(Builder)만이 존재하기 때문에,
    * 인스턴스를 생성할 수 없어 문제가 발생한다.
    * 이것을 해결하기 위해서는 인자가 없는 생성자를 추가하면 된다.
@@ -76,20 +76,6 @@ public class UserAddress {
     return userId;
   }
 
-  public String getAddress() {
-    return this.address.toString();
-  }
-
-  /**
-   * setAddress.
-   * DB에서 POINT값을 ST_ASTEXT를 이용해 String으로 바꿔서 보내주면,
-   * Mybatis가 UserAddress의 setAddress를 이용해서 객체에 값을 주입시켜줌.
-   * String address 형태 : POINT(127.04298707366922 37.512764805693074)
-   */
-  public void setAddress(String address) {
-    this.address = Address.of(address);
-  }
-
   public String getAddressDetail() {
     return addressDetail;
   }
@@ -100,5 +86,32 @@ public class UserAddress {
 
   public void setMainAddress(Boolean mainAddress) {
     this.mainAddress = mainAddress;
+  }
+
+  /**
+   * 현재 longitude, latitude는 Address VO로 묶여있다.
+   * MyBatis가 오류 없이 동작하기 위해서는 추가 조치가 필요하다.
+   * MyBatis는 실제 변수가 없고 getter 또는 setter만 있더라도
+   * getter와 setter의 이름을 이용해서 필드명을 추출하여 key값으로 이용한다.
+   * *
+   * MyBatis를 위한 longitude의 getter.
+   * Address VO를 위한 코드
+   */
+  public Double getLongitude() {
+    return address.getLongitude();
+  }
+
+  /**
+   * MyBatis를 위한 latitude의 getter. Address VO를 위한 코드.
+   */
+  public Double getLatitude() {
+    return address.getLatitude();
+  }
+
+  /**
+   * MyBatis를 위한 longitude와 latitude의 setter. Address VO를 위한 코드.
+   */
+  public void setAddress(String address) {
+    this.address = Address.of(address);
   }
 }

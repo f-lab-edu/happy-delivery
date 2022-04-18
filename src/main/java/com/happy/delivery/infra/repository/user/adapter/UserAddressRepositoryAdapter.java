@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
  * UserAddressRepositoryAdapter.
  */
 @Repository
-public class UserAddressRepositoryAdapter {
+public class UserAddressRepositoryAdapter implements UserAddressRepository {
 
   private final UserAddressMapper userAddressMapper;
 

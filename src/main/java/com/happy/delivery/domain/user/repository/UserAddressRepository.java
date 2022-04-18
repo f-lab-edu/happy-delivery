@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * UserAddressRepository.
  */
-public interface UserAddressRepository extends JpaRepository<UserAddress, Long> {
+public interface UserAddressRepository {
 
   UserAddress save(UserAddress userAddress);
 

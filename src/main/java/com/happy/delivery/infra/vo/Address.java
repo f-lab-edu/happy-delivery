@@ -1,6 +1,8 @@
 package com.happy.delivery.infra.vo;
 
+import com.happy.delivery.domain.exception.user.LatitudeOutOfBoundsException;
 import com.happy.delivery.domain.exception.user.LongitudeOrLatitudeNullPointException;
+import com.happy.delivery.domain.exception.user.LongitudeOutOfBoundsException;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -19,6 +21,7 @@ public final class Address {
 
   /**
    * Address default constructor.
+   * JPA를 위해 만들어 둔 생성자.
    */
   public Address() {
   }
@@ -38,12 +41,11 @@ public final class Address {
 
   /**
    * UserAddress setAddress()를 위해서 만듦.
-   * String address를 받아
-   * 파싱해서 longitude, latitude에 넣어주는 메서드.
+   * String address를 받아 파싱한 후에 longitude, latitude에 넣어줌.
    */
   public static Address of(String address) {
-    String strLongitude = address.substring(address.indexOf('(') + 1, address.indexOf(' '));
-    String strLatitude = address.substring(address.indexOf(' ') + 1, address.indexOf(')'));
+    String strLongitude = address.substring(0, address.indexOf(' '));
+    String strLatitude = address.substring(address.indexOf(' ') + 1);
     return new Address(Double.parseDouble(strLongitude), Double.parseDouble(strLatitude));
   }
 
@@ -51,15 +53,14 @@ public final class Address {
     if (this.longitude == null || this.latitude == null) {
       throw new LongitudeOrLatitudeNullPointException("경도 위도를 모두 작성해주세요.");
     }
-  }
 
-  /**
-   * toString.
-   * 내부 데이터를 추출하여 다른 유형으로 변환하기.
-   */
-  public String toString() {
-    //"point(" + longitude + " " + latitude + ")"
-    return String.format("point(%s %s)", longitude, latitude);
+    if (this.longitude > -180.0 && this.longitude < 180.0) {
+      throw new LongitudeOutOfBoundsException("경도가 범위를 벗어났습니다.");
+    }
+
+    if (this.latitude > -80.0 && this.latitude < 80.0) {
+      throw new LatitudeOutOfBoundsException("위도가 범위를 벗어났습니다.");
+    }
   }
 
   public Double getLongitude() {
