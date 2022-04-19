@@ -8,6 +8,7 @@ import com.happy.delivery.domain.exception.user.LongitudeOutOfBoundsException;
 import com.happy.delivery.domain.exception.user.NoUserException;
 import com.happy.delivery.domain.exception.user.NotAuthorizedException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
+import com.happy.delivery.domain.exception.user.PointWktReaderParseException;
 import com.happy.delivery.domain.exception.user.UserAddressNotExistedException;
 import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
 import com.happy.delivery.presentation.common.response.ApiResponse;
@@ -117,5 +118,13 @@ public class UserExceptionHandler {
   @ExceptionHandler(LatitudeOutOfBoundsException.class)
   public ApiResponse<?> latitudeOutOfBoundsException(LatitudeOutOfBoundsException ex) {
     return ApiResponse.fail("LATITUDE_OUT_OF_BOUNDS", ex.getMessage());
+  }
+
+  /**
+   * AddressVo에서 Point값 파싱에 문제가 생긴 경우.
+   */
+  @ExceptionHandler(PointWktReaderParseException.class)
+  public ApiResponse<?> pointWktReaderParseException(PointWktReaderParseException ex) {
+    return ApiResponse.fail("POINT_WKT_READER_PARSE_EXCEPTION", ex.getMessage());
   }
 }
