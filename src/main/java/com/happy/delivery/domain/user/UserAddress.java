@@ -1,5 +1,6 @@
 package com.happy.delivery.domain.user;
 
+
 import com.happy.delivery.infra.vo.Address;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -95,22 +96,25 @@ public class UserAddress {
    * getter와 setter의 이름을 이용해서 필드명을 추출하여 key값으로 이용한다.
    * *
    * MyBatis를 위한 longitude의 getter.
-   * Address VO를 위한 코드
    */
   public Double getLongitude() {
     return address.getLongitude();
   }
 
   /**
-   * MyBatis를 위한 latitude의 getter. Address VO를 위한 코드.
+   * MyBatis를 위한 latitude의 getter.
    */
   public Double getLatitude() {
     return address.getLatitude();
   }
 
   /**
-   * MyBatis를 위한 longitude와 latitude의 setter. Address VO를 위한 코드.
+   * MyBatis를 위한 longitude와 Address의 getter와 setter.
    */
+  public String getAddress() {
+    return address.getPointAsStringType();
+  }
+
   public void setAddress(String address) {
     this.address = Address.of(address);
   }

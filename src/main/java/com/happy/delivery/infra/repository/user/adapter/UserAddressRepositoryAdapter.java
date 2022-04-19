@@ -1,16 +1,13 @@
 package com.happy.delivery.infra.repository.user.adapter;
 
 import com.happy.delivery.domain.user.UserAddress;
-import com.happy.delivery.domain.user.repository.UserAddressRepository;
 import com.happy.delivery.infra.mybatis.user.UserAddressMapper;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.stereotype.Repository;
 
 /**
  * UserAddressRepositoryAdapter.
  */
-@Repository
 public class UserAddressRepositoryAdapter {
 
   private final UserAddressMapper userAddressMapper;
