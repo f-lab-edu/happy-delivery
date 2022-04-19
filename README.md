@@ -61,8 +61,7 @@
     * 현재 주소 변경
 
 ## ERD
-![HappyDeliveryERD drawio](https://user-images.githubusercontent.com/91924087/163892176-cec129f3-919b-4b31-8605-0a65b795366d.png)
-
+![HappyDeliveryERD drawio](https://user-images.githubusercontent.com/91924087/164116196-d6f62d4d-8943-4018-a769-77f4e71facba.png)
 
 ## 기능정의
 * [기능명세서](https://github.com/f-lab-edu/happy-delivery/wiki/기능-명세서)
