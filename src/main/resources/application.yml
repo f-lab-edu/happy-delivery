@@ -11,5 +11,18 @@ spring:
       baseline-version: 0
       useMysqlMetadata: true
 
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+#        show_sql: true # System.out.print을 사용해서 어떤 SQL이 생성됐는지 확인. 메모리 차지가 심해서 사용 안 함.
+#        format_sql: true
+
 mybatis:
   mapper-locations: mybatis/mapper/**/*.xml
+
+#logging:
+#  level:
+#    org.hibernate.SQL: debug #log를 사용해서 어떤 SQL이 생성됐는지 확인. 위에 있는 show_sql 대신 사용.
+#    org.hibernate.type: trace # PreparedStatement의 parameter에 실제로 어떤 값이 들어갔는지 확인.

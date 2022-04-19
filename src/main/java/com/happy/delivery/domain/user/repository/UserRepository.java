@@ -1,17 +1,20 @@
 package com.happy.delivery.domain.user.repository;
 
 import com.happy.delivery.domain.user.User;
+import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * UserRepository.
  */
-public interface UserRepository {
+public interface UserRepository extends JpaRepository<User, Long> {
 
   User save(User user);
 
-  User findById(Long id);
+  Optional<User> findById(Long id);
 
   User findByEmail(String email);
 
-  boolean deleteId(Long id);
+  void deleteById(Long id);
+
 }

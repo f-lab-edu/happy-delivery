@@ -1,20 +1,24 @@
 package com.happy.delivery.infra.repository.user.hashmap;
 
 import com.happy.delivery.domain.user.User;
-import com.happy.delivery.domain.user.repository.UserRepository;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * HashMapUserRepository. repository는 collection의 역할을 하기때문에 비지니스 로직이 들어가면 안된다.
+ * HashMapUserRepository.
+ * repository는 collection의 역할을 하기때문에 비지니스 로직이 들어가면 안된다.
  */
-public class HashMapUserRepository implements UserRepository {
+public class HashMapUserRepository {
 
   private final Map<Long, User> hashmap = new ConcurrentHashMap<>();
   private final AtomicLong id = new AtomicLong();
 
-  @Override
+  /**
+   * save.
+   * 주소 저장 및 수정.
+   */
   public User save(User user) {
     if (user.getId() == null || user.getId() <= 0L) {
       Long userId = id.incrementAndGet();
@@ -26,8 +30,20 @@ public class HashMapUserRepository implements UserRepository {
     return user;
   }
 
-  //email을 받아서 저장된 repository에서 찾고 패스워드를 반환
-  @Override
+  /**
+   * findById.
+   * 식별자로 값 찾기.
+   */
+  public Optional<User> findById(Long id) {
+    User user = hashmap.get(id);
+    return Optional.of(user);
+
+  }
+
+  /**
+   * findByEmail.
+   * 이메일로 값 찾기.
+   */
   public User findByEmail(String email) {
     return hashmap
         .values()
@@ -37,13 +53,11 @@ public class HashMapUserRepository implements UserRepository {
         .orElse(null);
   }
 
-  @Override
-  public boolean deleteId(Long id) {
-    return hashmap.remove(id) != null;
-  }
-
-  @Override
-  public User findById(Long id) {
-    return hashmap.get(id);
+  /**
+   * deleteById.
+   * 식별자로 삭제하기.
+   */
+  public void deleteById(Long id) {
+    hashmap.remove(id);
   }
 }

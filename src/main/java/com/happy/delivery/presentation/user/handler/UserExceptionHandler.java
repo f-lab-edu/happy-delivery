@@ -3,7 +3,7 @@ package com.happy.delivery.presentation.user.handler;
 import com.happy.delivery.domain.exception.user.CanNotDeleteMainAddressException;
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
 import com.happy.delivery.domain.exception.user.LongitudeOrLatitudeNullPointException;
-import com.happy.delivery.domain.exception.user.NoUserIdException;
+import com.happy.delivery.domain.exception.user.NoUserException;
 import com.happy.delivery.domain.exception.user.NotAuthorizedException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
 import com.happy.delivery.domain.exception.user.UserAddressNotExistedException;
@@ -61,8 +61,8 @@ public class UserExceptionHandler {
   /**
    * 세션 아이디가 없을 경우.
    */
-  @ExceptionHandler(NoUserIdException.class)
-  public ApiResponse<?> noUserIdException(NoUserIdException ex) {
+  @ExceptionHandler(NoUserException.class)
+  public ApiResponse<?> noUserIdException(NoUserException ex) {
     return ApiResponse.fail("NO_USER_ID.", ex.getMessage());
   }
 
