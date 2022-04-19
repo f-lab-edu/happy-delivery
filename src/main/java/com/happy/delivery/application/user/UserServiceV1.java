@@ -22,7 +22,6 @@ import com.happy.delivery.infra.encoder.EncryptMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -101,9 +100,9 @@ public class UserServiceV1 implements UserService {
   @Override
   @Transactional
   public UserResult getMyAccount(Long userId) {
-    Optional<User> user = userRepository.findById(userId);
+    User user = userRepository.findById(userId);
     checkUserExistence(user);
-    return UserResult.fromUser(user.get());
+    return UserResult.fromUser(user);
   }
 
   /**
@@ -121,9 +120,8 @@ public class UserServiceV1 implements UserService {
   @Transactional
   public UserResult updateMyAccount(MyAccountCommand myAccountCommand) {
     User byEmail = userRepository.findByEmail(myAccountCommand.getEmail());
-    Optional<User> optionalUser = userRepository.findById(myAccountCommand.getId());
-    checkUserExistence(optionalUser);
-    User user = optionalUser.get();
+    User user = userRepository.findById(myAccountCommand.getId());
+    checkUserExistence(user);
     if (byEmail != null && !myAccountCommand.getEmail().equals(user.getEmail())) {
       throw new UserAlreadyExistedException("이미 존재하는 계정 입니다.");
     }
@@ -143,9 +141,8 @@ public class UserServiceV1 implements UserService {
   @Override
   @Transactional
   public UserResult updatePassword(Long userId, PasswordUpdateCommand passwordUpdateCommand) {
-    Optional<User> optionalUser = userRepository.findById(userId);
-    checkUserExistence(optionalUser);
-    User user = optionalUser.get();
+    User user = userRepository.findById(userId);
+    checkUserExistence(user);
     if (!encryptMapper.isMatch(passwordUpdateCommand.getCurrentPassword(), user.getPassword())) {
       throw new PasswordIsNotMatchException("현재 패스워드가 일치하지 않습니다.");
     }
@@ -178,7 +175,7 @@ public class UserServiceV1 implements UserService {
   @Transactional
   public List<UserAddressResult> getListOfAllAddresses(Long userId) {
     List<UserAddressResult> result = new ArrayList<>();
-    List<UserAddress> addresses = userAddressRepository.findByUserId(userId);
+    List<UserAddress> addresses = userAddressRepository.findAllByUserId(userId);
     for (UserAddress address : addresses) {
       result.add(UserAddressResult.fromUserAddress(address));
     }
@@ -197,9 +194,8 @@ public class UserServiceV1 implements UserService {
   @Override
   @Transactional
   public UserAddressResult updateMainAddress(Long userId, Long addressId) {
-    Optional<UserAddress> optionalUserAddress = userAddressRepository.findById(addressId);
-    checkUserAddressExistence(optionalUserAddress);
-    UserAddress userAddress = optionalUserAddress.get();
+    UserAddress userAddress = userAddressRepository.findById(addressId);
+    checkUserAddressExistence(userAddress);
     checkUserAuthority(userId, userAddress);
 
     makeCurrentMainAddressFalse(userId);
@@ -215,9 +211,8 @@ public class UserServiceV1 implements UserService {
   public UserAddressResult updateAddress(Long addressId, Long userId,
       AddressCommand addressCommand) {
 
-    Optional<UserAddress> optionalUserAddress = userAddressRepository.findById(addressId);
-    checkUserAddressExistence(optionalUserAddress);
-    UserAddress userAddress = optionalUserAddress.get();
+    UserAddress userAddress = userAddressRepository.findById(addressId);
+    checkUserAddressExistence(userAddress);
     checkUserAuthority(userId, userAddress);
 
     makeCurrentMainAddressFalse(userId);
@@ -235,9 +230,8 @@ public class UserServiceV1 implements UserService {
   @Override
   @Transactional
   public void deleteAddress(Long addressId, Long userId) {
-    Optional<UserAddress> optionalUserAddress = userAddressRepository.findById(addressId);
-    checkUserAddressExistence(optionalUserAddress);
-    UserAddress userAddress = optionalUserAddress.get();
+    UserAddress userAddress = userAddressRepository.findById(addressId);
+    checkUserAddressExistence(userAddress);
     checkUserAuthority(userId, userAddress);
 
     if (userAddress.getId() == userAddressRepository.findByUserIdAndMainAddressIsTrue(userId)
@@ -250,8 +244,8 @@ public class UserServiceV1 implements UserService {
   /**
    * 주소 존재 여부 확인.
    */
-  private void checkUserAddressExistence(Optional<UserAddress> userAddress) {
-    if (userAddress.isEmpty()) {
+  private void checkUserAddressExistence(UserAddress userAddress) {
+    if (userAddress == null) {
       throw new UserAddressNotExistedException("존재하지 않는 주소입니다.");
     }
   }
@@ -268,8 +262,8 @@ public class UserServiceV1 implements UserService {
   /**
    * repository에 해당 user가 있는지 확인.
    */
-  private void checkUserExistence(Optional<User> user) {
-    if (user.isEmpty()) {
+  private void checkUserExistence(User user) {
+    if (user == null) {
       throw new NoUserException();
     }
   }

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * HashMapUserAddressRepository.
  * repository는 collection의 역할을 하기 때문에 비지니스 로직이 들어가면 안된다.
  */
-public class HashMapUserAddressRepository {
+public class HashMapUserAddressRepository implements UserAddressRepository {
 
   private final Map<Long, UserAddress> map = new ConcurrentHashMap<>();
   private final AtomicLong id = new AtomicLong();
@@ -22,6 +22,7 @@ public class HashMapUserAddressRepository {
    * save.
    * 주소 저장 및 변경.
    */
+  @Override
   public UserAddress save(UserAddress userAddress) {
     if ((userAddress.getId() == null) || (userAddress.getId() <= 0L)) {
       Long addressId = id.incrementAndGet();
@@ -37,16 +38,17 @@ public class HashMapUserAddressRepository {
    * findById.
    * 식별자를 통해 주소 검색.
    */
-  public Optional<UserAddress> findById(Long id) {
-    UserAddress userAddress = map.get(id);
-    return Optional.ofNullable(userAddress);
+  @Override
+  public UserAddress findById(Long id) {
+    return map.get(id);
   }
 
   /**
-   * findByUserId.
+   * findAllByUserId.
    * 회원 식별자를 통해 주소 검색.
    */
-  public List<UserAddress> findByUserId(Long userId) {
+  @Override
+  public List<UserAddress> findAllByUserId(Long userId) {
     return map.values()
         .stream()
         .filter(userAddress -> userId.equals(userAddress.getUserId()))
@@ -57,6 +59,7 @@ public class HashMapUserAddressRepository {
    * findByUserIdAndMainAddressIsTrue.
    * 현재 주소로 지정된 주소 가져오는 메서드.
    */
+  @Override
   public UserAddress findByUserIdAndMainAddressIsTrue(Long userId) {
     Optional<UserAddress> mainAddress = map.values()
         .stream()
@@ -70,6 +73,7 @@ public class HashMapUserAddressRepository {
    * deleteById.
    * 식별자로 주소 삭제.
    */
+  @Override
   public void deleteById(Long id) {
     map.remove(id);
   }

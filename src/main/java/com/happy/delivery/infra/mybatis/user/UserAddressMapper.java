@@ -16,7 +16,7 @@ public interface UserAddressMapper {
 
   UserAddress findById(Long id);
 
-  List<UserAddress> findByUserId(Long userId);
+  List<UserAddress> findAllByUserId(Long userId);
 
   UserAddress findByUserIdAndMainAddressIsTrue(Long userId);
 
