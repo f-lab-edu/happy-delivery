@@ -123,7 +123,7 @@ public class UserController {
   public ApiResponse deleteMyAccount(@Valid HttpSession httpSession) {
     userService.deleteMyAccount(SessionUtil.getLoginId(httpSession));
     SessionUtil.clear(httpSession);
-    return ApiResponse.success("DELETE_MY_ACCOUNT");
+    return ApiResponse.success(null);
   }
 
   /**
@@ -189,6 +189,6 @@ public class UserController {
   @DeleteMapping("/addresses/{addressId}")
   public ApiResponse deleteAddress(@PathVariable Long addressId, HttpSession httpSession) {
     userService.deleteAddress(addressId, SessionUtil.getLoginId(httpSession));
-    return ApiResponse.success("DELETE_ADDRESS_SUCCESS");
+    return ApiResponse.success(null);
   }
 }
