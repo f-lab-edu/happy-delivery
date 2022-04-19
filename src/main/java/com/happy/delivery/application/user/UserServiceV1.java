@@ -49,42 +49,55 @@ public class UserServiceV1 implements UserService {
     this.encryptMapper = encryptMapper;
   }
 
+  /**
+   * signup.
+   * 회원가입.
+   * email로 user 조회해서 null이 아니면 이미 존재하는 계정이니 오류 발생.
+   * email 조회해서 null이면 비밀번호 암호화 해서 DB에 저장.
+   *
+   */
   @Override
   @Transactional
   public UserResult signup(SignupCommand signCommand) {
-    // email로 user 조회
-    // null이 아니면, 이미 존재하는 계정이니 예외 발생
     if (userRepository.findByEmail(signCommand.getEmail()) != null) {
       throw new UserAlreadyExistedException("이미 존재하는 계정 입니다.");
     }
-
     User userResult = new User(
         signCommand.getEmail(),
         encryptMapper.encoder(signCommand.getPassword()),
-        // 패스워드 암호화 로직
         signCommand.getName(),
         signCommand.getPhoneNumber()
     );
     userRepository.save(userResult);
-
     return UserResult.fromUser(userResult);
   }
 
+  /**
+   * signin.
+   * 로그인.
+   * DB에 저장된 이메일과 비밀번호를 request로 받아온 값과 비교하기.
+   * 만약 이메일이 다르다면 EmailIsNotMatchException 오류 발생.
+   * 만약 비밀번호가 다르다면 PasswordIsNotMatchException 오류 발생.
+   * 둘 다 맞다면 controller로 보내서 새션 생성.
+   */
   @Override
   @Transactional
   public UserResult signin(SigninCommand signinCommand) {
-    // 1. repo에 저장된 비밀번호 가져오기
     User user = userRepository.findByEmail(signinCommand.getEmail());
     if (user == null) {
       throw new EmailIsNotMatchException("이메일이 일치하지 않습니다.");
     }
-    // 2. 비밀번호 맞는지 확인
     if (!encryptMapper.isMatch(signinCommand.getPassword(), user.getPassword())) {
       throw new PasswordIsNotMatchException("패스워드가 일치하지 않습니다.");
     }
     return UserResult.fromUser(user);
   }
 
+  /**
+   * getMyAccount.
+   * 개인 정보 가져오기.
+   * 세션에 저장된 식별자를 이용해 개인 정보를 가져온다.
+   */
   @Override
   @Transactional
   public UserResult getMyAccount(Long userId) {
@@ -93,17 +106,24 @@ public class UserServiceV1 implements UserService {
     return UserResult.fromUser(user.get());
   }
 
+  /**
+   * updateMyAccount.
+   * 개인 정보 수정.
+   * 수정하는 정보들 : 이메일, 이름, 전화번호.
+   * 경우 1. user1, user2 생성되어있는 상태 -> user1이 user2의 이메일로 변경 요청 ; (변경안됨)
+   * 경우 2. user1, user2 생성되어있는 상태 -> user1이 이메일은 그대로, 이름과 폰 번호만 변경 요청 ; (변경됨)
+   * 경우 3. user1, user2 생성되어있는 상태 -> user1이 user2의 이메일이 아닌, 중복 없는 이메일로 변경 요청 ; (변경됨)
+   * 바꾸려는 이메일이 DB에 들어있는지 확인.
+   * 이미 DB에 저장된 이메일인데 중복된 이메일이 타인의 것인 경우 UserAlreadyExistedException 오류 발생.
+   * DB에 중복된 이메일이 없거나, 중복된 이메일이 내 것인 경우 save로 저장.
+   */
   @Override
   @Transactional
   public UserResult updateMyAccount(MyAccountCommand myAccountCommand) {
-    // 경우 1. user1, user2 생성, user1로그인 -> user2의 이메일로 변경 ; (변경안됨)
-    // 경우 2. user1, user2 생성, user1로그인 -> user1의 이메일로 변경(그대로) 이름과 폰 번호만 변경 ; (변경됨)
-    // 경우 3. user1, user2 생성, user1로그인 -> user3의 이메일 신규 생성 ; (변경됨)
     User byEmail = userRepository.findByEmail(myAccountCommand.getEmail());
     Optional<User> optionalUser = userRepository.findById(myAccountCommand.getId());
     checkUserExistence(optionalUser);
     User user = optionalUser.get();
-    //repo에 값이 있거나 기존 이메일과 변경하려는 이메일이 같지 않은경우
     if (byEmail != null && !myAccountCommand.getEmail().equals(user.getEmail())) {
       throw new UserAlreadyExistedException("이미 존재하는 계정 입니다.");
     }
