@@ -1,4 +1,4 @@
-package com.happy.delivery.infra.vo;
+package com.happy.delivery.domain.vo;
 
 import com.happy.delivery.domain.exception.user.LatitudeOutOfBoundsException;
 import com.happy.delivery.domain.exception.user.LongitudeOrLatitudeNullPointException;

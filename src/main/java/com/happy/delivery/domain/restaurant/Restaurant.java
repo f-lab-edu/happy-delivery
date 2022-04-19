@@ -1,6 +1,6 @@
 package com.happy.delivery.domain.restaurant;
 
-import com.happy.delivery.infra.vo.Address;
+import com.happy.delivery.domain.vo.Address;
 
 /**
  * Restaurant.

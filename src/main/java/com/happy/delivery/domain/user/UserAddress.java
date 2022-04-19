@@ -1,7 +1,7 @@
 package com.happy.delivery.domain.user;
 
 
-import com.happy.delivery.infra.vo.Address;
+import com.happy.delivery.domain.vo.Address;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
