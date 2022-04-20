@@ -4,12 +4,10 @@ import com.happy.delivery.domain.user.User;
 import com.happy.delivery.domain.user.repository.UserRepository;
 import com.happy.delivery.infra.jpa.user.JpaUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 /**
  * JpaUserRepositoryAdapter.
  */
-@Repository
 public class JpaUserRepositoryAdapter implements UserRepository {
 
   private final JpaUserRepository jpaUserRepository;

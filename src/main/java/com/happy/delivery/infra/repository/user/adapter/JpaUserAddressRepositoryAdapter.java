@@ -5,12 +5,10 @@ import com.happy.delivery.domain.user.repository.UserAddressRepository;
 import com.happy.delivery.infra.jpa.user.JpaUserAddressRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 /**
  * JpaUserAddressRepositoryAdapter.
  */
-@Repository
 public class JpaUserAddressRepositoryAdapter implements UserAddressRepository {
 
   private final JpaUserAddressRepository jpaUserAddressRepository;
