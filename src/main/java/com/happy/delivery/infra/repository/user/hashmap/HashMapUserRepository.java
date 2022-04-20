@@ -1,8 +1,8 @@
 package com.happy.delivery.infra.repository.user.hashmap;
 
 import com.happy.delivery.domain.user.User;
+import com.happy.delivery.domain.user.repository.UserRepository;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * HashMapUserRepository.
  * repository는 collection의 역할을 하기때문에 비지니스 로직이 들어가면 안된다.
  */
-public class HashMapUserRepository {
+public class HashMapUserRepository implements UserRepository {
 
   private final Map<Long, User> hashmap = new ConcurrentHashMap<>();
   private final AtomicLong id = new AtomicLong();
@@ -34,9 +34,8 @@ public class HashMapUserRepository {
    * findById.
    * 식별자로 값 찾기.
    */
-  public Optional<User> findById(Long id) {
-    User user = hashmap.get(id);
-    return Optional.of(user);
+  public User findById(Long id) {
+    return hashmap.get(id);
 
   }
 

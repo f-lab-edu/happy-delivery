@@ -9,7 +9,7 @@
 * ex) 배달의 민족과 같은 배달 서비스
 
 ## 사용기술
-* Spring Boot, Java11, Gradle, Mybatis, Mysql, Docker 등
+* Spring Boot, Java11, Gradle, Mybatis, Mysql, JPA, Docker 등
 
 ## Code Convention
 * [Google code Style](https://google.github.io/styleguide/javaguide.html) 준수
@@ -29,6 +29,7 @@
   -Delastic.apm.application_packages=com.happy.delivery
   -Delastic.apm.transaction_sample_rate=1
   -Delastic.apm.trace_methods=com.happy.*
+  ```
 
 ##CI
 * pre-commit을 이용해 code convention 확인
@@ -37,8 +38,7 @@
 ## 프로젝트 주요 기능
 ### user (고객)
 
-    1. 받을 정보 :
-
+1. 받을 정보 :
     * 아이디(식별자)
     * 이메일
     * 비밀번호
@@ -46,17 +46,22 @@
     * 주소
 
 
-    2. 구현할 기능 :
-
+2. 구현할 기능 :
     * 회원가입
     * 로그인
     * 로그아웃
     * 비밀번호 수정
     * 회원정보 수정
+    * 회원정보 보기
+    * 회원 삭제
     * 주소 저장
     * 주소 목록 가져오기
     * 주소 수정
     * 주소 삭제
+    * 현재 주소 변경
+
+## ERD
+![HappyDeliveryERD drawio](https://user-images.githubusercontent.com/91924087/164116196-d6f62d4d-8943-4018-a769-77f4e71facba.png)
 
 ## 기능정의
 * [기능명세서](https://github.com/f-lab-edu/happy-delivery/wiki/기능-명세서)

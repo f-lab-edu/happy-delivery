@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import net.bytebuddy.dynamic.loading.InjectionClassLoader.Strategy;
 
 /**
  * User.

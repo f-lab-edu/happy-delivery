@@ -16,6 +16,8 @@ spring:
       ddl-auto: none
     properties:
       hibernate:
+    database: mysql
+    database-platform: org.hibernate.spatial.dialect.mysql.MySQL8SpatialDialect
 #        show_sql: true # System.out.print을 사용해서 어떤 SQL이 생성됐는지 확인. 메모리 차지가 심해서 사용 안 함.
 #        format_sql: true
 

@@ -35,6 +35,9 @@ dependencies {
     //DB connection을 랩핑해서 실제로 쿼리문이 어떻게 작성되는지 로그로 출력해주는 라이브러리.
     implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0")
 
+    // https://mvnrepository.com/artifact/org.hibernate/hibernate-spatial
+    implementation group: 'org.hibernate', name: 'hibernate-spatial', version: '5.4.4.Final'
+
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-aop'

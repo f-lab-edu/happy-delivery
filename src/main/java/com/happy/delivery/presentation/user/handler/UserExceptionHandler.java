@@ -2,10 +2,13 @@ package com.happy.delivery.presentation.user.handler;
 
 import com.happy.delivery.domain.exception.user.CanNotDeleteMainAddressException;
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
+import com.happy.delivery.domain.exception.user.LatitudeOutOfBoundsException;
 import com.happy.delivery.domain.exception.user.LongitudeOrLatitudeNullPointException;
+import com.happy.delivery.domain.exception.user.LongitudeOutOfBoundsException;
 import com.happy.delivery.domain.exception.user.NoUserException;
 import com.happy.delivery.domain.exception.user.NotAuthorizedException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
+import com.happy.delivery.domain.exception.user.PointWktReaderParseException;
 import com.happy.delivery.domain.exception.user.UserAddressNotExistedException;
 import com.happy.delivery.domain.exception.user.UserAlreadyExistedException;
 import com.happy.delivery.presentation.common.response.ApiResponse;
@@ -99,5 +102,29 @@ public class UserExceptionHandler {
   public ApiResponse<?> longitudeOrLatitudeNullPointException(
       LongitudeOrLatitudeNullPointException ex) {
     return ApiResponse.fail("LONGITUDE_OR_LATITUDE_NULL_VALUES", ex.getMessage());
+  }
+
+  /**
+   * 경도가 범위를 벗어난 경우.
+   */
+  @ExceptionHandler(LongitudeOutOfBoundsException.class)
+  public ApiResponse<?> longitudeOutOfBoundsException(LongitudeOutOfBoundsException ex) {
+    return ApiResponse.fail("LONGITUDE_OUT_OF_BOUNDS", ex.getMessage());
+  }
+
+  /**
+   * 위도가 범위를 벗어난 경우.
+   */
+  @ExceptionHandler(LatitudeOutOfBoundsException.class)
+  public ApiResponse<?> latitudeOutOfBoundsException(LatitudeOutOfBoundsException ex) {
+    return ApiResponse.fail("LATITUDE_OUT_OF_BOUNDS", ex.getMessage());
+  }
+
+  /**
+   * AddressVo에서 Point값 파싱에 문제가 생긴 경우.
+   */
+  @ExceptionHandler(PointWktReaderParseException.class)
+  public ApiResponse<?> pointWktReaderParseException(PointWktReaderParseException ex) {
+    return ApiResponse.fail("POINT_WKT_READER_PARSE_EXCEPTION", ex.getMessage());
   }
 }

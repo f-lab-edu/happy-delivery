@@ -2,18 +2,20 @@ package com.happy.delivery.infra.repository.user.adapter;
 
 import com.happy.delivery.domain.user.UserAddress;
 import com.happy.delivery.domain.user.repository.UserAddressRepository;
-import com.happy.delivery.infra.mybatis.user.UserAddressMapper;
+import com.happy.delivery.infra.jpa.user.JpaUserAddressRepository;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * UserAddressRepositoryAdapter.
+ * JpaUserAddressRepositoryAdapter.
  */
-public class UserAddressRepositoryAdapter implements UserAddressRepository {
+public class JpaUserAddressRepositoryAdapter implements UserAddressRepository {
 
-  private final UserAddressMapper userAddressMapper;
+  private final JpaUserAddressRepository jpaUserAddressRepository;
 
-  public UserAddressRepositoryAdapter(UserAddressMapper userAddressMapper) {
-    this.userAddressMapper = userAddressMapper;
+  @Autowired
+  public JpaUserAddressRepositoryAdapter(JpaUserAddressRepository jpaUserAddressRepository) {
+    this.jpaUserAddressRepository = jpaUserAddressRepository;
   }
 
   /**
@@ -22,12 +24,7 @@ public class UserAddressRepositoryAdapter implements UserAddressRepository {
    */
   @Override
   public UserAddress save(UserAddress userAddress) {
-    if ((userAddress.getId() == null) || (userAddress.getId() <= 0L)) {
-      userAddressMapper.insert(userAddress);
-    } else {
-      userAddressMapper.update(userAddress);
-    }
-    return userAddress;
+    return jpaUserAddressRepository.save(userAddress);
   }
 
   /**
@@ -36,7 +33,7 @@ public class UserAddressRepositoryAdapter implements UserAddressRepository {
    */
   @Override
   public UserAddress findById(Long id) {
-    return userAddressMapper.findById(id);
+    return jpaUserAddressRepository.findById(id).orElse(null);
   }
 
   /**
@@ -45,7 +42,7 @@ public class UserAddressRepositoryAdapter implements UserAddressRepository {
    */
   @Override
   public List<UserAddress> findAllByUserId(Long userId) {
-    return userAddressMapper.findAllByUserId(userId);
+    return jpaUserAddressRepository.findAllByUserId(userId);
   }
 
   /**
@@ -54,7 +51,7 @@ public class UserAddressRepositoryAdapter implements UserAddressRepository {
    */
   @Override
   public UserAddress findByUserIdAndMainAddressIsTrue(Long userId) {
-    return userAddressMapper.findByUserIdAndMainAddressIsTrue(userId);
+    return jpaUserAddressRepository.findByUserIdAndMainAddressIsTrue(userId);
   }
 
   /**
@@ -63,6 +60,6 @@ public class UserAddressRepositoryAdapter implements UserAddressRepository {
    */
   @Override
   public void deleteById(Long id) {
-    userAddressMapper.deleteById(id);
+    jpaUserAddressRepository.deleteById(id);
   }
 }

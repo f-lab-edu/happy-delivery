@@ -18,6 +18,10 @@ public class HashMapUserAddressRepository implements UserAddressRepository {
   private final Map<Long, UserAddress> map = new ConcurrentHashMap<>();
   private final AtomicLong id = new AtomicLong();
 
+  /**
+   * save.
+   * 주소 저장 및 변경.
+   */
   @Override
   public UserAddress save(UserAddress userAddress) {
     if ((userAddress.getId() == null) || (userAddress.getId() <= 0L)) {
@@ -30,11 +34,19 @@ public class HashMapUserAddressRepository implements UserAddressRepository {
     return userAddress;
   }
 
+  /**
+   * findById.
+   * 식별자를 통해 주소 검색.
+   */
   @Override
   public UserAddress findById(Long id) {
     return map.get(id);
   }
 
+  /**
+   * findAllByUserId.
+   * 회원 식별자를 통해 주소 검색.
+   */
   @Override
   public List<UserAddress> findAllByUserId(Long userId) {
     return map.values()
@@ -43,27 +55,30 @@ public class HashMapUserAddressRepository implements UserAddressRepository {
         .collect(Collectors.toList());
   }
 
+  /**
+   * findByUserIdAndMainAddressIsTrue.
+   * 현재 주소로 지정된 주소 가져오는 메서드.
+   */
   @Override
-  public UserAddress findMainAddress(Long userId) {
+  public UserAddress findByUserIdAndMainAddressIsTrue(Long userId) {
     Optional<UserAddress> mainAddress = map.values()
         .stream()
         .filter(userAddress -> userId.equals(userAddress.getUserId()))
-        .filter(userAddress -> userAddress.getMainAddress() == true)
+        .filter(userAddress -> userAddress.getMainAddress())
         .findFirst();
     return mainAddress.get();
   }
 
+  /**
+   * deleteById.
+   * 식별자로 주소 삭제.
+   */
   @Override
-  public boolean deleteById(Long id) {
-    boolean flag = false;
-    if (map.remove(id) != null) {
-      flag = true;
-    }
-    return flag;
+  public void deleteById(Long id) {
+    map.remove(id);
   }
 
   // DB에 foreign key를 적용하면서 더이상 사용할 필요가 없어짐.
-  //  @Override
   //  public boolean deleteAllByUserId(Long userId) {
   //    boolean flag = false;
   //    List<UserAddress> addressList = new ArrayList<>();

@@ -14,15 +14,17 @@
 
   <insert id="insert" parameterType="com.happy.delivery.domain.user.UserAddress"
     useGeneratedKeys="true" keyProperty="id">
-    insert into user_addresses (user_id, address, address_detail, main_address)
-    values (#{userId}, ST_GeomFromText(#{address}), #{addressDetail}, #{mainAddress})
+    insert into user_addresses (user_id, address_detail, main_address, longitude, latitude, address)
+    values (#{userId}, #{addressDetail}, #{mainAddress}, #{longitude}, #{latitude}, ST_GeomFromText(#{address}))
   </insert>
 
   <update id="update" parameterType="com.happy.delivery.domain.user.UserAddress">
     update user_addresses
-    set address = ST_GeomFromText(#{address}),
-        address_detail = #{addressDetail},
-        main_address = #{mainAddress}
+    set address_detail = #{addressDetail},
+        main_address = #{mainAddress},
+        longitude = #{longitude},
+        latitude = #{latitude},
+        address = ST_GeomFromText(#{address})
     where user_address_id = #{id}
   </update>
 
@@ -38,7 +40,7 @@
     where user_id = #{userId}
   </select>
 
-  <select id="findMainAddress" resultMap="userAddressMap">
+  <select id="findByUserIdAndMainAddressIsTrue" resultMap="userAddressMap">
     select user_address_id, user_id, address_detail, main_address, ST_ASTEXT(address) as address
     from user_addresses
     where user_id = #{userId} and main_address = true;

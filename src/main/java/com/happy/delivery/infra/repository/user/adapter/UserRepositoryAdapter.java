@@ -1,13 +1,13 @@
 package com.happy.delivery.infra.repository.user.adapter;
 
 import com.happy.delivery.domain.user.User;
+import com.happy.delivery.domain.user.repository.UserRepository;
 import com.happy.delivery.infra.mybatis.user.UserMapper;
-import java.util.Optional;
 
 /**
  * UserRepositoryAdapter.
  */
-public class UserRepositoryAdapter {
+public class UserRepositoryAdapter implements UserRepository {
 
   private final UserMapper userMapper;
 
@@ -32,9 +32,8 @@ public class UserRepositoryAdapter {
    * findById.
    * 식별자로 값 찾기.
    */
-  public Optional<User> findById(Long id) {
-    User user = userMapper.findById(id);
-    return Optional.of(user);
+  public User findById(Long id) {
+    return userMapper.findById(id);
   }
 
   /**

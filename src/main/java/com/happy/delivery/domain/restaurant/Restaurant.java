@@ -1,6 +1,6 @@
 package com.happy.delivery.domain.restaurant;
 
-import com.happy.delivery.infra.vo.AddressObject;
+import com.happy.delivery.domain.vo.Address;
 
 /**
  * Restaurant.
@@ -10,7 +10,7 @@ public class Restaurant {
   private Long id;
   private String name;
   private String category;
-  private AddressObject address;
+  private Address address;
   private String addressDetail;
 
   /**
@@ -27,7 +27,7 @@ public class Restaurant {
     this.id = id;
     this.name = name;
     this.category = category;
-    this.address = AddressObject.of(longitude, latitude);
+    this.address = Address.of(longitude, latitude);
     this.addressDetail = addressDetail;
   }
 
