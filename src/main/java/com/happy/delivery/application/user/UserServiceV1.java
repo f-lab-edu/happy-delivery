@@ -234,8 +234,8 @@ public class UserServiceV1 implements UserService {
     checkUserAddressExistence(userAddress);
     checkUserAuthority(userId, userAddress);
 
-    if (userAddress.getId() == userAddressRepository.findByUserIdAndMainAddressIsTrue(userId)
-        .getId()) {
+    if (userAddress.getId().equals(userAddressRepository.findByUserIdAndMainAddressIsTrue(userId)
+        .getId())) {
       throw new CanNotDeleteMainAddressException("현재 주소와 삭제하려는 주소가 일치합니다.");
     }
     userAddressRepository.deleteById(addressId);
