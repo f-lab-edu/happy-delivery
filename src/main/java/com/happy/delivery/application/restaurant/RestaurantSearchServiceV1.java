@@ -20,16 +20,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class RestaurantSearchServiceV1 implements RestaurantSearchService {
 
   private final RestaurantSearchRepository restaurantSearchRepository;
-  private final UserAddressRepository userAddressRepository;
 
   /**
    * RestaurantSearchServiceV1 constructor.
    */
   @Autowired
-  public RestaurantSearchServiceV1(RestaurantSearchRepository restaurantSearchRepository,
-      UserAddressRepository userAddressRepository) {
+  public RestaurantSearchServiceV1(RestaurantSearchRepository restaurantSearchRepository) {
     this.restaurantSearchRepository = restaurantSearchRepository;
-    this.userAddressRepository = userAddressRepository;
   }
 
   @Override
