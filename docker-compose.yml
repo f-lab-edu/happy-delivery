@@ -12,3 +12,14 @@ services:
       - --collation-server=utf8_general_ci
 #    volumes:
 #      - "./db_data:/var/lib/mysql:/var/lib/mysql"
+
+  redis:
+    image: redis:6.2.6
+    command: ["redis-server", "--port", "6379"]
+    container_name: happy_delivery_redis
+    hostname: happy_delivery_redis
+    labels:
+      - "name=redis"
+      - "mode=standalone"
+    ports:
+      - "6379:6379"
