@@ -13,13 +13,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class UserRepositoryConfig {
 
-
-  private final JpaUserRepository jpaUserRepository;
-
   @Autowired
-  public UserRepositoryConfig(JpaUserRepository jpaUserRepository) {
-    this.jpaUserRepository = jpaUserRepository;
-  }
+  private JpaUserRepository jpaUserRepository;
 
   @Bean
   public UserRepository jpaUserRepositoryAdapter() {

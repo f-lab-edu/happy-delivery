@@ -13,13 +13,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RestaurantSearchRepositoryConfig {
 
-  private final JpaRestaurantCategoryRepository jpaRestaurantCategoryRepository;
-
   @Autowired
-  public RestaurantSearchRepositoryConfig(
-      JpaRestaurantCategoryRepository jpaRestaurantCategoryRepository) {
-    this.jpaRestaurantCategoryRepository = jpaRestaurantCategoryRepository;
-  }
+  private JpaRestaurantCategoryRepository jpaRestaurantCategoryRepository;
 
   @Bean
   public RestaurantSearchRepository jpaRestaurantSearchRepositoryAdapter() {
