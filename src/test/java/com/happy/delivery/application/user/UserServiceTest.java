@@ -21,6 +21,9 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+/**
+ * UserService Method Test.
+ */
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
@@ -41,6 +44,12 @@ public class UserServiceTest {
   private EncryptMapper encryptMapper;
   private UserService userService;
 
+  /**
+   * settings.
+   * 테스트 전에 미리 세팅.
+   * userRepository, userAddressRepository, encryptMapper 의 Mock 생성.
+   * UserService 객체 생성.
+   */
   @BeforeEach
   public void settings() {
     this.userRepository = Mockito.mock(UserRepository.class);
@@ -79,8 +88,8 @@ public class UserServiceTest {
     //when
     //then
     Assertions.assertThatThrownBy(() -> {
-          this.userService.signup(command);
-        }).isInstanceOf(UserAlreadyExistedException.class);
+      this.userService.signup(command);
+    }).isInstanceOf(UserAlreadyExistedException.class);
   }
 
   @Test
@@ -109,8 +118,8 @@ public class UserServiceTest {
     //when
     //then
     Assertions.assertThatThrownBy(() -> {
-          this.userService.signin(command);
-        }).isInstanceOf(EmailIsNotMatchException.class);
+      this.userService.signin(command);
+    }).isInstanceOf(EmailIsNotMatchException.class);
   }
 
   @Test
@@ -125,8 +134,8 @@ public class UserServiceTest {
     //when
     //then
     Assertions.assertThatThrownBy(() -> {
-          this.userService.signin(command);
-        }).isInstanceOf(PasswordIsNotMatchException.class);
+      this.userService.signin(command);
+    }).isInstanceOf(PasswordIsNotMatchException.class);
   }
 
   @Test
@@ -144,7 +153,7 @@ public class UserServiceTest {
 
   @Test
   @DisplayName("DB에 해당 ID가 없어서 사용자의 개인정보를 가져오는 것에 실패해야한다.")
-  public void get_my_account_failure_case1__user_ID_does_not_exist() {
+  public void get_my_account_failure_case1__user_Id_does_not_exist() {
     //given
     Mockito.when(userRepository.findById(ID)).thenReturn(null);
 
@@ -157,7 +166,7 @@ public class UserServiceTest {
 
   @Test
   @DisplayName("수정하려는 계정이 DB에 존재하고, 중복된 이메일이 없으면 개인정보 업데이트에 성공해야 한다.")
-  public void update_my_account_success_case1__duplicated_email_doesnt_exist() {
+  public void update_my_account_success_case2__duplicated_email_doesnt_exist() {
     //given
     MyAccountCommand command =
         new MyAccountCommand(ID, UPDATED_EMAIL, UPDATED_NAME, UPDATED_PHONE_NUMBER);
