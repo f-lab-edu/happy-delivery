@@ -35,7 +35,7 @@ public class AuthorizationToken implements Serializable {
     return id;
   }
 
-  public Status getAuthority() {
+  public Status getStatus() {
     return status;
   }
 }

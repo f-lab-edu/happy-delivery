@@ -35,6 +35,6 @@ class DeliveryApplicationTests {
     // then
     Assertions.assertThat(token.getToken()).isEqualTo(TOKEN);
     Assertions.assertThat(token.getId()).isEqualTo(ID);
-    Assertions.assertThat(token.getAuthority()).isEqualTo(USER);
+    Assertions.assertThat(token.getStatus()).isEqualTo(USER);
   }
 }
