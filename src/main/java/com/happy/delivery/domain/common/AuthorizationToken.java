@@ -1,26 +1,30 @@
 package com.happy.delivery.domain.common;
 
-import javax.persistence.Id;
-import org.springframework.data.redis.core.RedisHash;
+import com.happy.delivery.infra.enumeration.Status;
+import java.io.Serializable;
 
 /**
  * AuthorizationToken.
  */
-@RedisHash
-public class AuthorizationToken {
+public class AuthorizationToken implements Serializable {
 
-  @Id
-  private final String token;
-  private final Long id;
-  private final String authority;
+  private String token;
+  private Long id;
+  private Status status;
+
+  /**
+   * AuthorizationToken default constructor.
+   */
+  public AuthorizationToken() {
+  }
 
   /**
    * AuthorizationToken constructor.
    */
-  public AuthorizationToken(String token, Long id, String authority) {
+  public AuthorizationToken(String token, Long id, Status status) {
     this.token = token;
     this.id = id;
-    this.authority = authority;
+    this.status = status;
   }
 
   public String getToken() {
@@ -31,7 +35,7 @@ public class AuthorizationToken {
     return id;
   }
 
-  public String getAuthority() {
-    return authority;
+  public Status getAuthority() {
+    return status;
   }
 }
