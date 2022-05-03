@@ -1,9 +1,12 @@
 package com.happy.delivery.presentation.user.rest;
 
+import com.happy.delivery.application.common.TokenService;
+import com.happy.delivery.application.common.command.TokenCommand;
 import com.happy.delivery.application.user.UserService;
 import com.happy.delivery.application.user.result.UserAddressResult;
 import com.happy.delivery.application.user.result.UserResult;
 import com.happy.delivery.infra.annotation.UserLoginCheck;
+import com.happy.delivery.infra.enumeration.Status;
 import com.happy.delivery.infra.util.SessionUtil;
 import com.happy.delivery.presentation.common.response.ApiResponse;
 import com.happy.delivery.presentation.user.request.AddressRequest;
@@ -16,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +28,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,14 +42,22 @@ public class UserController {
 
   private final Logger log = LoggerFactory.getLogger(UserController.class);
   private final UserService userService;
+  private final TokenService tokenService;
 
   /**
    * UserController Constructor.
    */
-  public UserController(UserService userService) {
+  @Autowired
+  public UserController(UserService userService, TokenService tokenService) {
     this.userService = userService;
+    this.tokenService = tokenService;
   }
 
+  /**
+   * signup.
+   * 회원가입 기능.
+   * 추가해야 하는 것 :: enum 값 (Status) 을 DB 에 저장해야 함.
+   */
   @ResponseStatus(code = HttpStatus.CREATED)
   @PostMapping("/signup")
   public ApiResponse signup(@Valid @RequestBody SignupRequest request) {
@@ -54,13 +67,17 @@ public class UserController {
 
   /**
    * signin.
+   * 로그인 기능.
    */
   @ResponseStatus(code = HttpStatus.OK)
   @PostMapping("/signin")
-  public ApiResponse signin(@Valid @RequestBody SigninRequest request,
-      HttpSession httpSession) {
+  public ApiResponse signin(
+      @Valid @RequestBody SigninRequest request,
+      @RequestHeader(value = "Authorization") String token) {
     UserResult userResult = userService.signin(request.toCommand());
-    SessionUtil.setLoginId(httpSession, userResult.getId());
+    // TokenService 가 아닌 것 같긴한데 일단 이렇게 만들어보자.
+    // Status.USER 값을 userResult 에서 가져오도록 만들기.
+    tokenService.saveToken(new TokenCommand(token, userResult.getId(), Status.USER));
     return ApiResponse.success(userResult);
   }
 

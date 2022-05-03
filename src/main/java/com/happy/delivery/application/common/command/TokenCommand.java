@@ -1,27 +1,21 @@
-package com.happy.delivery.domain.common;
+package com.happy.delivery.application.common.command;
 
 import com.happy.delivery.infra.enumeration.Status;
-import java.io.Serializable;
 
 /**
- * AuthorizationToken.
+ * TokenCommand.
+ * token 을 위한 command 값
  */
-public class AuthorizationToken implements Serializable {
+public class TokenCommand {
 
   private String token;
   private Long id;
   private Status status;
 
   /**
-   * AuthorizationToken default constructor.
+   * TokenCommand Constructor.
    */
-  public AuthorizationToken() {
-  }
-
-  /**
-   * AuthorizationToken constructor.
-   */
-  public AuthorizationToken(String token, Long id, Status status) {
+  public TokenCommand(String token, Long id, Status status) {
     this.token = token;
     this.id = id;
     this.status = status;
@@ -38,4 +32,6 @@ public class AuthorizationToken implements Serializable {
   public Status getStatus() {
     return status;
   }
+
+
 }
