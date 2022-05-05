@@ -3,6 +3,7 @@ package com.happy.delivery.infra.redis.common;
 import com.happy.delivery.domain.common.Token;
 import com.happy.delivery.domain.common.repository.TokenRepository;
 import com.happy.delivery.domain.exception.common.NullTokenValueException;
+import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Repository;
 public class TokenRedisTemplate implements TokenRepository {
 
   private final RedisTemplate<String, Token> redisTemplate;
+  private static final long DEFAULT_LIFE_TIME = 240; // 4시간.
 
   @Autowired
   public TokenRedisTemplate(RedisTemplate<String, Token> redisTemplate) {
@@ -23,7 +25,7 @@ public class TokenRedisTemplate implements TokenRepository {
 
   @Override
   public void save(Token token) {
-    redisTemplate.opsForValue().set(token.getToken(), token);
+    redisTemplate.opsForValue().set(token.getToken(), token, DEFAULT_LIFE_TIME, TimeUnit.MINUTES);
   }
 
   @Override
