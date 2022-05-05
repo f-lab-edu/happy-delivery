@@ -107,7 +107,7 @@ public class UserController {
   @ResponseStatus(code = HttpStatus.OK)
   @PutMapping("/my-account")
   public ApiResponse updateMyAccount(@Valid @RequestBody MyAccountRequest myAccountRequest) {
-    myAccountRequest.addLoginId(getCurrentUserId());
+    myAccountRequest.addCurrentUserId(getCurrentUserId());
     UserResult myAccountResult = userService.updateMyAccount(myAccountRequest.toCommand());
     return ApiResponse.success(myAccountResult);
   }
