@@ -1,5 +1,6 @@
 package com.happy.delivery.infra.config.redis;
 
+import com.happy.delivery.domain.common.Token;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -54,8 +55,8 @@ public class RedisConfig {
           => 기본 StringRedisSerializer 를 사용하면 serialized 오류가 발생한다.
    */
   @Bean
-  public RedisTemplate<String, Object> redisTemplate() {
-    RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+  public RedisTemplate<String, Token> redisTemplate() {
+    RedisTemplate<String, Token> redisTemplate = new RedisTemplate<>();
     redisTemplate.setConnectionFactory(redisConnectionFactory());
     redisTemplate.setKeySerializer(new StringRedisSerializer());
     redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
