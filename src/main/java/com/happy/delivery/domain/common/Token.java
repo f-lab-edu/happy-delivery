@@ -1,6 +1,6 @@
 package com.happy.delivery.domain.common;
 
-import com.happy.delivery.infra.enumeration.Status;
+import com.happy.delivery.domain.enumeration.Authority;
 import java.io.Serializable;
 
 /**
@@ -9,8 +9,8 @@ import java.io.Serializable;
 public class Token implements Serializable {
 
   private String token;
-  private Long id;
-  private Status status;
+  private Long memberId;
+  private Authority authority;
 
   /**
    * AuthorizationToken default constructor.
@@ -21,21 +21,21 @@ public class Token implements Serializable {
   /**
    * AuthorizationToken constructor.
    */
-  public Token(String token, Long id, Status status) {
+  public Token(String token, Long memberId, Authority authority) {
     this.token = token;
-    this.id = id;
-    this.status = status;
+    this.memberId = memberId;
+    this.authority = authority;
   }
 
   public String getToken() {
     return token;
   }
 
-  public Long getId() {
-    return id;
+  public Long getMemberId() {
+    return memberId;
   }
 
-  public Status getStatus() {
-    return status;
+  public Authority getAuthority() {
+    return authority;
   }
 }
