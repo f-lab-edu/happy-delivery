@@ -62,7 +62,7 @@ public class UserExceptionHandler {
   }
 
   /**
-   * 세션 아이디가 없을 경우.
+   * 저장된 아이디가 없을 경우.
    */
   @ExceptionHandler(NoUserException.class)
   public ApiResponse<?> noUserIdException(NoUserException ex) {
@@ -88,7 +88,7 @@ public class UserExceptionHandler {
 
   /**
    * 현재 주소로 설정된 주소정보를 삭제하려고 한 경우.
-   * user에 들어있는 main address의 정보를 삭제하려고 한 경우.
+   * user 에 들어있는 main address 의 정보를 삭제하려고 한 경우.
    */
   @ExceptionHandler(CanNotDeleteMainAddressException.class)
   public ApiResponse<?> canNotDeleteMainAddressException(CanNotDeleteMainAddressException ex) {
@@ -121,7 +121,7 @@ public class UserExceptionHandler {
   }
 
   /**
-   * AddressVo에서 Point값 파싱에 문제가 생긴 경우.
+   * AddressVo 에서 Point 값 파싱에 문제가 생긴 경우.
    */
   @ExceptionHandler(PointWktReaderParseException.class)
   public ApiResponse<?> pointWktReaderParseException(PointWktReaderParseException ex) {
