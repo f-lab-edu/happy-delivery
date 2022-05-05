@@ -2,9 +2,9 @@ package com.happy.delivery.infra.redis.common;
 
 import com.happy.delivery.domain.common.Token;
 import com.happy.delivery.domain.common.repository.TokenRepository;
+import com.happy.delivery.domain.exception.common.NullTokenValueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,21 +14,29 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class TokenRedisTemplate implements TokenRepository {
 
-  private final ValueOperations<String, Object> valueOperations;
+  private final RedisTemplate<String, Token> redisTemplate;
 
   @Autowired
-  public TokenRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
-    valueOperations = redisTemplate.opsForValue();
+  public TokenRedisTemplate(RedisTemplate<String, Token> redisTemplate) {
+    this.redisTemplate = redisTemplate;
   }
 
   @Override
   public void save(Token token) {
-    valueOperations.set(token.getToken(), token);
+    redisTemplate.opsForValue().set(token.getToken(), token);
   }
 
   @Override
-  public Token findById(String token) {
-    Object tokenObj = valueOperations.get(token);
+  public Token findByToken(String token) {
+    if (token == null) {
+      throw new NullTokenValueException("토큰값이 null 입니다.");
+    }
+    Object tokenObj = redisTemplate.opsForValue().get(token);
     return (Token) tokenObj;
+  }
+
+  @Override
+  public void deleteByToken(String token) {
+    redisTemplate.delete(token);
   }
 }
