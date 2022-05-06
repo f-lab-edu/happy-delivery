@@ -65,10 +65,10 @@ public class MyAccountRequest {
   }
 
   /**
-   * addSessionLoginId.
-   * session에 들어있는 회원 식별자 넣어주는 메서드.
+   * addCurrentUserId.
+   * 현재 회원 Id 를 MyAccountRequest 넣어주는 메서드.
    */
-  public void addSessionLoginId(Long sessionLoginId) {
-    this. id = sessionLoginId;
+  public void addCurrentUserId(Long currentUserId) {
+    this. id = currentUserId;
   }
 }

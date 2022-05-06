@@ -13,14 +13,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class UserAddressRepositoryConfig {
 
-
-  private final JpaUserAddressRepository jpaUserAddressRepository;
-
   @Autowired
-  public UserAddressRepositoryConfig(
-      JpaUserAddressRepository jpaUserAddressRepository) {
-    this.jpaUserAddressRepository = jpaUserAddressRepository;
-  }
+  private JpaUserAddressRepository jpaUserAddressRepository;
 
   @Bean
   public UserAddressRepository jpaUserAddressRepositoryAdapter() {
