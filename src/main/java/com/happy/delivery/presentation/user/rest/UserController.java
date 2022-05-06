@@ -14,7 +14,7 @@ import com.happy.delivery.presentation.user.request.PasswordUpdateRequest;
 import com.happy.delivery.presentation.user.request.SigninRequest;
 import com.happy.delivery.presentation.user.request.SignupRequest;
 import java.util.List;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,8 +84,8 @@ public class UserController {
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @GetMapping("/logout")
-  public void logout() {
-    authorizationService.logout();
+  public void logout(HttpServletRequest request) {
+    authorizationService.logout(request);
   }
 
   /**
@@ -95,8 +95,9 @@ public class UserController {
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @GetMapping("/my-account")
-  public ApiResponse getMyAccount() {
-    UserResult myAccount = userService.getMyAccount(getCurrentUserId());
+  public ApiResponse getMyAccount(HttpServletRequest request) {
+    Long userId = getCurrentUserId(request);
+    UserResult myAccount = userService.getMyAccount(userId);
     return ApiResponse.success(myAccount);
   }
 
@@ -107,73 +108,81 @@ public class UserController {
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @PutMapping("/my-account")
-  public ApiResponse updateMyAccount(@Valid @RequestBody MyAccountRequest myAccountRequest) {
-    myAccountRequest.addCurrentUserId(getCurrentUserId());
+  public ApiResponse updateMyAccount(HttpServletRequest request,
+      @Valid @RequestBody MyAccountRequest myAccountRequest) {
+    Long userId = getCurrentUserId(request);
+    myAccountRequest.addCurrentUserId(userId);
     UserResult myAccountResult = userService.updateMyAccount(myAccountRequest.toCommand());
     return ApiResponse.success(myAccountResult);
   }
 
   /**
-   * my-account/password.
-   * update password.
+   * updatePassword.
+   * 비밀번호 변경.
    */
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.CREATED)
   @PatchMapping("/my-account/password")
-  public ApiResponse updatePassword(@Valid @RequestBody PasswordUpdateRequest request) {
-    UserResult userResult = userService.updatePassword(getCurrentUserId(), request.toCommand());
+  public ApiResponse updatePassword(HttpServletRequest request,
+      @Valid @RequestBody PasswordUpdateRequest passwordUpdateRequest) {
+    Long userId = getCurrentUserId(request);
+    UserResult userResult = userService.updatePassword(userId, passwordUpdateRequest.toCommand());
     return ApiResponse.success(userResult);
   }
 
   /**
-   * myAccount delete.
+   * deleteMyAccount.
+   * 계정 탈퇴.
    */
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @DeleteMapping("/my-account")
-  public ApiResponse deleteMyAccount() {
-    userService.deleteMyAccount(getCurrentUserId());
-    authorizationService.logout();
+  public ApiResponse deleteMyAccount(HttpServletRequest request) {
+    userService.deleteMyAccount(getCurrentUserId(request));
+    authorizationService.logout(request);
     return ApiResponse.success(null);
   }
 
   /**
-   * UserController PostMapping /addresses.
+   * saveAddress.
    * 주소 저장
    */
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.CREATED)
   @PostMapping("/addresses")
-  public ApiResponse saveAddress(@Valid @RequestBody AddressRequest addressRequest) {
+  public ApiResponse saveAddress(HttpServletRequest request,
+      @Valid @RequestBody AddressRequest addressRequest) {
+    Long userId = getCurrentUserId(request);
     UserAddressResult userAddressResult =
-        userService.saveAddress(getCurrentUserId(), addressRequest.toCommand());
+        userService.saveAddress(userId, addressRequest.toCommand());
     return ApiResponse.success(userAddressResult);
   }
 
   /**
-   * UserController GetMapping /addresses.
+   * getListOfAllAddresses.
    * 주소 목록 가져오기.
    */
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @GetMapping("/addresses")
-  public ApiResponse getListOfAllAddresses() {
-    List<UserAddressResult> listOfAllAddresses =
-        userService.getListOfAllAddresses(getCurrentUserId());
+  public ApiResponse getListOfAllAddresses(HttpServletRequest request) {
+    Long userId = getCurrentUserId(request);
+    List<UserAddressResult> listOfAllAddresses = userService.getListOfAllAddresses(userId);
     return ApiResponse.success(listOfAllAddresses);
   }
 
   /**
-   * UserController update /addresses.
+   * updateAddress.
    * 주소 수정.
    */
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.CREATED)
   @PatchMapping("/addresses/{addressId}")
-  public ApiResponse updateAddress(@PathVariable Long addressId,
+  public ApiResponse updateAddress(HttpServletRequest request, @PathVariable Long addressId,
       @Valid @RequestBody AddressRequest addressCommand) {
+    Long userId = getCurrentUserId(request);
     UserAddressResult userAddressResult =
-        userService.updateAddress(addressId, getCurrentUserId(), addressCommand.toCommand());
+        userService.updateAddress(addressId, userId, addressCommand.toCommand());
     return ApiResponse.success(userAddressResult);
   }
 
@@ -184,9 +193,9 @@ public class UserController {
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @PatchMapping("/addresses/main/{addressId}")
-  public ApiResponse updateMainAddress(@PathVariable Long addressId) {
-    UserAddressResult userAddressResult =
-        userService.updateMainAddress(getCurrentUserId(), addressId);
+  public ApiResponse updateMainAddress(HttpServletRequest request, @PathVariable Long addressId) {
+    Long userId = getCurrentUserId(request);
+    UserAddressResult userAddressResult = userService.updateMainAddress(userId, addressId);
     return ApiResponse.success(userAddressResult);
   }
 
@@ -197,8 +206,9 @@ public class UserController {
   @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @DeleteMapping("/addresses/{addressId}")
-  public ApiResponse deleteAddress(@PathVariable Long addressId) {
-    userService.deleteAddress(addressId, getCurrentUserId());
+  public ApiResponse deleteAddress(HttpServletRequest request, @PathVariable Long addressId) {
+    Long userId = getCurrentUserId(request);
+    userService.deleteAddress(addressId, userId);
     return ApiResponse.success(null);
   }
 
@@ -206,7 +216,7 @@ public class UserController {
    * getCurrentUserId.
    * 현재 사용자의 식별자를 토큰, 세션 등을 이용해 가져오는 메서드.
    */
-  private Long getCurrentUserId() {
-    return authorizationService.getCurrentUser().getMemberId();
+  private Long getCurrentUserId(HttpServletRequest request) {
+    return authorizationService.getCurrentUser(request).getMemberId();
   }
 }

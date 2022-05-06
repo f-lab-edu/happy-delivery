@@ -7,8 +7,6 @@ import com.happy.delivery.domain.common.repository.TokenRepository;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * TokenAuthorizationService.
@@ -34,8 +32,8 @@ public class TokenAuthorizationService implements AuthorizationService {
   }
 
   @Override
-  public AuthorizationResult getCurrentUser() {
-    String token = getTokenFromRequestHeader();
+  public AuthorizationResult getCurrentUser(HttpServletRequest request) {
+    String token = request.getHeader("Authorization");
     Token tokenById = tokenRepository.findByToken(token);
     // LoginCheckAspect 의 예외처리를 위해 만들어 둔 코드.
     if (tokenById == null) {
@@ -45,23 +43,8 @@ public class TokenAuthorizationService implements AuthorizationService {
   }
 
   @Override
-  public void logout() {
-    String token = getTokenFromRequestHeader();
+  public void logout(HttpServletRequest request) {
+    String token = request.getHeader("Authorization");
     tokenRepository.deleteByToken(token);
-  }
-
-  private String getTokenFromRequestHeader() {
-    /*
-            RequestContextHolder : Request 에 대한 정보를 가져오고자 할 때 사용하는 유틸성 클래스.
-                                   T현재 Thread 에 RequestAttributes 를 바인딩 해뒀다가
-                                   요청하면 이 값을 반환한다.
-
-            currentRequestAttributes() : RequestAttributes 가 없으면 예외 발생.
-
-            getRequestAttributes() : RequestAttributes 가 없으면 null 을 반환.
-     */
-    HttpServletRequest request =
-        ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-    return request.getHeader("Authorization");
   }
 }

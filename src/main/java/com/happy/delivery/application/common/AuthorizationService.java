@@ -2,6 +2,7 @@ package com.happy.delivery.application.common;
 
 import com.happy.delivery.application.common.command.AuthorizationCommand;
 import com.happy.delivery.application.common.result.AuthorizationResult;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * AuthorizationService.
@@ -14,7 +15,7 @@ public interface AuthorizationService {
 
   String login(AuthorizationCommand authorizationCommand);
 
-  AuthorizationResult getCurrentUser();
+  AuthorizationResult getCurrentUser(HttpServletRequest request);
 
-  void logout();
+  void logout(HttpServletRequest request);
 }
