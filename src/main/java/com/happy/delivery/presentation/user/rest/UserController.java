@@ -14,6 +14,7 @@ import com.happy.delivery.presentation.user.request.PasswordUpdateRequest;
 import com.happy.delivery.presentation.user.request.SigninRequest;
 import com.happy.delivery.presentation.user.request.SignupRequest;
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,15 +65,15 @@ public class UserController {
 
   /**
    * signin.
-   * 로그인 기능.
+   * 로그인.
    */
   @ResponseStatus(code = HttpStatus.OK)
   @PostMapping("/signin")
   public ApiResponse signin(@Valid @RequestBody SigninRequest request) {
     UserResult userResult = userService.signin(request.toCommand());
-    // TokenService 가 아닌 것 같긴한데 일단 이렇게 만들어보자.
-    // Status.USER 값을 userResult 에서 가져오도록 만들기.
-    authorizationService.login(new AuthorizationCommand(userResult.getId(), Authority.USER));
+    String token = authorizationService.login(
+        new AuthorizationCommand(userResult.getId(), Authority.USER));
+    userResult.addCurrentUserToken(token);
     return ApiResponse.success(userResult);
   }
 

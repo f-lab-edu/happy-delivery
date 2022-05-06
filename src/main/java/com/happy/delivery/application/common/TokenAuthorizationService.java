@@ -4,6 +4,7 @@ import com.happy.delivery.application.common.command.AuthorizationCommand;
 import com.happy.delivery.application.common.result.AuthorizationResult;
 import com.happy.delivery.domain.common.Token;
 import com.happy.delivery.domain.common.repository.TokenRepository;
+import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -23,12 +24,13 @@ public class TokenAuthorizationService implements AuthorizationService {
   }
 
   @Override
-  public void login(AuthorizationCommand authorizationCommand) {
-    String token = getTokenFromRequestHeader();
+  public String login(AuthorizationCommand authorizationCommand) {
+    String token = UUID.randomUUID().toString();
     tokenRepository.save(new Token(
         token,
         authorizationCommand.getMemberId(),
         authorizationCommand.getAuthority()));
+    return token;
   }
 
   @Override

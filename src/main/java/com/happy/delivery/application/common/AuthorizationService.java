@@ -12,7 +12,7 @@ import com.happy.delivery.application.common.result.AuthorizationResult;
  * */
 public interface AuthorizationService {
 
-  void login(AuthorizationCommand authorizationCommand);
+  String login(AuthorizationCommand authorizationCommand);
 
   AuthorizationResult getCurrentUser();
 

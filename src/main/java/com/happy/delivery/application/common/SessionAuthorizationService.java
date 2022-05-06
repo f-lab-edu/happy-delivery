@@ -21,12 +21,13 @@ public class SessionAuthorizationService implements AuthorizationService {
   }
 
   @Override
-  public void login(AuthorizationCommand authorizationCommand) {
+  public String login(AuthorizationCommand authorizationCommand) {
     SessionValue sessionValue = new SessionValue(
         authorizationCommand.getMemberId(),
         authorizationCommand.getAuthority()
     );
     httpSession.setAttribute(CURRENT_USER_SESSION_VALUE, sessionValue);
+    return null;
   }
 
   @Override
