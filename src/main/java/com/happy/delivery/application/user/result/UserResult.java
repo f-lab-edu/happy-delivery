@@ -1,5 +1,6 @@
 package com.happy.delivery.application.user.result;
 
+import com.happy.delivery.domain.enumeration.Authority;
 import com.happy.delivery.domain.user.User;
 
 /**
@@ -11,16 +12,18 @@ public class UserResult {
   private String email;
   private String name;
   private String phoneNumber;
-  private String token;
+  private Authority authority;
+  private String token; // Redis 를 위한 field, Constructor 에서 사용하지 않음.
 
   /**
    * UserResult Constructor.
    */
-  public UserResult(Long id, String email, String name, String phoneNumber) {
+  public UserResult(Long id, String email, String name, String phoneNumber, Authority authority) {
     this.id = id;
     this.email = email;
     this.name = name;
     this.phoneNumber = phoneNumber;
+    this.authority = authority;
   }
 
   /**
@@ -31,7 +34,8 @@ public class UserResult {
         user.getId(),
         user.getEmail(),
         user.getName(),
-        user.getPhoneNumber()
+        user.getPhoneNumber(),
+        user.getAuthority()
     );
   }
 
@@ -60,6 +64,10 @@ public class UserResult {
     return phoneNumber;
   }
 
+  public Authority getAuthority() {
+    return authority;
+  }
+
   public String getToken() {
     return token;
   }
@@ -71,6 +79,8 @@ public class UserResult {
         ", email='" + email + '\'' +
         ", name='" + name + '\'' +
         ", phoneNumber='" + phoneNumber + '\'' +
+        ", authority=" + authority +
+        ", token='" + token + '\'' +
         '}';
   }
 }

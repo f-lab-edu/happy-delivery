@@ -4,6 +4,7 @@ import com.happy.delivery.application.user.command.MyAccountCommand;
 import com.happy.delivery.application.user.command.SigninCommand;
 import com.happy.delivery.application.user.command.SignupCommand;
 import com.happy.delivery.application.user.result.UserResult;
+import com.happy.delivery.domain.enumeration.Authority;
 import com.happy.delivery.domain.exception.user.EmailIsNotMatchException;
 import com.happy.delivery.domain.exception.user.NoUserException;
 import com.happy.delivery.domain.exception.user.PasswordIsNotMatchException;
@@ -38,6 +39,7 @@ public class UserServiceTest {
   private static final String UPDATED_NAME = "에프랩";
   private static final String PHONE_NUMBER = "12345678910";
   private static final String UPDATED_PHONE_NUMBER = "11122223333";
+  private static final Authority USER_AUTHORITY = Authority.USER;
   //기본객체
   private UserRepository userRepository;
   private UserAddressRepository userAddressRepository;
@@ -62,7 +64,7 @@ public class UserServiceTest {
   @DisplayName("이메일 중복이 없다면 회원가입은 성공해야 한다.")
   public void signup_success_case1__different_email() {
     //given
-    SignupCommand command = new SignupCommand(EMAIL, PASSWORD, NAME, PHONE_NUMBER);
+    SignupCommand command = new SignupCommand(EMAIL, PASSWORD, NAME, PHONE_NUMBER, USER_AUTHORITY);
     Mockito.when(userRepository.findByEmail(EMAIL)).thenReturn(null);
     Mockito.when(encryptMapper.encoder(PASSWORD)).thenReturn(ENCRYPTED_PASSWORD);
     ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
@@ -82,7 +84,7 @@ public class UserServiceTest {
   @DisplayName("이메일 중복이 있으면 회원가입 실패해야한다. & 예외 발생")
   public void signup_failure_case1__duplicated_email() {
     //given
-    SignupCommand command = new SignupCommand(EMAIL, PASSWORD, NAME, PHONE_NUMBER);
+    SignupCommand command = new SignupCommand(EMAIL, PASSWORD, NAME, PHONE_NUMBER, USER_AUTHORITY);
     Mockito.when(userRepository.findByEmail(EMAIL)).thenReturn(getUserFromRepository());
 
     //when
@@ -221,6 +223,6 @@ public class UserServiceTest {
 
   //비밀번호가 암호화된 user 객체 만드는 메서드
   private User getUserFromRepository() {
-    return new User(EMAIL, ENCRYPTED_PASSWORD, NAME, PHONE_NUMBER);
+    return new User(EMAIL, ENCRYPTED_PASSWORD, NAME, PHONE_NUMBER, USER_AUTHORITY);
   }
 }

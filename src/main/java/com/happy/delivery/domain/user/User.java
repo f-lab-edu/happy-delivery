@@ -1,11 +1,15 @@
 package com.happy.delivery.domain.user;
 
+import com.happy.delivery.domain.enumeration.Authority;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 /**
  * User.
@@ -31,6 +35,10 @@ public class User {
   @Column(name = "phone_number")
   private String phoneNumber;
 
+  @Enumerated(value = EnumType.STRING)
+  @Column(name = "authority")
+  private Authority authority;
+
   /**
    * 기본 생성자.
    */
@@ -40,23 +48,25 @@ public class User {
   /**
    * 회원가입 할 때 사용.
    */
-  public User(String email, String password, String name, String phoneNumber) {
+  public User(String email, String password, String name, String phoneNumber, Authority authority) {
     this.email = email;
     this.password = password;
     this.name = name;
     this.phoneNumber = phoneNumber;
+    this.authority = authority;
   }
 
   /**
    * 보통의 경우.
    */
   public User(Long id, String email, String password, String name, String phoneNumber,
-      Long addressId) {
+      Long addressId, Authority authority) {
     this.id = id;
     this.email = email;
     this.password = password;
     this.name = name;
     this.phoneNumber = phoneNumber;
+    this.authority = authority;
   }
 
   /**
@@ -119,6 +129,10 @@ public class User {
     this.phoneNumber = phoneNumber;
   }
 
+  public Authority getAuthority() {
+    return authority;
+  }
+
   @Override
   public String toString() {
     return "User{" +
@@ -127,6 +141,7 @@ public class User {
         ", password='" + password + '\'' +
         ", name='" + name + '\'' +
         ", phoneNumber='" + phoneNumber + '\'' +
+        ", authority=" + authority +
         '}';
   }
 }
