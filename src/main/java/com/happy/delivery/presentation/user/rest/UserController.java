@@ -5,8 +5,6 @@ import com.happy.delivery.application.common.command.AuthorizationCommand;
 import com.happy.delivery.application.user.UserService;
 import com.happy.delivery.application.user.result.UserAddressResult;
 import com.happy.delivery.application.user.result.UserResult;
-import com.happy.delivery.domain.enumeration.Authority;
-import com.happy.delivery.infra.annotation.UserLoginCheck;
 import com.happy.delivery.presentation.common.response.ApiResponse;
 import com.happy.delivery.presentation.user.request.AddressRequest;
 import com.happy.delivery.presentation.user.request.MyAccountRequest;
@@ -72,7 +70,7 @@ public class UserController {
   public ApiResponse signin(@Valid @RequestBody SigninRequest request) {
     UserResult userResult = userService.signin(request.toCommand());
     String token = authorizationService.login(
-        new AuthorizationCommand(userResult.getId(), Authority.USER));
+        new AuthorizationCommand(userResult.getId(), userResult.getAuthority()));
     userResult.addCurrentUserToken(token);
     return ApiResponse.success(userResult);
   }
@@ -81,7 +79,6 @@ public class UserController {
    * UserController logout.
    * 로그아웃.
    */
-  @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @GetMapping("/logout")
   public void logout(HttpServletRequest request) {
@@ -92,7 +89,6 @@ public class UserController {
    * myAccount view.
    * 계정 정보 가져오기.
    */
-  @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @GetMapping("/my-account")
   public ApiResponse getMyAccount(HttpServletRequest request) {
@@ -105,7 +101,6 @@ public class UserController {
    * myAccount update.
    * 계정 정보 수정하기.
    */
-  @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @PutMapping("/my-account")
   public ApiResponse updateMyAccount(HttpServletRequest request,
@@ -120,7 +115,6 @@ public class UserController {
    * updatePassword.
    * 비밀번호 변경.
    */
-  @UserLoginCheck
   @ResponseStatus(code = HttpStatus.CREATED)
   @PatchMapping("/my-account/password")
   public ApiResponse updatePassword(HttpServletRequest request,
@@ -134,7 +128,6 @@ public class UserController {
    * deleteMyAccount.
    * 계정 탈퇴.
    */
-  @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @DeleteMapping("/my-account")
   public ApiResponse deleteMyAccount(HttpServletRequest request) {
@@ -147,7 +140,6 @@ public class UserController {
    * saveAddress.
    * 주소 저장
    */
-  @UserLoginCheck
   @ResponseStatus(code = HttpStatus.CREATED)
   @PostMapping("/addresses")
   public ApiResponse saveAddress(HttpServletRequest request,
@@ -162,7 +154,6 @@ public class UserController {
    * getListOfAllAddresses.
    * 주소 목록 가져오기.
    */
-  @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @GetMapping("/addresses")
   public ApiResponse getListOfAllAddresses(HttpServletRequest request) {
@@ -175,7 +166,6 @@ public class UserController {
    * updateAddress.
    * 주소 수정.
    */
-  @UserLoginCheck
   @ResponseStatus(code = HttpStatus.CREATED)
   @PatchMapping("/addresses/{addressId}")
   public ApiResponse updateAddress(HttpServletRequest request, @PathVariable Long addressId,
@@ -190,7 +180,6 @@ public class UserController {
    * updateMainAddress.
    * 현재 주소 설정.
    */
-  @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @PatchMapping("/addresses/main/{addressId}")
   public ApiResponse updateMainAddress(HttpServletRequest request, @PathVariable Long addressId) {
@@ -203,7 +192,6 @@ public class UserController {
    * deleteAddress.
    * 주소 삭제.
    */
-  @UserLoginCheck
   @ResponseStatus(code = HttpStatus.OK)
   @DeleteMapping("/addresses/{addressId}")
   public ApiResponse deleteAddress(HttpServletRequest request, @PathVariable Long addressId) {

@@ -6,15 +6,16 @@ import javax.servlet.http.HttpServletRequest;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * LoginCheckAspect.
+ * 처음엔 AOP 를 사용해서 로그인 체크를 했지만,
+ * interceptor 가 더 알맞은 방식이라고 판단해 더이상 사용하지 않음.
  */
 @Aspect
-@Component
+//Component
 public class LoginCheckAspect {
 
   private final AuthorizationService authorizationService;
@@ -29,8 +30,6 @@ public class LoginCheckAspect {
    */
   @Before("@annotation(com.happy.delivery.infra.annotation.UserLoginCheck)")
   public void userLoginCheck() {
-    // 임시로 만들어 둔 request
-    // AOP 자체를 filter 나 interceptor 로 변경할 예정.
     HttpServletRequest request =
         ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
     if (authorizationService.getCurrentUser(request) == null) {

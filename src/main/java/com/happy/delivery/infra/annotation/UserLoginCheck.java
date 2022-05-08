@@ -7,6 +7,8 @@ import java.lang.annotation.Target;
 
 /**
  * UserLoginCheck annotation.
+ * 로그인 체크 AOP 위해 만든 어노테이션.
+ * userController 메서드에 사용.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
