@@ -9,7 +9,7 @@
 * ex) 배달의 민족과 같은 배달 서비스
 
 ## 사용기술
-* Spring Boot, Java11, Gradle, Mybatis, Mysql, JPA, Docker 등
+* Spring Boot, Java11, Gradle, Mybatis, Mysql, JPA, Redis ,Docker 등
 
 ## Code Convention
 * [Google code Style](https://google.github.io/styleguide/javaguide.html) 준수
@@ -61,7 +61,7 @@
     * 현재 주소 변경
 
 ## ERD
-![HappyDeliveryERD drawio](https://user-images.githubusercontent.com/91924087/164116196-d6f62d4d-8943-4018-a769-77f4e71facba.png)
+![HappyDeliveryERD](https://user-images.githubusercontent.com/91924087/167279527-aa57b4a9-ae5d-4678-8c48-092a4c11b2c1.jpg)
 
 ## 기능정의
 * [기능명세서](https://github.com/f-lab-edu/happy-delivery/wiki/기능-명세서)
