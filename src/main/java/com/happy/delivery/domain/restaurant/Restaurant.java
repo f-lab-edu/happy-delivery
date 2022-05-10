@@ -1,20 +1,39 @@
 package com.happy.delivery.domain.restaurant;
 
 import com.happy.delivery.domain.vo.Address;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  * Restaurant.
  */
+@Entity(name = "restaurants")
 public class Restaurant {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  @Column
   private String name;
+
+  @Column
   private String category;
+  //  @Column
+  //  @ManyToOne
+  //  private RestaurantCategory category;
+
+  @Column
   private Address address;
+
+  @Column(name = "address_detail")
   private String addressDetail;
 
   /**
-   * Restaurant Constructor for MyBatis.
+   * Restaurant Constructor for MyBatis and JPA.
    */
   public Restaurant() {
   }
