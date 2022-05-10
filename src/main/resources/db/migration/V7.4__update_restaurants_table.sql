@@ -1,0 +1,1 @@
+alter table restaurants change addressDetail address_detail varchar(100) not null;
