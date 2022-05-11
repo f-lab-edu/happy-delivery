@@ -36,7 +36,7 @@
 * github-action을 이용하여 pr 시 build와 code convention 확인 (더블체크)
 
 ## ERD
-![HappyDeliveryERD](https://user-images.githubusercontent.com/91924087/167279527-aa57b4a9-ae5d-4678-8c48-092a4c11b2c1.jpg)
+![HappyDeliveryERD](https://user-images.githubusercontent.com/91924087/167845486-a58ca3d8-46b1-41a4-ab3f-4bea6cf1478e.jpg)
 
 ## 기능정의
 * [기능명세서](https://github.com/f-lab-edu/happy-delivery/wiki/기능-명세서)
