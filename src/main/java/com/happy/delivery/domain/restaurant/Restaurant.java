@@ -1,6 +1,6 @@
 package com.happy.delivery.domain.restaurant;
 
-import com.happy.delivery.domain.vo.Address;
+import com.happy.delivery.domain.vo.PointValue;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +27,7 @@ public class Restaurant {
   //  private RestaurantCategory category;
 
   @Column
-  private Address address;
+  private PointValue pointValue;
 
   @Column(name = "address_detail")
   private String addressDetail;
@@ -46,7 +46,7 @@ public class Restaurant {
     this.id = id;
     this.name = name;
     this.category = category;
-    this.address = Address.of(longitude, latitude);
+    this.pointValue = PointValue.of(longitude, latitude);
     this.addressDetail = addressDetail;
   }
 
@@ -67,11 +67,11 @@ public class Restaurant {
   }
 
   public Double getLongitude() {
-    return this.address.getLongitude();
+    return this.pointValue.getLongitude();
   }
 
   public Double getLatitude() {
-    return this.address.getLatitude();
+    return this.pointValue.getLatitude();
   }
 
   @Override
@@ -80,7 +80,7 @@ public class Restaurant {
         "id=" + id +
         ", name='" + name + '\'' +
         ", category='" + category + '\'' +
-        ", address=" + address +
+        ", address=" + pointValue +
         ", addressDetail='" + addressDetail + '\'' +
         '}';
   }
