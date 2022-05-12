@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * JpaRestaurantCategoryRepository.
  */
-public interface JpaRestaurantCategoryRepository extends JpaRepository<RestaurantCategory, Long> {
+public interface JpaRestaurantCategoryRepository extends JpaRepository<RestaurantCategory, String> {
 
   List<RestaurantCategory> findAll();
 }
