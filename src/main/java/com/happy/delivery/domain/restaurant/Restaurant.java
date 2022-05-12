@@ -2,6 +2,7 @@ package com.happy.delivery.domain.restaurant;
 
 import com.happy.delivery.domain.vo.PointValue;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +16,7 @@ public class Restaurant {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "restaurant_id")
   private Long id;
 
   @Column
@@ -22,11 +24,8 @@ public class Restaurant {
 
   @Column
   private String category;
-  //  @Column
-  //  @ManyToOne
-  //  private RestaurantCategory category;
 
-  @Column
+  @Embedded
   private PointValue pointValue;
 
   @Column(name = "address_detail")
@@ -62,16 +61,16 @@ public class Restaurant {
     return category;
   }
 
-  public String getAddressDetail() {
-    return addressDetail;
-  }
-
   public Double getLongitude() {
     return this.pointValue.getLongitude();
   }
 
   public Double getLatitude() {
     return this.pointValue.getLatitude();
+  }
+
+  public String getAddressDetail() {
+    return addressDetail;
   }
 
   @Override
