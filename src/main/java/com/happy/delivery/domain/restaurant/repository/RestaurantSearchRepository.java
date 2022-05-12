@@ -11,6 +11,5 @@ public interface RestaurantSearchRepository {
 
   List<RestaurantCategory> getAllCategories();
 
-  List<Restaurant> getAllRestaurantsByCategory(String categoryId,
-      Double longitude, Double latitude);
+  List<Restaurant> getAllRestaurantsByCategory(String category);
 }

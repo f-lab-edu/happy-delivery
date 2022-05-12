@@ -21,4 +21,12 @@ public class RestaurantSearchRepositoryConfig {
     return new JpaRestaurantSearchRepositoryAdapter(jpaRestaurantCategoryRepository);
   }
 
+  //  @Autowired
+  //  private RestaurantSearchMapper restaurantSearchMapper;
+  //
+  //  @Bean
+  //  public RestaurantSearchRepository restaurantSearchRepositoryAdapter() {
+  //    return new RestaurantSearchRepositoryAdapter(restaurantSearchMapper);
+  //  }
+
 }

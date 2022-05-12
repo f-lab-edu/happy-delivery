@@ -26,8 +26,7 @@ public class JpaRestaurantSearchRepositoryAdapter implements RestaurantSearchRep
   }
 
   @Override
-  public List<Restaurant> getAllRestaurantsByCategory(String category, Double longitude,
-      Double latitude) {
+  public List<Restaurant> getAllRestaurantsByCategory(String category) {
     return null;
   }
 }

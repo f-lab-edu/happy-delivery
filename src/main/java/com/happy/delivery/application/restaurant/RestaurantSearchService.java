@@ -12,6 +12,6 @@ public interface RestaurantSearchService {
 
   List<RestaurantCategoryResult> getCategories();
 
-  List<RestaurantResult> restaurantSearchByCategory(String category,
+  List<RestaurantResult> restaurantSearchByCategoryAndPoint(String category,
       RestaurantSearchCommand restaurantSearchCommand);
 }

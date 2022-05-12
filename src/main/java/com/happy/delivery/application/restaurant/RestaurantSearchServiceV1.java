@@ -42,12 +42,13 @@ public class RestaurantSearchServiceV1 implements RestaurantSearchService {
 
   @Override
   @Transactional
-  public List<RestaurantResult> restaurantSearchByCategory(String category,
+  public List<RestaurantResult> restaurantSearchByCategoryAndPoint(String category,
       RestaurantSearchCommand restaurantSearchCommand) {
-    Restaurant restaurantLocation = restaurantSearchCommand.toRestaurant();
+    // 어떤 방식으로 거리를 계산해 restaurant 를 가져올 것인지 생각해봐야 함.
+    // 지금은 카테고리별로 모든 식당을 가져오는 코드임.
+    // restaurantSearchCommand 를 사용하지 않았음.
     List<Restaurant> listOfRestaurant =
-        restaurantSearchRepository.getAllRestaurantsByCategory(category,
-            restaurantLocation.getLongitude(), restaurantLocation.getLatitude());
+        restaurantSearchRepository.getAllRestaurantsByCategory(category);
     List<RestaurantResult> result = new ArrayList<>();
     for (Restaurant restaurant : listOfRestaurant) {
       result.add(RestaurantResult.fromRestaurant(restaurant));

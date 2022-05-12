@@ -43,14 +43,14 @@ public class RestaurantSearchController {
   }
 
   /**
-   * getRestaurantByCategoryIdAndTownCode.
-   * 현재 주소 근처에 있는 식당을 카테고리별로 가져옴.
+   * getRestaurantByCategoryIdAndPoint.
+   * 근처 식당을 카테고리별로 가져옴.
    */
   @GetMapping({"/{category}"})
-  public ApiResponse getRestaurantByCategoryIdAndTownCode(@PathVariable String category,
+  public ApiResponse getRestaurantByCategoryIdAndPoint(@PathVariable String category,
       @RequestBody RestaurantSearchRequest restaurantSearchRequest) {
     List<RestaurantResult> restaurants =
-        restaurantSearchService.restaurantSearchByCategory(category,
+        restaurantSearchService.restaurantSearchByCategoryAndPoint(category,
             restaurantSearchRequest.toCommand());
     return ApiResponse.success(restaurants);
   }
