@@ -14,8 +14,8 @@
 
   <insert id="insert" parameterType="com.happy.delivery.domain.user.UserAddress"
     useGeneratedKeys="true" keyProperty="id">
-    insert into user_addresses (user_id, address_detail, main_address, longitude, latitude, address)
-    values (#{userId}, #{addressDetail}, #{mainAddress}, #{longitude}, #{latitude}, ST_GeomFromText(#{address}))
+    insert into user_addresses (user_id, address_detail, main_address, longitude, latitude)
+    values (#{userId}, #{addressDetail}, #{mainAddress}, #{longitude}, #{latitude})
   </insert>
 
   <update id="update" parameterType="com.happy.delivery.domain.user.UserAddress">
@@ -23,25 +23,24 @@
     set address_detail = #{addressDetail},
         main_address = #{mainAddress},
         longitude = #{longitude},
-        latitude = #{latitude},
-        address = ST_GeomFromText(#{address})
+        latitude = #{latitude}
     where user_address_id = #{id}
   </update>
 
   <select id="findById" parameterType="Long" resultMap="userAddressMap">
-    select user_address_id, user_id, address_detail, main_address, ST_ASTEXT(address) as address
+    select user_address_id, user_id, address_detail, main_address, longitude, latitude
     from user_addresses
     where user_address_id = #{id}
   </select>
 
   <select id="findAllByUserId" resultMap="userAddressMap">
-    select user_address_id, user_id, address_detail, main_address, ST_ASTEXT(address) as address
+    select user_address_id, user_id, address_detail, main_address, longitude, latitude
     from user_addresses
     where user_id = #{userId}
   </select>
 
   <select id="findByUserIdAndMainAddressIsTrue" resultMap="userAddressMap">
-    select user_address_id, user_id, address_detail, main_address, ST_ASTEXT(address) as address
+    select user_address_id, user_id, address_detail, main_address, longitude, latitude
     from user_addresses
     where user_id = #{userId} and main_address = true;
   </select>
