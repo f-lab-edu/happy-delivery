@@ -13,7 +13,7 @@ public class MenuResult {
 
   private String menuDetail;
 
-  private Long menuPrice;
+  private Integer menuPrice;
 
   /**
    * MenuResult fromMenu.
@@ -30,7 +30,7 @@ public class MenuResult {
   /**
    * MenuResult Constructor.
    */
-  public MenuResult(Long menuId, String menuName, String menuDetail, Long menuPrice) {
+  public MenuResult(Long menuId, String menuName, String menuDetail, Integer menuPrice) {
     this.menuId = menuId;
     this.menuName = menuName;
     this.menuDetail = menuDetail;
@@ -49,7 +49,7 @@ public class MenuResult {
     return menuDetail;
   }
 
-  public Long getMenuPrice() {
+  public Integer getMenuPrice() {
     return menuPrice;
   }
 
