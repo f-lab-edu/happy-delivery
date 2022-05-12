@@ -22,7 +22,7 @@ public class JpaRestaurantSearchRepositoryAdapter implements RestaurantSearchRep
 
   @Override
   public List<RestaurantCategory> getAllCategories() {
-    return jpaRestaurantCategoryRepository.findAllByOrderById();
+    return jpaRestaurantCategoryRepository.findAll();
   }
 
   @Override

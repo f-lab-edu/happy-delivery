@@ -6,19 +6,13 @@ import com.happy.delivery.domain.restaurant.RestaurantCategory;
  * RestaurantCategoryResult.
  */
 public class RestaurantCategoryResult {
-  private int id;
   private String name;
 
   /**
    * RestaurantCategoryResult constructor.
    */
-  public RestaurantCategoryResult(int id, String name) {
-    this.id = id;
+  public RestaurantCategoryResult(String name) {
     this.name = name;
-  }
-
-  public int getId() {
-    return id;
   }
 
   public String getName() {
@@ -28,8 +22,7 @@ public class RestaurantCategoryResult {
   @Override
   public String toString() {
     return "RestaurantCategoryResult{" +
-        "id=" + id +
-        ", name='" + name + '\'' +
+        "name='" + name + '\'' +
         '}';
   }
 
@@ -39,7 +32,6 @@ public class RestaurantCategoryResult {
    */
   public static RestaurantCategoryResult fromRestaurantCategory(RestaurantCategory category) {
     return new RestaurantCategoryResult(
-        category.getId(),
         category.getName()
     );
   }

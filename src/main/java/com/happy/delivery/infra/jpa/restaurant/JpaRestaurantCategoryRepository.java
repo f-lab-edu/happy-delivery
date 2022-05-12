@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface JpaRestaurantCategoryRepository extends JpaRepository<RestaurantCategory, Long> {
 
-  List<RestaurantCategory> findAllByOrderById();
+  List<RestaurantCategory> findAll();
 }
