@@ -82,14 +82,12 @@ public class Restaurant {
     return addressDetail;
   }
 
-  @Override
-  public String toString() {
-    return "Restaurant{" +
-        "id=" + id +
-        ", name='" + name + '\'' +
-        ", category='" + category + '\'' +
-        ", address=" + pointValue +
-        ", addressDetail='" + addressDetail + '\'' +
-        '}';
+  public List<MenuGroup> getMenuGroups() {
+    return menuGroups;
+  }
+
+  public void addMenuGroup(MenuGroup menuGroup) {
+    menuGroup.setRestaurant(this);
+    menuGroups.add(menuGroup);
   }
 }

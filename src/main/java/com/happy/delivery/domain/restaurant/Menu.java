@@ -73,15 +73,4 @@ public class Menu {
   public Integer getMenuPrice() {
     return menuPrice;
   }
-
-  @Override
-  public String toString() {
-    return "Menu{" +
-        "menuId=" + menuId +
-        ", menuGroup=" + menuGroup +
-        ", menuName='" + menuName + '\'' +
-        ", menuDetail='" + menuDetail + '\'' +
-        ", menuPrice=" + menuPrice +
-        '}';
-  }
 }
