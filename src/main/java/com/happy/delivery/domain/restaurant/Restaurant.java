@@ -1,12 +1,15 @@
 package com.happy.delivery.domain.restaurant;
 
 import com.happy.delivery.domain.vo.PointValue;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  * Restaurant.
@@ -30,6 +33,12 @@ public class Restaurant {
 
   @Column(name = "address_detail")
   private String addressDetail;
+
+  // mappedBy 를 사용했을 때와 사용하지 않았을 때 비교해보기!!
+  // mappedBy == readOnly
+  // mappedBy의 값은 Owner side 에서 @JoinColum 으로 선언한 변수의 이름입니다.
+  @OneToMany(mappedBy = "restaurant")
+  private List<MenuGroup> menuGroups = new ArrayList<>();
 
   /**
    * Restaurant Constructor for MyBatis and JPA.
