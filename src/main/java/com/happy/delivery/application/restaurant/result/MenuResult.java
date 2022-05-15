@@ -1,6 +1,7 @@
 package com.happy.delivery.application.restaurant.result;
 
 import com.happy.delivery.domain.restaurant.Menu;
+import com.happy.delivery.domain.restaurant.MenuGroup;
 
 /**
  * MenuResult.
@@ -9,6 +10,8 @@ public class MenuResult {
 
   private Long menuId;
 
+  private MenuGroup menuGroup;
+
   private String menuName;
 
   private String menuDetail;
@@ -16,25 +19,28 @@ public class MenuResult {
   private Integer menuPrice;
 
   /**
+   * MenuResult Constructor.
+   */
+  public MenuResult(Long menuId, MenuGroup menuGroup, String menuName, String menuDetail,
+      Integer menuPrice) {
+    this.menuId = menuId;
+    this.menuGroup = menuGroup;
+    this.menuName = menuName;
+    this.menuDetail = menuDetail;
+    this.menuPrice = menuPrice;
+  }
+
+  /**
    * MenuResult fromMenu.
    */
   public static MenuResult fromMenu(Menu menu) {
     return new MenuResult(
         menu.getMenuId(),
+        menu.getMenuGroup(),
         menu.getMenuName(),
         menu.getMenuDetail(),
         menu.getMenuPrice()
     );
-  }
-
-  /**
-   * MenuResult Constructor.
-   */
-  public MenuResult(Long menuId, String menuName, String menuDetail, Integer menuPrice) {
-    this.menuId = menuId;
-    this.menuName = menuName;
-    this.menuDetail = menuDetail;
-    this.menuPrice = menuPrice;
   }
 
   public Long getMenuId() {
@@ -53,13 +59,4 @@ public class MenuResult {
     return menuPrice;
   }
 
-  @Override
-  public String toString() {
-    return "MenuResult{" +
-        "menuId=" + menuId +
-        ", menuName='" + menuName + '\'' +
-        ", menuDetail='" + menuDetail + '\'' +
-        ", menuPrice=" + menuPrice +
-        '}';
-  }
 }
