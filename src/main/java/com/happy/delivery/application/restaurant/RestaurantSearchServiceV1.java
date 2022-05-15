@@ -1,12 +1,14 @@
 package com.happy.delivery.application.restaurant;
 
 import com.happy.delivery.application.restaurant.command.RestaurantSearchCommand;
+import com.happy.delivery.application.restaurant.result.MenuGroupResult;
 import com.happy.delivery.application.restaurant.result.RestaurantCategoryResult;
 import com.happy.delivery.application.restaurant.result.RestaurantResult;
+import com.happy.delivery.domain.restaurant.MenuGroup;
 import com.happy.delivery.domain.restaurant.Restaurant;
 import com.happy.delivery.domain.restaurant.RestaurantCategory;
+import com.happy.delivery.domain.restaurant.repository.MenuRepository;
 import com.happy.delivery.domain.restaurant.repository.RestaurantSearchRepository;
-import com.happy.delivery.domain.user.repository.UserAddressRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +22,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class RestaurantSearchServiceV1 implements RestaurantSearchService {
 
   private final RestaurantSearchRepository restaurantSearchRepository;
+  private final MenuRepository menuRepository;
 
   /**
    * RestaurantSearchServiceV1 constructor.
    */
   @Autowired
-  public RestaurantSearchServiceV1(RestaurantSearchRepository restaurantSearchRepository) {
+  public RestaurantSearchServiceV1(RestaurantSearchRepository restaurantSearchRepository,
+      MenuRepository menuRepository) {
     this.restaurantSearchRepository = restaurantSearchRepository;
+    this.menuRepository = menuRepository;
   }
 
   @Override
@@ -56,5 +61,13 @@ public class RestaurantSearchServiceV1 implements RestaurantSearchService {
     return result;
   }
 
-
+  @Override
+  public List<MenuGroupResult> getAllMenuGroupsByRestaurantId(Long restaurantId) {
+    List<MenuGroupResult> result = new ArrayList<>();
+    List<MenuGroup> menuGroups = menuRepository.getAllMenuGroupsByRestaurantId(restaurantId);
+    for (MenuGroup menuGroup : menuGroups) {
+      result.add(MenuGroupResult.fromMenuGroup(menuGroup));
+    }
+    return result;
+  }
 }
