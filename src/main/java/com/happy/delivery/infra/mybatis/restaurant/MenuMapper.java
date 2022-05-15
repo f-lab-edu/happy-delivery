@@ -1,6 +1,6 @@
 package com.happy.delivery.infra.mybatis.restaurant;
 
-import com.happy.delivery.domain.restaurant.Menu;
+import com.happy.delivery.domain.restaurant.MenuGroup;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -9,5 +9,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface MenuMapper {
-  List<Menu> getAllByStoreId(Long storeId);
+  List<MenuGroup> findAllByRestaurantId(Long restaurantId);
 }

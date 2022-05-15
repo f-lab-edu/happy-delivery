@@ -4,9 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.happy.delivery.infra.mybatis.restaurant.MenuMapper">
-  <select id="getAllByStoreId" resultType="com.happy.delivery.domain.restaurant.Menu">
-    SELECT *
-    FROM menus
-    WHERE storeSid = ${storeId}
+
+  <resultMap id="menuGroupMap" type="com.happy.delivery.domain.restaurant.MenuGroup">
+    <result column="menu_group_id" property="id"/>
+  </resultMap>
+
+  <select id="findAllByRestaurantId" resultType="com.happy.delivery.domain.restaurant.MenuGroup">
+    SELECT menu_group_id, name
+    FROM menu_groups
+    WHERE restaurant_id = ${restaurantId}
   </select>
 </mapper>
