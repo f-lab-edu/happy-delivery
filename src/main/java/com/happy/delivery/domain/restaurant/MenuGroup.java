@@ -1,15 +1,14 @@
 package com.happy.delivery.domain.restaurant;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.happy.delivery.domain.restaurant.vo.MenuGroupId;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 /**
  * MenuGroups.
@@ -17,6 +16,7 @@ import javax.persistence.OneToMany;
  * Ex) 특선메뉴, 인기메뉴, 기본메뉴 등.
  */
 @Entity(name = "menu_groups")
+@IdClass(MenuGroupId.class)
 public class MenuGroup {
 
   @Id
@@ -25,16 +25,13 @@ public class MenuGroup {
   private Long id;
 
   // JoinColumn 는 외래키를 갖는 칼럼의 이름입니다.
-  // 테이블에 외래키가 존재하고, 해당 칼럼에 값을 insert, update 를 하기 때문에 owner 가 됩니다.
+  @Id
   @ManyToOne
   @JoinColumn(name = "restaurant_id")
   private Restaurant restaurant;
 
   @Column
   private String name;
-
-  @OneToMany(mappedBy = "menuGroup")
-  private List<Menu> menus = new ArrayList<>();
 
   /**
    * MenuGroups default constructor.
@@ -59,20 +56,7 @@ public class MenuGroup {
     return restaurant;
   }
 
-  public void setRestaurant(Restaurant restaurant) {
-    this.restaurant = restaurant;
-  }
-
-  public void changeRestaurant(Restaurant restaurant) {
-    this.restaurant = restaurant;
-    restaurant.getMenuGroups().add(this);
-  }
-
   public String getName() {
     return name;
-  }
-
-  public List<Menu> getMenus() {
-    return menus;
   }
 }

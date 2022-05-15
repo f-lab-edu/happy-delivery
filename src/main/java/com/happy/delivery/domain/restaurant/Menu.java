@@ -1,10 +1,12 @@
 package com.happy.delivery.domain.restaurant;
 
+import com.happy.delivery.domain.restaurant.vo.MenuId;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
@@ -15,6 +17,7 @@ import javax.persistence.ManyToOne;
  * ex) 특선초밥, 계란1+연여2+장어2, 13000원.
  */
 @Entity(name = "menus")
+@IdClass(MenuId.class)
 public class Menu {
 
   @Id
@@ -22,9 +25,12 @@ public class Menu {
   @Column(name = "menu_id")
   private Long menuId;
 
+  @Id
   @ManyToOne
-  @JoinColumns(value = {@JoinColumn(name = "menu_group_id", referencedColumnName = "menu_group_id"),
-      @JoinColumn(name = "restaurant_id", referencedColumnName = "restaurant_id")})
+  @JoinColumns({
+      @JoinColumn(name = "restaurant_id", referencedColumnName = "restaurant_id"),
+      @JoinColumn(name = "menu_group_id", referencedColumnName = "menu_group_id")
+  })
   private MenuGroup menuGroup;
 
   @Column(name = "name")
