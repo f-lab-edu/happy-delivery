@@ -9,5 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface JpaRestaurantRepository extends JpaRepository<Restaurant, Long> {
 
-  List<Restaurant> findAllByCategory(String category);
+  List<Restaurant> findRestaurantsByCategory(String category);
+
+  Restaurant findAllById(Long restaurantId);
 }
