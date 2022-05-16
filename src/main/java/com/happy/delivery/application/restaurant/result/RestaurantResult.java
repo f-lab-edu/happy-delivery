@@ -1,6 +1,9 @@
 package com.happy.delivery.application.restaurant.result;
 
+import com.happy.delivery.domain.restaurant.MenuGroup;
 import com.happy.delivery.domain.restaurant.Restaurant;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * RestaurantResult.
@@ -13,22 +16,45 @@ public class RestaurantResult {
   private final Double longitude;
   private final Double latitude;
   private final String addressDetail;
+  private List<MenuGroupResult> menuGroupResultList = new ArrayList<>();
 
   /**
    * RestaurantResult Constructor.
    */
   public RestaurantResult(Long id, String name, String category, Double longitude,
-      Double latitude, String addressDetail) {
+      Double latitude, String addressDetail, List<MenuGroupResult> menuGroupResultList) {
     this.id = id;
     this.name = name;
     this.category = category;
     this.longitude = longitude;
     this.latitude = latitude;
     this.addressDetail = addressDetail;
+    this.menuGroupResultList = menuGroupResultList;
   }
 
   /**
-   * fromRestaurant. Restaurant -> RestaurantResult.
+   * fromRestaurantForList.
+   * Restaurant -> RestaurantResult.
+   * 식당 정보를 가져올 때, 메뉴 정보들은 가져오지 않는 메서드.
+   * 쿼리문을 1번만 생성.
+   */
+  public static RestaurantResult fromRestaurantForList(Restaurant restaurant) {
+    return new RestaurantResult(
+        restaurant.getId(),
+        restaurant.getName(),
+        restaurant.getCategory(),
+        restaurant.getLongitude(),
+        restaurant.getLatitude(),
+        restaurant.getAddressDetail(),
+        null
+    );
+  }
+
+  /**
+   * fromRestaurantForList.
+   * Restaurant -> RestaurantResult.
+   * 식당 정보를 가져올 때, 메뉴 정보까지 가져오는 메서드.
+   * 쿼리문을 여러개 생성함.
    */
   public static RestaurantResult fromRestaurant(Restaurant restaurant) {
     return new RestaurantResult(
@@ -37,8 +63,22 @@ public class RestaurantResult {
         restaurant.getCategory(),
         restaurant.getLongitude(),
         restaurant.getLatitude(),
-        restaurant.getAddressDetail()
-    );
+        restaurant.getAddressDetail(),
+        changeMenuGroupListToMenuGroupResultList(restaurant.getMenuGroupList()));
+  }
+
+  /**
+   * changeMenuGroupListToMenuGroupResultList.
+   * 리스트 변형 : MenuGroup => MenuGroupResult.
+   * stack-over-flow 를 예방하고, 계층을 변경할 수 있음.
+   */
+  private static List<MenuGroupResult> changeMenuGroupListToMenuGroupResultList(
+      List<MenuGroup> menuGroups) {
+    List<MenuGroupResult> results = new ArrayList<>();
+    for (MenuGroup menuGroup : menuGroups) {
+      results.add(MenuGroupResult.fromMenuGroup(menuGroup));
+    }
+    return results;
   }
 
   public Long getId() {
@@ -65,15 +105,7 @@ public class RestaurantResult {
     return addressDetail;
   }
 
-  @Override
-  public String toString() {
-    return "RestaurantResult{" +
-        "id=" + id +
-        ", name='" + name + '\'' +
-        ", category='" + category + '\'' +
-        ", longitude=" + longitude +
-        ", latitude=" + latitude +
-        ", addressDetail='" + addressDetail + '\'' +
-        '}';
+  public List<MenuGroupResult> getMenuGroupResultList() {
+    return menuGroupResultList;
   }
 }

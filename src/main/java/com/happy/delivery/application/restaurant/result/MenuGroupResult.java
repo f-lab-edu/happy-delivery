@@ -1,24 +1,26 @@
 package com.happy.delivery.application.restaurant.result;
 
+import com.happy.delivery.domain.restaurant.Menu;
 import com.happy.delivery.domain.restaurant.MenuGroup;
-import com.happy.delivery.domain.restaurant.Restaurant;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * MenuGroupResult.
  */
 public class MenuGroupResult {
 
-  private Long id;
-  private Restaurant restaurant;
-  private String name;
+  private final Long id;
+  private final String name;
+  private List<MenuResult> menuResultList = new ArrayList<>();
 
   /**
    * MenuGroupResult Constructor.
    */
-  public MenuGroupResult(Long id, Restaurant restaurant, String name) {
+  public MenuGroupResult(Long id, String name, List<MenuResult> menuResultList) {
     this.id = id;
-    this.restaurant = restaurant;
     this.name = name;
+    this.menuResultList = menuResultList;
   }
 
   /**
@@ -29,21 +31,32 @@ public class MenuGroupResult {
   public static MenuGroupResult fromMenuGroup(MenuGroup menuGroup) {
     return new MenuGroupResult(
         menuGroup.getId(),
-        menuGroup.getRestaurant(),
-        menuGroup.getName());
+        menuGroup.getName(),
+        changeMenuToMenuResult(menuGroup.getMenuList()));
+  }
+
+  /**
+   * changeMenuToMenuResult.
+   * 리스트 변형 : Menu => ListMenuResult.
+   * stack-over-flow 를 예방하고, 계층을 변경할 수 있음.
+   */
+  private static List<MenuResult> changeMenuToMenuResult(List<Menu> menus) {
+    List<MenuResult> results = new ArrayList<>();
+    for (Menu menu : menus) {
+      results.add(MenuResult.fromMenu(menu));
+    }
+    return results;
   }
 
   public Long getId() {
     return id;
   }
 
-  public Restaurant getRestaurant() {
-    return restaurant;
-  }
-
   public String getName() {
     return name;
   }
 
-
+  public List<MenuResult> getMenuResultList() {
+    return menuResultList;
+  }
 }
