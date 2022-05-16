@@ -14,8 +14,8 @@ public interface RestaurantSearchService {
 
   List<RestaurantCategoryResult> getCategories();
 
-  List<RestaurantResult> restaurantSearchByCategoryAndPoint(String category,
+  List<RestaurantResult> getRestaurantsByCategoryAndPoint(String category,
       RestaurantSearchCommand restaurantSearchCommand);
 
-  List<MenuGroupResult> getAllMenuGroupsByRestaurantId(Long restaurantId);
+  RestaurantResult getRestaurantInfoAndAllMenus(Long restaurantId);
 }

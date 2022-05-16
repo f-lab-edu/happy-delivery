@@ -45,27 +45,26 @@ public class RestaurantSearchController {
   }
 
   /**
-   * getRestaurantByCategoryIdAndPoint.
-   * 근처 식당을 카테고리별로 가져옴.
+   * getRestaurantsByCategoryIdAndPoint.
+   * 근처 식당 리스트를 카테고리별로 가져옴.
    * 위치 정보를 어떻게 활용할 것인지 생각해봐야 함.
    */
   @GetMapping({"/{category}"})
-  public ApiResponse getRestaurantByCategoryIdAndPoint(@PathVariable String category,
+  public ApiResponse getRestaurantsByCategoryIdAndPoint(@PathVariable String category,
       @RequestBody RestaurantSearchRequest restaurantSearchRequest) {
-    List<RestaurantResult> restaurants =
-        restaurantSearchService.restaurantSearchByCategoryAndPoint(category,
+    List<RestaurantResult> results =
+        restaurantSearchService.getRestaurantsByCategoryAndPoint(category,
             restaurantSearchRequest.toCommand());
-    return ApiResponse.success(restaurants);
+    return ApiResponse.success(results);
   }
 
   /**
-   * getAllMenuGroupsByRestaurantId.
-   * 해당 레스토랑의 메뉴들을 가져옴.
+   * getRestaurantAndMenus.
+   * 해당 레스토랑의 상세정보과 메뉴들을 가져옴.
    */
-  @GetMapping("/{restaurantId}/menus")
-  public ApiResponse getAllMenuGroupsByRestaurantId(@PathVariable Long restaurantId) {
-    List<MenuGroupResult> menuGroupResultList =
-        restaurantSearchService.getAllMenuGroupsByRestaurantId(restaurantId);
-    return ApiResponse.success(menuGroupResultList);
+  @GetMapping("/{restaurantId}/info")
+  public ApiResponse getRestaurantAndMenus(@PathVariable Long restaurantId) {
+    RestaurantResult result = restaurantSearchService.getRestaurantInfoAndAllMenus(restaurantId);
+    return ApiResponse.success(result);
   }
 }
