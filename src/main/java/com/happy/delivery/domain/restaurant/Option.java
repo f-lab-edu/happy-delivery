@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
  * 옵션.
  * ex) 안 매움, 보통, 약간 매움, 매움, 아주 매움
  */
-@Entity
+@Entity(name = "options")
 @IdClass(OptionId.class)
 public class Option {
 

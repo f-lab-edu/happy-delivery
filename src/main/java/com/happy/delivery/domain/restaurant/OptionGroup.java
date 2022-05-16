@@ -1,6 +1,8 @@
 package com.happy.delivery.domain.restaurant;
 
 import com.happy.delivery.domain.restaurant.vo.OptionGroupId;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,13 +12,14 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  * OptionGroup.
  * 옵션들의 그룹.
  * ex) 맵기 단계 조절, 음료 추가 선택(최대 6개)
  */
-@Entity
+@Entity(name = "option_groups")
 @IdClass(OptionGroupId.class)
 public class OptionGroup {
 
@@ -42,6 +45,9 @@ public class OptionGroup {
 
   @Column
   private Boolean mandatory;
+
+  @OneToMany(mappedBy = "optionGroup")
+  private List<Option> optionList = new ArrayList<>();
 
   public OptionGroup() {
   }
@@ -76,5 +82,9 @@ public class OptionGroup {
 
   public Boolean getMandatory() {
     return mandatory;
+  }
+
+  public List<Option> getOptionList() {
+    return optionList;
   }
 }
