@@ -19,9 +19,17 @@
     FROM restaurant_categories
   </select>
 
+  <!-- getAllRestaurantsByCategory 미완성! : longitude 와 latitude 의 값을 어떻게 VO에 넣어줄 것인지 고민 중. -->
   <select id="getAllRestaurantsByCategory" resultMap="restaurantMap">
-    SELECT restaurant_id, name, category, address_detail
+    SELECT restaurant_id, name, category, address_detail, longitude, latitude, address_detail
     FROM restaurants
     where category = #{category}
+  </select>
+
+  <!-- getRestaurantInfoAndAllMenus 미완성! : 쿼리문을 어떻게 만들어야 할지 고민 중, restaurant 와 관련된 모든 데이터를 가져와야 함. -->
+  <select id="getRestaurantInfoAndAllMenus" resultMap="restaurantMap">
+    SELECT restaurant_id, name, category, address_detail, longitude, latitude, address_detail
+    FROM restaurants
+    WHERE id = ${restaurantId}
   </select>
 </mapper>

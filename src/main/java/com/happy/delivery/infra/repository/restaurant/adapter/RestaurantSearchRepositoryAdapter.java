@@ -26,4 +26,9 @@ public class RestaurantSearchRepositoryAdapter implements RestaurantSearchReposi
   public List<Restaurant> getAllRestaurantsByCategory(String category) {
     return restaurantSearchMapper.getAllRestaurantsByCategory(category);
   }
+
+  @Override
+  public Restaurant getRestaurantInfoAndAllMenus(Long restaurantId) {
+    return restaurantSearchMapper.getRestaurantInfoAndAllMenus(restaurantId);
+  }
 }
