@@ -57,15 +57,16 @@ public class UserServiceV1 implements UserService {
    */
   @Override
   @Transactional
-  public UserResult signup(SignupCommand signCommand) {
-    if (userRepository.findByEmail(signCommand.getEmail()) != null) {
+  public UserResult signup(SignupCommand signupCommand) {
+    if (userRepository.findByEmail(signupCommand.getEmail()) != null) {
       throw new UserAlreadyExistedException("이미 존재하는 계정 입니다.");
     }
     User userResult = new User(
-        signCommand.getEmail(),
-        encryptMapper.encoder(signCommand.getPassword()),
-        signCommand.getName(),
-        signCommand.getPhoneNumber()
+        signupCommand.getEmail(),
+        encryptMapper.encoder(signupCommand.getPassword()),
+        signupCommand.getName(),
+        signupCommand.getPhoneNumber(),
+        signupCommand.getAuthority()
     );
     userRepository.save(userResult);
     return UserResult.fromUser(userResult);

@@ -23,8 +23,12 @@ public class RestaurantSearchRepositoryAdapter implements RestaurantSearchReposi
   }
 
   @Override
-  public List<Restaurant> getAllRestaurantsByCategory(String category,
-      Double longitude, Double latitude) {
-    return restaurantSearchMapper.getAllRestaurantsByCategory(category, longitude, latitude);
+  public List<Restaurant> getAllRestaurantsByCategory(String category) {
+    return restaurantSearchMapper.getAllRestaurantsByCategory(category);
+  }
+
+  @Override
+  public Restaurant getRestaurantInfoAndAllMenus(Long restaurantId) {
+    return restaurantSearchMapper.getRestaurantInfoAndAllMenus(restaurantId);
   }
 }

@@ -1,6 +1,8 @@
 package com.happy.delivery.presentation.restaurant.rest;
 
 import com.happy.delivery.application.restaurant.RestaurantSearchService;
+import com.happy.delivery.application.restaurant.result.MenuGroupResult;
+import com.happy.delivery.application.restaurant.result.MenuResult;
 import com.happy.delivery.application.restaurant.result.RestaurantResult;
 import com.happy.delivery.presentation.common.response.ApiResponse;
 import com.happy.delivery.presentation.restaurant.request.RestaurantSearchRequest;
@@ -43,15 +45,26 @@ public class RestaurantSearchController {
   }
 
   /**
-   * getRestaurantByCategoryIdAndTownCode.
-   * 현재 주소 근처에 있는 식당을 카테고리별로 가져옴.
+   * getRestaurantsByCategoryIdAndPoint.
+   * 근처 식당 리스트를 카테고리별로 가져옴.
+   * 위치 정보를 어떻게 활용할 것인지 생각해봐야 함.
    */
   @GetMapping({"/{category}"})
-  public ApiResponse getRestaurantByCategoryIdAndTownCode(@PathVariable String category,
+  public ApiResponse getRestaurantsByCategoryIdAndPoint(@PathVariable String category,
       @RequestBody RestaurantSearchRequest restaurantSearchRequest) {
-    List<RestaurantResult> restaurants =
-        restaurantSearchService.restaurantSearchByCategory(category,
+    List<RestaurantResult> results =
+        restaurantSearchService.getRestaurantsByCategoryAndPoint(category,
             restaurantSearchRequest.toCommand());
-    return ApiResponse.success(restaurants);
+    return ApiResponse.success(results);
+  }
+
+  /**
+   * getRestaurantAndMenus.
+   * 해당 레스토랑의 상세정보과 메뉴들을 가져옴.
+   */
+  @GetMapping("/{restaurantId}/info")
+  public ApiResponse getRestaurantAndMenus(@PathVariable Long restaurantId) {
+    RestaurantResult result = restaurantSearchService.getRestaurantInfoAndAllMenus(restaurantId);
+    return ApiResponse.success(result);
   }
 }

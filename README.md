@@ -9,13 +9,13 @@
 * ex) 배달의 민족과 같은 배달 서비스
 
 ## 사용기술
-* Spring Boot, Java11, Gradle, Mybatis, Mysql, JPA, Docker 등
+* Spring Boot, Java11, Gradle, Mybatis, Mysql, JPA, Redis ,Docker 등
 
 ## Code Convention
 * [Google code Style](https://google.github.io/styleguide/javaguide.html) 준수
 * pre-commit과 github-action에 checkStyle을 적용하여 위반한 것이 없는지 확인
 
-##APM(Application Performance Management)
+## APM(Application Performance Management)
 * APM도구로 Elastic APM을 사용
 * 팀원과 구성을 공통적으로 하기 위해 docker-compose를 이용하기로 결정
 * [elastic APM의 docker-compose 파일 예시](https://www.elastic.co/guide/en/apm/get-started/current/quick-start-overview.html)
@@ -31,37 +31,12 @@
   -Delastic.apm.trace_methods=com.happy.*
   ```
 
-##CI
+## CI
 * pre-commit을 이용해 code convention 확인
 * github-action을 이용하여 pr 시 build와 code convention 확인 (더블체크)
 
-## 프로젝트 주요 기능
-### user (고객)
-
-1. 받을 정보 :
-    * 아이디(식별자)
-    * 이메일
-    * 비밀번호
-    * 전화번호
-    * 주소
-
-
-2. 구현할 기능 :
-    * 회원가입
-    * 로그인
-    * 로그아웃
-    * 비밀번호 수정
-    * 회원정보 수정
-    * 회원정보 보기
-    * 회원 삭제
-    * 주소 저장
-    * 주소 목록 가져오기
-    * 주소 수정
-    * 주소 삭제
-    * 현재 주소 변경
-
 ## ERD
-![HappyDeliveryERD drawio](https://user-images.githubusercontent.com/91924087/164116196-d6f62d4d-8943-4018-a769-77f4e71facba.png)
+![HappyDeliveryERD](https://user-images.githubusercontent.com/91924087/167845486-a58ca3d8-46b1-41a4-ab3f-4bea6cf1478e.jpg)
 
 ## 기능정의
 * [기능명세서](https://github.com/f-lab-edu/happy-delivery/wiki/기능-명세서)

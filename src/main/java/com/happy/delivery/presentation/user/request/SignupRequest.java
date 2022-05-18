@@ -1,8 +1,10 @@
 package com.happy.delivery.presentation.user.request;
 
 import com.happy.delivery.application.user.command.SignupCommand;
+import com.happy.delivery.domain.enumeration.Authority;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -29,27 +31,32 @@ public class SignupRequest {
   @Pattern(regexp = "^\\d{11}$", message = "'-'없이 숫자 11자리만 입력해주세요.")
   private String phoneNumber;
 
+  @NotNull
+  private Authority authority;
+
   /**
    * SignupRequest Constructor.
    */
-  public SignupRequest(String email, String password, String name, String phoneNumber) {
+  public SignupRequest(String email, String password, String name, String phoneNumber,
+      Authority authority) {
     this.email = email;
     this.password = password;
     this.name = name;
     this.phoneNumber = phoneNumber;
+    this.authority = authority;
   }
 
   /**
    * SignupRequest ->SignCommand.
    */
   public SignupCommand toCommand() {
-    SignupCommand signCommand = new SignupCommand(
+    return new SignupCommand(
         this.email,
         this.password,
         this.name,
-        this.phoneNumber
+        this.phoneNumber,
+        this.authority
     );
-    return signCommand;
   }
 
   public String getEmail() {
@@ -66,5 +73,9 @@ public class SignupRequest {
 
   public String getPhoneNumber() {
     return phoneNumber;
+  }
+
+  public Authority getAuthority() {
+    return authority;
   }
 }

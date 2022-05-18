@@ -1,7 +1,7 @@
 package com.happy.delivery.domain.user;
 
 
-import com.happy.delivery.domain.vo.Address;
+import com.happy.delivery.domain.vo.PointValue;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -26,7 +26,7 @@ public class UserAddress {
   private Long userId;
 
   @Embedded
-  private Address address;
+  private PointValue pointValue;
 
   @Column(name = "address_detail")
   private String addressDetail;
@@ -50,7 +50,7 @@ public class UserAddress {
   public UserAddress(Long userId, Double longitude, Double latitude, String addressDetail,
       Boolean mainAddress) {
     this.userId = userId;
-    this.address = Address.of(longitude, latitude);
+    this.pointValue = PointValue.of(longitude, latitude);
     this.addressDetail = addressDetail;
     this.mainAddress = mainAddress;
   }
@@ -60,7 +60,7 @@ public class UserAddress {
    */
   public void changeAddress(Double longitude, Double latitude, String addressDetail,
       Boolean mainAddress) {
-    this.address = Address.of(longitude, latitude);
+    this.pointValue = PointValue.of(longitude, latitude);
     this.addressDetail = addressDetail;
     this.mainAddress = mainAddress;
   }
@@ -89,33 +89,11 @@ public class UserAddress {
     this.mainAddress = mainAddress;
   }
 
-  /**
-   * 현재 longitude, latitude는 Address VO로 묶여있다.
-   * MyBatis가 오류 없이 동작하기 위해서는 추가 조치가 필요하다.
-   * MyBatis는 실제 변수가 없고 getter 또는 setter만 있더라도
-   * getter와 setter의 이름을 이용해서 필드명을 추출하여 key값으로 이용한다.
-   * *
-   * MyBatis를 위한 longitude의 getter.
-   */
   public Double getLongitude() {
-    return address.getLongitude();
+    return pointValue.getLongitude();
   }
 
-  /**
-   * MyBatis를 위한 latitude의 getter.
-   */
   public Double getLatitude() {
-    return address.getLatitude();
-  }
-
-  /**
-   * MyBatis를 위한 longitude와 Address의 getter와 setter.
-   */
-  public String getAddress() {
-    return address.getPointAsStringType();
-  }
-
-  public void setAddress(String address) {
-    this.address = Address.of(address);
+    return pointValue.getLatitude();
   }
 }

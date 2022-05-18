@@ -1,1 +1,0 @@
-alter table user_addresses modify addressDetail varchar(100);

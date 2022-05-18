@@ -15,10 +15,7 @@ import javax.persistence.Table;
 public class RestaurantCategory {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
-
-  @Column
+  @Column(name = "category")
   private String name;
 
   /**
@@ -31,13 +28,8 @@ public class RestaurantCategory {
   /**
    * RestaurantCategory constructor.
    */
-  public RestaurantCategory(int id, String name) {
-    this.id = id;
+  public RestaurantCategory(String name) {
     this.name = name;
-  }
-
-  public int getId() {
-    return id;
   }
 
   public String getName() {
@@ -47,8 +39,7 @@ public class RestaurantCategory {
   @Override
   public String toString() {
     return "RestaurantCategory{" +
-        "id=" + id +
-        ", name='" + name + '\'' +
+        "name='" + name + '\'' +
         '}';
   }
 }

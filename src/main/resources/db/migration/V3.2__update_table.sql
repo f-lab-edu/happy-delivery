@@ -1,1 +1,0 @@
-alter table user_addresses add address point not null;
