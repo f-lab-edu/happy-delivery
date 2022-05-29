@@ -1,10 +1,12 @@
 package com.happy.delivery.domain.restaurant;
 
 import com.happy.delivery.domain.restaurant.vo.OptionGroupId;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +23,7 @@ import javax.persistence.OneToMany;
  */
 @Entity(name = "option_groups")
 @IdClass(OptionGroupId.class)
-public class OptionGroup {
+public class OptionGroup implements Comparable<OptionGroup> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +31,7 @@ public class OptionGroup {
   private Long id;
 
   @Id
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumns(value = {
       @JoinColumn(name = "restaurant_id", referencedColumnName = "restaurant_id"),
       @JoinColumn(name = "menu_group_id", referencedColumnName = "menu_group_id"),
@@ -47,7 +49,7 @@ public class OptionGroup {
   private Boolean mandatory;
 
   @OneToMany(mappedBy = "optionGroup")
-  private List<Option> optionList = new ArrayList<>();
+  private Set<Option> optionSet = new TreeSet<>();
 
   public OptionGroup() {
   }
@@ -62,6 +64,34 @@ public class OptionGroup {
     this.name = name;
     this.limitOfOptions = limitOfOptions;
     this.mandatory = mandatory;
+  }
+
+  /**
+   * compareTo.
+   * Menu 의 TreeSet 을 정렬하는 메서드.
+   * 오름차순.
+   */
+  @Override
+  public int compareTo(OptionGroup o) {
+    Long value = this.id - o.getId();
+    return value.intValue();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    OptionGroup that = (OptionGroup) o;
+    return Objects.equals(id, that.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id);
   }
 
   public Long getId() {
@@ -84,7 +114,7 @@ public class OptionGroup {
     return mandatory;
   }
 
-  public List<Option> getOptionList() {
-    return optionList;
+  public Set<Option> getOptionSet() {
+    return optionSet;
   }
 }

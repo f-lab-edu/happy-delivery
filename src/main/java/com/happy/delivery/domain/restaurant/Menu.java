@@ -1,10 +1,12 @@
 package com.happy.delivery.domain.restaurant;
 
 import com.happy.delivery.domain.restaurant.vo.MenuId;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +23,7 @@ import javax.persistence.OneToMany;
  */
 @Entity(name = "menus")
 @IdClass(MenuId.class)
-public class Menu {
+public class Menu implements Comparable<Menu> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +31,7 @@ public class Menu {
   private Long menuId;
 
   @Id
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumns({
       @JoinColumn(name = "restaurant_id", referencedColumnName = "restaurant_id"),
       @JoinColumn(name = "menu_group_id", referencedColumnName = "menu_group_id")
@@ -45,15 +47,8 @@ public class Menu {
   @Column(name = "price")
   private Integer menuPrice;
 
-  /*
-     양방향 연관관계 주인이 아닌 쪽 :
-           값을 읽어오는 것만 가능하다. (read only)
-           mappedBy 속성을 이용해 주인과 연결해줘야 한다.
-           mappedBy 값으로는 주인 이름을 값으로 넣어줘야 한다.
-           => 지금은 MenuGroup.menu 이 주인이므로 해당 변수의 이름인 "menu" 가 값으로 들어간다.
- */
   @OneToMany(mappedBy = "menu")
-  List<OptionGroup> optionGroupList = new ArrayList<>();
+  Set<OptionGroup> optionGroupSet = new TreeSet<>();
 
   /**
    * Menu Constructor.
@@ -71,6 +66,34 @@ public class Menu {
     this.menuName = menuName;
     this.menuDetail = menuDetail;
     this.menuPrice = menuPrice;
+  }
+
+  /**
+   * compareTo.
+   * MenuGroup 의 TreeSet 을 정렬하는 메서드.
+   * 오름차순.
+   */
+  @Override
+  public int compareTo(Menu o) {
+    Long value = this.menuId - o.getMenuId();
+    return value.intValue();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Menu menu = (Menu) o;
+    return Objects.equals(menuId, menu.menuId);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(menuId);
   }
 
   public Long getMenuId() {
@@ -93,7 +116,7 @@ public class Menu {
     return menuPrice;
   }
 
-  public List<OptionGroup> getOptionGroupList() {
-    return optionGroupList;
+  public Set<OptionGroup> getOptionGroupSet() {
+    return optionGroupSet;
   }
 }
