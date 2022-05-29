@@ -2,25 +2,26 @@ package com.happy.delivery.application.restaurant.result;
 
 import com.happy.delivery.domain.restaurant.Menu;
 import com.happy.delivery.domain.restaurant.MenuGroup;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * MenuGroupResult.
  */
-public class MenuGroupResult {
+public class MenuGroupResult implements Comparable<MenuGroupResult> {
 
   private final Long id;
   private final String name;
-  private List<MenuResult> menuResultList = new ArrayList<>();
+  private Set<MenuResult> menus;
 
   /**
    * MenuGroupResult Constructor.
    */
-  public MenuGroupResult(Long id, String name, List<MenuResult> menuResultList) {
+  public MenuGroupResult(Long id, String name, Set<MenuResult> menus) {
     this.id = id;
     this.name = name;
-    this.menuResultList = menuResultList;
+    this.menus = menus;
   }
 
   /**
@@ -32,20 +33,32 @@ public class MenuGroupResult {
     return new MenuGroupResult(
         menuGroup.getId(),
         menuGroup.getName(),
-        changeMenuToMenuResult(menuGroup.getMenuList()));
+        toMenuResultSet(menuGroup.getMenuSet()));
   }
 
   /**
-   * changeMenuToMenuResult.
-   * 리스트 변형 : Menu => ListMenuResult.
+   * toMenuResultSet.
+   * set 변형 : Menu => MenuResult.
    * stack-over-flow 를 예방하고, 계층을 변경할 수 있음.
    */
-  private static List<MenuResult> changeMenuToMenuResult(List<Menu> menus) {
-    List<MenuResult> results = new ArrayList<>();
-    for (Menu menu : menus) {
-      results.add(MenuResult.fromMenu(menu));
+  private static Set<MenuResult> toMenuResultSet(Set<Menu> menus) {
+    Iterator<Menu> itr = menus.iterator();
+    Set<MenuResult> results = new TreeSet<>();
+    while (itr.hasNext()) {
+      results.add(MenuResult.fromMenu(itr.next()));
     }
     return results;
+  }
+
+  /**
+   * compareTo.
+   * RestaurantResult 의 TreeSet 을 정렬하는 메서드.
+   * 오름차순.
+   */
+  @Override
+  public int compareTo(MenuGroupResult o) {
+    Long value = this.id - o.getId();
+    return value.intValue();
   }
 
   public Long getId() {
@@ -56,7 +69,7 @@ public class MenuGroupResult {
     return name;
   }
 
-  public List<MenuResult> getMenuResultList() {
-    return menuResultList;
+  public Set<MenuResult> getMenus() {
+    return menus;
   }
 }

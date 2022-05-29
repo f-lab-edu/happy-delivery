@@ -2,32 +2,33 @@ package com.happy.delivery.application.restaurant.result;
 
 import com.happy.delivery.domain.restaurant.Menu;
 import com.happy.delivery.domain.restaurant.OptionGroup;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * MenuResult.
  */
-public class MenuResult {
+public class MenuResult implements Comparable<MenuResult> {
 
   private final Long menuId;
   private final Long menuGroupId;
   private final String menuName;
   private final String menuDetail;
   private final Integer menuPrice;
-  private List<OptionGroupResult> optionGroupResultList = new ArrayList<>();
+  private Set<OptionGroupResult> optionGroups;
 
   /**
    * MenuResult Constructor.
    */
   public MenuResult(Long menuId, Long menuGroupId, String menuName, String menuDetail,
-      Integer menuPrice, List<OptionGroupResult> optionGroupResultList) {
+      Integer menuPrice, Set<OptionGroupResult> optionGroups) {
     this.menuId = menuId;
     this.menuGroupId = menuGroupId;
     this.menuName = menuName;
     this.menuDetail = menuDetail;
     this.menuPrice = menuPrice;
-    this.optionGroupResultList = optionGroupResultList;
+    this.optionGroups = optionGroups;
   }
 
   /**
@@ -40,21 +41,32 @@ public class MenuResult {
         menu.getMenuName(),
         menu.getMenuDetail(),
         menu.getMenuPrice(),
-        changeOptionGroupListToOptionGroupResultList(menu.getOptionGroupList()));
+        toOptionGroupResultSet(menu.getOptionGroupSet()));
   }
 
   /**
-   * changeOptionGroupListToOptionGroupResultList.
-   * 리스트 변형 : OptionGroup => OptionGroupResult.
+   * toOptionGroupResultSet.
+   * set 변형 : OptionGroup => OptionGroupResult.
    * stack-over-flow 를 예방하고, 계층을 변경할 수 있음.
    */
-  private static List<OptionGroupResult> changeOptionGroupListToOptionGroupResultList(
-      List<OptionGroup> optionGroups) {
-    List<OptionGroupResult> results = new ArrayList<>();
-    for (OptionGroup optionGroup : optionGroups) {
-      results.add(OptionGroupResult.fromOptionGroup(optionGroup));
+  private static Set<OptionGroupResult> toOptionGroupResultSet(Set<OptionGroup> optionGroups) {
+    Iterator<OptionGroup> itr = optionGroups.iterator();
+    Set<OptionGroupResult> results = new TreeSet<>();
+    while (itr.hasNext()) {
+      results.add(OptionGroupResult.fromOptionGroup(itr.next()));
     }
     return results;
+  }
+
+  /**
+   * compareTo.
+   * MenuGroupResult 의 TreeSet 을 위한 메서드.
+   * 오름차순.
+   */
+  @Override
+  public int compareTo(MenuResult o) {
+    Long value = this.menuId - o.getMenuId();
+    return value.intValue();
   }
 
   public Long getMenuId() {
@@ -77,7 +89,7 @@ public class MenuResult {
     return menuPrice;
   }
 
-  public List<OptionGroupResult> getOptionGroupResultList() {
-    return optionGroupResultList;
+  public Set<OptionGroupResult> getOptionGroups() {
+    return optionGroups;
   }
 }

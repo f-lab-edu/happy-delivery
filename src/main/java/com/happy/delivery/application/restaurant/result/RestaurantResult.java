@@ -2,8 +2,9 @@ package com.happy.delivery.application.restaurant.result;
 
 import com.happy.delivery.domain.restaurant.MenuGroup;
 import com.happy.delivery.domain.restaurant.Restaurant;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * RestaurantResult.
@@ -16,20 +17,20 @@ public class RestaurantResult {
   private final Double longitude;
   private final Double latitude;
   private final String addressDetail;
-  private List<MenuGroupResult> menuGroupResultList = new ArrayList<>();
+  private Set<MenuGroupResult> menuGroups;
 
   /**
    * RestaurantResult Constructor.
    */
   public RestaurantResult(Long id, String name, String category, Double longitude,
-      Double latitude, String addressDetail, List<MenuGroupResult> menuGroupResultList) {
+      Double latitude, String addressDetail, Set<MenuGroupResult> menuGroups) {
     this.id = id;
     this.name = name;
     this.category = category;
     this.longitude = longitude;
     this.latitude = latitude;
     this.addressDetail = addressDetail;
-    this.menuGroupResultList = menuGroupResultList;
+    this.menuGroups = menuGroups;
   }
 
   /**
@@ -64,19 +65,19 @@ public class RestaurantResult {
         restaurant.getLongitude(),
         restaurant.getLatitude(),
         restaurant.getAddressDetail(),
-        changeMenuGroupListToMenuGroupResultList(restaurant.getMenuGroupList()));
+        toMenuGroupResultSet(restaurant.getMenuGroupSet()));
   }
 
   /**
-   * changeMenuGroupListToMenuGroupResultList.
-   * 리스트 변형 : MenuGroup => MenuGroupResult.
+   * toMenuGroupResultSet.
+   * set 변형 : MenuGroup => MenuGroupResult.
    * stack-over-flow 를 예방하고, 계층을 변경할 수 있음.
    */
-  private static List<MenuGroupResult> changeMenuGroupListToMenuGroupResultList(
-      List<MenuGroup> menuGroups) {
-    List<MenuGroupResult> results = new ArrayList<>();
-    for (MenuGroup menuGroup : menuGroups) {
-      results.add(MenuGroupResult.fromMenuGroup(menuGroup));
+  private static Set<MenuGroupResult> toMenuGroupResultSet(Set<MenuGroup> menuGroups) {
+    Iterator<MenuGroup> itr = menuGroups.iterator();
+    Set<MenuGroupResult> results = new TreeSet<>();
+    while (itr.hasNext()) {
+      results.add(MenuGroupResult.fromMenuGroup(itr.next()));
     }
     return results;
   }
@@ -105,7 +106,7 @@ public class RestaurantResult {
     return addressDetail;
   }
 
-  public List<MenuGroupResult> getMenuGroupResultList() {
-    return menuGroupResultList;
+  public Set<MenuGroupResult> getMenuGroups() {
+    return menuGroups;
   }
 }
