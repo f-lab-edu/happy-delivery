@@ -3,7 +3,7 @@ package com.happy.delivery.application.restaurant.result;
 import com.happy.delivery.domain.restaurant.Option;
 import com.happy.delivery.domain.restaurant.OptionGroup;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
@@ -16,13 +16,13 @@ public class OptionGroupResult implements Comparable<OptionGroupResult> {
   private final String name;
   private final Integer limitOfOptions;
   private final Boolean mandatory;
-  private Set<OptionResult> options;
+  private SortedSet<OptionResult> options;
 
   /**
    * OptionGroupResult Constructor.
    */
   public OptionGroupResult(Long id, Long menuId, String name, Integer limitOfOptions,
-      Boolean mandatory, Set<OptionResult> options) {
+      Boolean mandatory, SortedSet<OptionResult> options) {
     this.id = id;
     this.menuId = menuId;
     this.name = name;
@@ -49,9 +49,9 @@ public class OptionGroupResult implements Comparable<OptionGroupResult> {
    * Set 변형 : Option => OptionResul.
    * stack-over-flow 를 예방하고, 계층을 변경할 수 있음.
    */
-  private static Set<OptionResult> toOptionResultSet(Set<Option> options) {
+  private static SortedSet<OptionResult> toOptionResultSet(SortedSet<Option> options) {
     Iterator<Option> itr = options.iterator();
-    Set<OptionResult> results = new TreeSet<>();
+    SortedSet<OptionResult> results = new TreeSet<>();
     while (itr.hasNext()) {
       results.add(OptionResult.fromOption(itr.next()));
     }
@@ -89,7 +89,7 @@ public class OptionGroupResult implements Comparable<OptionGroupResult> {
     return mandatory;
   }
 
-  public Set<OptionResult> getOptions() {
+  public SortedSet<OptionResult> getOptions() {
     return options;
   }
 }

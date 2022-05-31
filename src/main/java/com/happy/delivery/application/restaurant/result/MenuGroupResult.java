@@ -3,7 +3,7 @@ package com.happy.delivery.application.restaurant.result;
 import com.happy.delivery.domain.restaurant.Menu;
 import com.happy.delivery.domain.restaurant.MenuGroup;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
@@ -13,12 +13,12 @@ public class MenuGroupResult implements Comparable<MenuGroupResult> {
 
   private final Long id;
   private final String name;
-  private Set<MenuResult> menus;
+  private SortedSet<MenuResult> menus;
 
   /**
    * MenuGroupResult Constructor.
    */
-  public MenuGroupResult(Long id, String name, Set<MenuResult> menus) {
+  public MenuGroupResult(Long id, String name, SortedSet<MenuResult> menus) {
     this.id = id;
     this.name = name;
     this.menus = menus;
@@ -41,9 +41,9 @@ public class MenuGroupResult implements Comparable<MenuGroupResult> {
    * set 변형 : Menu => MenuResult.
    * stack-over-flow 를 예방하고, 계층을 변경할 수 있음.
    */
-  private static Set<MenuResult> toMenuResultSet(Set<Menu> menus) {
+  private static SortedSet<MenuResult> toMenuResultSet(SortedSet<Menu> menus) {
     Iterator<Menu> itr = menus.iterator();
-    Set<MenuResult> results = new TreeSet<>();
+    SortedSet<MenuResult> results = new TreeSet<>();
     while (itr.hasNext()) {
       results.add(MenuResult.fromMenu(itr.next()));
     }
@@ -69,7 +69,7 @@ public class MenuGroupResult implements Comparable<MenuGroupResult> {
     return name;
   }
 
-  public Set<MenuResult> getMenus() {
+  public SortedSet<MenuResult> getMenus() {
     return menus;
   }
 }

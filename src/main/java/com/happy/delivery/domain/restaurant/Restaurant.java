@@ -1,7 +1,7 @@
 package com.happy.delivery.domain.restaurant;
 
 import com.happy.delivery.domain.vo.PointValue;
-import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import org.hibernate.annotations.SortNatural;
 
 /**
  * Restaurant.
@@ -49,12 +50,19 @@ public class Restaurant {
             따라서 collection join 이 2개 이상이라면 너무 많은 값들이 메모리로 들어와 exception 을 발생한다.
             bag 의 값을 set 으로 받아, 처음부터 중복을 허여하지 않는다면 이러한 오류를 해결할 수 있다.
 
+      Set 이 아닌 SortedSet 을 사용하는 이유 :
+            SortedSet 은 Set 을 상속받은 인터페이스이다.
+            이 이유로 Set 에서 할 수있는 모든 메소드 호출을 SortedSet 에서도 사용이 가능하다.
+            Set 과 다른점은 SortedSet 은 객체의 중복여부뿐만 아니라 객체끼리의 순서에도 관심을 갖고 있다.
+
       linkedHashSet 이 아닌 TreeSet 을 사용하는 이유 :
             linkedHashSet 은 입력된 순서를 보장할 뿐, 내가 순서대로 값을 정렬해주지는 않는다.
-            TreeSet 은 Comparable 을 사용하여 원하는대로 값들을 정렬할 수 있다.
+            TreeSet 은 이진검색트리(binary search tree)라는 자료구조의 형태로 데이터를 저장하는 컬렉션 클래스이고,
+            comparable 혹은 comparator 를 사용하여 원하는 순서대로 데이터를 정렬할 수 있다.
  */
+  @SortNatural
   @OneToMany(mappedBy = "restaurant")
-  Set<MenuGroup> menuGroupSet = new TreeSet<>();
+  SortedSet<MenuGroup> menuGroupSet = new TreeSet<>();
 
   /**
    * Restaurant Constructor for MyBatis and JPA.
@@ -98,7 +106,7 @@ public class Restaurant {
     return addressDetail;
   }
 
-  public Set<MenuGroup> getMenuGroupSet() {
+  public SortedSet<MenuGroup> getMenuGroupSet() {
     return menuGroupSet;
   }
 }

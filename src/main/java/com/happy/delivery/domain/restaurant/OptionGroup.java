@@ -2,7 +2,7 @@ package com.happy.delivery.domain.restaurant;
 
 import com.happy.delivery.domain.restaurant.vo.OptionGroupId;
 import java.util.Objects;
-import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import org.hibernate.annotations.SortNatural;
 
 /**
  * OptionGroup.
@@ -48,8 +49,9 @@ public class OptionGroup implements Comparable<OptionGroup> {
   @Column
   private Boolean mandatory;
 
+  @SortNatural
   @OneToMany(mappedBy = "optionGroup")
-  private Set<Option> optionSet = new TreeSet<>();
+  private SortedSet<Option> optionSet = new TreeSet<>();
 
   public OptionGroup() {
   }
@@ -114,7 +116,7 @@ public class OptionGroup implements Comparable<OptionGroup> {
     return mandatory;
   }
 
-  public Set<Option> getOptionSet() {
+  public SortedSet<Option> getOptionSet() {
     return optionSet;
   }
 }

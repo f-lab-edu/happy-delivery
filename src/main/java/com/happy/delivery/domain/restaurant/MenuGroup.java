@@ -2,7 +2,7 @@ package com.happy.delivery.domain.restaurant;
 
 import com.happy.delivery.domain.restaurant.vo.MenuGroupId;
 import java.util.Objects;
-import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +14,7 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import org.hibernate.annotations.SortNatural;
 
 /**
  * MenuGroups.
@@ -54,8 +55,9 @@ public class MenuGroup implements Comparable<MenuGroup> {
   @Column
   private String name;
 
+  @SortNatural
   @OneToMany(mappedBy = "menuGroup")
-  Set<Menu> menuSet = new TreeSet<>();
+  SortedSet<Menu> menuSet = new TreeSet<>();
 
   /**
    * MenuGroups default constructor.
@@ -122,7 +124,7 @@ public class MenuGroup implements Comparable<MenuGroup> {
     return name;
   }
 
-  public Set<Menu> getMenuSet() {
+  public SortedSet<Menu> getMenuSet() {
     return menuSet;
   }
 }
