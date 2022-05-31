@@ -11,6 +11,8 @@ public interface RestaurantSearchRepository {
 
   List<RestaurantCategory> getAllCategories();
 
+  List<Restaurant> getAllRestaurants();
+
   List<Restaurant> getAllRestaurantsByCategory(String category);
 
   Restaurant getRestaurantInfoAndAllMenus(Long restaurantId);

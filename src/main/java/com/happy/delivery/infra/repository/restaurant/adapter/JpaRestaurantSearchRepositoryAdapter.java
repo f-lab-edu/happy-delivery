@@ -30,6 +30,11 @@ public class JpaRestaurantSearchRepositoryAdapter implements RestaurantSearchRep
   }
 
   @Override
+  public List<Restaurant> getAllRestaurants() {
+    return jpaRestaurantRepository.findRestaurantsBy();
+  }
+
+  @Override
   public List<Restaurant> getAllRestaurantsByCategory(String category) {
     return jpaRestaurantRepository.findRestaurantsByCategory(category);
   }

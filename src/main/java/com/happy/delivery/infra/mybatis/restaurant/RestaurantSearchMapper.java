@@ -13,6 +13,8 @@ public interface RestaurantSearchMapper {
 
   List<RestaurantCategory> getAllCategories();
 
+  List<Restaurant> getAllRestaurants();
+
   List<Restaurant> getAllRestaurantsByCategory(String category);
 
   Restaurant getRestaurantInfoAndAllMenus(Long restaurantId);

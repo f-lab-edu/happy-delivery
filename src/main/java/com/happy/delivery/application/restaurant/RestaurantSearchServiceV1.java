@@ -5,9 +5,11 @@ import com.happy.delivery.application.restaurant.result.RestaurantCategoryResult
 import com.happy.delivery.application.restaurant.result.RestaurantResult;
 import com.happy.delivery.domain.restaurant.Restaurant;
 import com.happy.delivery.domain.restaurant.RestaurantCategory;
+import com.happy.delivery.domain.restaurant.repository.RestaurantCacheRepository;
 import com.happy.delivery.domain.restaurant.repository.RestaurantSearchRepository;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +21,30 @@ import org.springframework.transaction.annotation.Transactional;
 public class RestaurantSearchServiceV1 implements RestaurantSearchService {
 
   private final RestaurantSearchRepository restaurantSearchRepository;
+  private final RestaurantCacheRepository restaurantCacheRepository;
 
   /**
    * RestaurantSearchServiceV1 constructor.
    */
   @Autowired
-  public RestaurantSearchServiceV1(RestaurantSearchRepository restaurantSearchRepository) {
+  public RestaurantSearchServiceV1(RestaurantSearchRepository restaurantSearchRepository,
+      RestaurantCacheRepository restaurantCacheRepository) {
     this.restaurantSearchRepository = restaurantSearchRepository;
+    this.restaurantCacheRepository = restaurantCacheRepository;
+  }
+
+  /*
+       PostConstruct 어노테이션  : 특정 클래스의 메서드에 사용하는 어노테이션으로,
+                                해당 클래스 생성과 의존성 주입이 끝난 직후에 딱 한 번만 실행한다.
+                                Bean 이 생성된 직후, 무조건 실행해야 하는 초기화 메서드를 위해서 사용한다.
+
+       PostConstruct 사용 이유  : 단순하게 Bean 의 생성자에서 초기화 로직을 실행하면 안되나 생각할 수 있다.
+                                그러나, 객체가 생성되는 시점엔 아직 주입되는 Bean 들이 초기화가 되지 않은 상태이므로
+                                주입된 Bean 을 사용하는 경우 NPE 가 발생한다.
+  */
+  @PostConstruct
+  public void init() {
+    List<Restaurant> allOfRestaurants = restaurantSearchRepository.getAllRestaurants();
   }
 
   @Override

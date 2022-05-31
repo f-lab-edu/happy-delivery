@@ -19,6 +19,11 @@
     FROM restaurant_categories
   </select>
 
+  <select id="getAllRestaurants" resultMap="restaurantMap">
+    SELECT restaurant_id, name, category, address_detail, longitude, latitude, address_detail
+    FROM restaurants
+  </select>
+
   <!-- getAllRestaurantsByCategory 미완성! : longitude 와 latitude 의 값을 어떻게 VO에 넣어줄 것인지 고민 중. -->
   <select id="getAllRestaurantsByCategory" resultMap="restaurantMap">
     SELECT restaurant_id, name, category, address_detail, longitude, latitude, address_detail
