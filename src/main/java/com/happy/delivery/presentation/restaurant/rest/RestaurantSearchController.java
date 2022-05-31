@@ -1,8 +1,6 @@
 package com.happy.delivery.presentation.restaurant.rest;
 
 import com.happy.delivery.application.restaurant.RestaurantSearchService;
-import com.happy.delivery.application.restaurant.result.MenuGroupResult;
-import com.happy.delivery.application.restaurant.result.MenuResult;
 import com.happy.delivery.application.restaurant.result.RestaurantResult;
 import com.happy.delivery.presentation.common.response.ApiResponse;
 import com.happy.delivery.presentation.restaurant.request.RestaurantSearchRequest;
@@ -48,6 +46,10 @@ public class RestaurantSearchController {
    * getRestaurantsByCategoryIdAndPoint.
    * 근처 식당 리스트를 카테고리별로 가져옴.
    * 위치 정보를 어떻게 활용할 것인지 생각해봐야 함.
+   * ..
+   * redis 가게 위치 정보 저장 + 가게 id
+   * 가게 정보가 추가나 수정될 때마다 redis에도 동일하게 적용해야함.
+   * 위치 정보를 가지고 걸러주는 기능 있음.
    */
   @GetMapping({"/{category}"})
   public ApiResponse getRestaurantsByCategoryIdAndPoint(@PathVariable String category,

@@ -1,13 +1,12 @@
 package com.happy.delivery.application.restaurant.result;
 
 import com.happy.delivery.domain.restaurant.Option;
-import com.happy.delivery.domain.restaurant.OptionGroup;
 
 
 /**
  * OptionResult.
  */
-public class OptionResult {
+public class OptionResult implements Comparable<OptionResult> {
 
   private Long id;
   private Long optionGroupId;
@@ -33,6 +32,17 @@ public class OptionResult {
         option.getOptionGroup().getId(),
         option.getName(),
         option.getPrice());
+  }
+
+  /**
+   * compareTo.
+   * OptionGroupResult 의 TreeSet 을 정렬하는 메서드.
+   * 오름차순.
+   */
+  @Override
+  public int compareTo(OptionResult o) {
+    Long value = this.id - o.getId();
+    return value.intValue();
   }
 
   public Long getId() {

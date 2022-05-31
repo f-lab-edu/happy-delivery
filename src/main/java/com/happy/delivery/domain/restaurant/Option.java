@@ -1,8 +1,10 @@
 package com.happy.delivery.domain.restaurant;
 
 import com.happy.delivery.domain.restaurant.vo.OptionId;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +20,7 @@ import javax.persistence.ManyToOne;
  */
 @Entity(name = "options")
 @IdClass(OptionId.class)
-public class Option {
+public class Option implements Comparable<Option> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +28,7 @@ public class Option {
   private Long id;
 
   @Id
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumns(value = {
       @JoinColumn(name = "restaurant_id", referencedColumnName = "restaurant_id"),
       @JoinColumn(name = "menu_group_id", referencedColumnName = "menu_group_id"),
@@ -52,6 +54,34 @@ public class Option {
     this.optionGroup = optionGroup;
     this.name = name;
     this.price = price;
+  }
+
+  /**
+   * compareTo.
+   * OptionGroup 의 TreeSet 을 정렬하는 메서드.
+   * 오름차순.
+   */
+  @Override
+  public int compareTo(Option o) {
+    Long value = this.id - o.getId();
+    return value.intValue();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Option option = (Option) o;
+    return Objects.equals(id, option.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id);
   }
 
   public Long getId() {
