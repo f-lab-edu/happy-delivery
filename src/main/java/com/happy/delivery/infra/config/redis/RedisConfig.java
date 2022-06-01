@@ -64,7 +64,7 @@ public class RedisConfig {
   }
 
   /**
-          StringRedisTemplate : 주어진 객체들을 자동으로 직렬화/역직렬화 하며 String 데이터를 Redis 에 저장한다.
+   *      StringRedisTemplate : 주어진 객체들을 자동으로 직렬화/역직렬화 하며 String 데이터를 Redis 에 저장한다.
    */
   @Bean
   public StringRedisTemplate stringRedisTemplate() {
@@ -73,5 +73,18 @@ public class RedisConfig {
     stringRedisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
     stringRedisTemplate.setConnectionFactory(redisConnectionFactory());
     return stringRedisTemplate;
+  }
+
+  /**
+   * RestaurantPointRedisTemplate.
+   * Redis GEO 를 사용하기 위해서 만든 template.
+   */
+  @Bean
+  public RedisTemplate<String, String> restaurantPointRedisTemplate() {
+    RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
+    redisTemplate.setConnectionFactory(redisConnectionFactory());
+    redisTemplate.setKeySerializer(new StringRedisSerializer());
+    redisTemplate.setValueSerializer(new StringRedisSerializer());
+    return redisTemplate;
   }
 }

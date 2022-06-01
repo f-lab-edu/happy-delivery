@@ -45,6 +45,7 @@ public class RestaurantSearchServiceV1 implements RestaurantSearchService {
   @PostConstruct
   public void init() {
     List<Restaurant> allOfRestaurants = restaurantSearchRepository.getAllRestaurants();
+    // restaurantCacheRepository, RestaurantRedisTemplate 을 사용해서 Redis 에 allOfRestaurants 넣어줄 것.
   }
 
   @Override
