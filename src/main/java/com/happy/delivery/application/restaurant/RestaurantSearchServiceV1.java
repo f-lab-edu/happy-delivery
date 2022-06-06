@@ -44,8 +44,8 @@ public class RestaurantSearchServiceV1 implements RestaurantSearchService {
   */
   @PostConstruct
   public void init() {
-    List<Restaurant> allOfRestaurants = restaurantSearchRepository.getAllRestaurants();
-    // restaurantCacheRepository, RestaurantRedisTemplate 을 사용해서 Redis 에 allOfRestaurants 넣어줄 것.
+    List<Restaurant> restaurants = restaurantSearchRepository.getAllRestaurants();
+    restaurantCacheRepository.save(restaurants);
   }
 
   @Override
@@ -63,11 +63,13 @@ public class RestaurantSearchServiceV1 implements RestaurantSearchService {
   @Transactional
   public List<RestaurantResult> getRestaurantsByCategoryAndPoint(String category,
       RestaurantSearchCommand restaurantSearchCommand) {
-    // 어떤 방식으로 거리를 계산해 restaurant 를 가져올 것인지 생각해봐야 함.
-    // 지금은 카테고리별로 모든 식당을 가져오는 코드임.
-    // restaurantSearchCommand 를 사용하지 않았음.
+    // Redis 를 사용해서 근처 restaurants 가져오기.
+    List<Long> nearbyRestaurantIdList = restaurantCacheRepository
+        .searchNearbyRestaurants(restaurantSearchCommand.toRestaurantSearchValue());
+
+    // 카테고리와 레스토랑 아이디를 이용해서 MySQL 에서 값 가져오기.
     List<Restaurant> listOfRestaurant =
-        restaurantSearchRepository.getAllRestaurantsByCategory(category);
+        restaurantSearchRepository.getAllRestaurantsByCategory(nearbyRestaurantIdList, category);
     List<RestaurantResult> result = new ArrayList<>();
     for (Restaurant restaurant : listOfRestaurant) {
       result.add(RestaurantResult.fromRestaurantForList(restaurant));

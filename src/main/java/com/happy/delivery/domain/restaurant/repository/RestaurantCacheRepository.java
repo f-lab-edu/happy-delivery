@@ -1,6 +1,8 @@
 package com.happy.delivery.domain.restaurant.repository;
 
 import com.happy.delivery.domain.restaurant.Restaurant;
+import com.happy.delivery.domain.restaurant.vo.RestaurantSearchValue;
+import java.util.List;
 
 /**
  * RestaurantCacheRepository.
@@ -8,9 +10,7 @@ import com.happy.delivery.domain.restaurant.Restaurant;
  */
 public interface RestaurantCacheRepository {
 
-  void save(Restaurant restaurant);
+  void save(List<Restaurant> restaurant);
 
-  Restaurant findById(String id);
-
-  void deleteById(String id);
+  List<Long> searchNearbyRestaurants(RestaurantSearchValue restaurantSearchValue);
 }

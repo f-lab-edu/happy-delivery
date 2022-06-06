@@ -1,11 +1,24 @@
 package com.happy.delivery.infra.redis.restaurant;
 
+import com.happy.delivery.domain.exception.restaurant.NearbyRestaurantNotExistException;
 import com.happy.delivery.domain.restaurant.Restaurant;
 import com.happy.delivery.domain.restaurant.repository.RestaurantCacheRepository;
+import com.happy.delivery.domain.restaurant.vo.RestaurantSearchValue;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.geo.Circle;
+import org.springframework.data.geo.Distance;
+import org.springframework.data.geo.GeoResults;
 import org.springframework.data.geo.Point;
-import org.springframework.data.redis.core.BoundGeoOperations;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.connection.RedisGeoCommands;
+import org.springframework.data.redis.connection.RedisGeoCommands.DistanceUnit;
+import org.springframework.data.redis.connection.RedisGeoCommands.GeoLocation;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,13 +29,13 @@ import org.springframework.stereotype.Repository;
 public class RestaurantRedisTemplate implements RestaurantCacheRepository {
 
   private final RedisTemplate<String, String> restaurantPointRedisTemplate;
-  private final BoundGeoOperations<String, String> boundGeoOperations;
+  private final RedisSerializer<String> stringSerializer;
   private static final String GEO_KEY = "restaurants";
 
   @Autowired
   public RestaurantRedisTemplate(RedisTemplate<String, String> restaurantPointRedisTemplate) {
     this.restaurantPointRedisTemplate = restaurantPointRedisTemplate;
-    this.boundGeoOperations = restaurantPointRedisTemplate.boundGeoOps(GEO_KEY);
+    this.stringSerializer = restaurantPointRedisTemplate.getStringSerializer();
   }
 
   /*
@@ -45,18 +58,47 @@ public class RestaurantRedisTemplate implements RestaurantCacheRepository {
                    Redis 는 Geohash 를 사용해서 geospatial data 를 최대 12자리의 String 으로 hash 한다.
                    이 hashed string 은 지정한 key 의 sorted set 에 저장한다.
                    따라서, Redis Geo 를 사용할 때엔 RedisTemplate<String, String>을 사용해야 한다.
+
+
    */
   @Override
-  public void save(Restaurant restaurant) {
-    Point point = new Point(restaurant.getLongitude(), restaurant.getLatitude());
-    boundGeoOperations.add(point, restaurant.getId().toString());
+  public void save(List<Restaurant> restaurants) {
+
+    restaurantPointRedisTemplate.executePipelined(new RedisCallback<Object>() {
+      public Object doInRedis(RedisConnection connection) throws DataAccessException {
+        for (Restaurant restaurant : restaurants) {
+          Point point = new Point(restaurant.getLongitude(), restaurant.getLatitude());
+          connection.geoCommands().geoAdd(stringSerializer.serialize(GEO_KEY), point,
+              stringSerializer.serialize(restaurant.getId().toString()));
+        }
+        return null;
+      }
+    });
   }
 
   @Override
-  public Restaurant findById(String id) {
-    return null;
-  }
+  public List<Long> searchNearbyRestaurants(RestaurantSearchValue rsv) {
+    // 현재 주문 위치
+    Point point = new Point(rsv.getLongitude(), rsv.getLatitude());
+    // 거리 설정
+    Distance distance = new Distance(rsv.getDistance(), DistanceUnit.METERS);
+    // 범위
+    Circle within = new Circle(point, distance);
 
-  @Override
-  public void deleteById(String id) {}
+    GeoResults<GeoLocation<String>> radius =
+        restaurantPointRedisTemplate.opsForGeo().radius(GEO_KEY, within);
+
+    if (radius == null) {
+      throw new NearbyRestaurantNotExistException("근처에 주문할 수 있는 레스토랑이 없습니다.");
+    }
+
+    List<Long> nearbyRestaurantIdList = new ArrayList<>();
+    radius.forEach(geoLocationGeoResult -> {
+      RedisGeoCommands.GeoLocation<String> content = geoLocationGeoResult.getContent();
+      String id = content.getName();
+      nearbyRestaurantIdList.add(Long.parseLong(id));
+    });
+
+    return nearbyRestaurantIdList;
+  }
 }
