@@ -1,6 +1,6 @@
 package com.happy.delivery.domain.restaurant;
 
-import com.happy.delivery.domain.restaurant.vo.OptionGroupId;
+import com.happy.delivery.domain.restaurant.vo.id.OptionGroupId;
 import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;

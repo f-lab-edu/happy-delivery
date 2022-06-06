@@ -1,8 +1,8 @@
 package com.happy.delivery.application.common.result;
 
 import com.happy.delivery.domain.common.Token;
+import com.happy.delivery.domain.common.vo.SessionValue;
 import com.happy.delivery.domain.enumeration.Authority;
-import com.happy.delivery.domain.vo.SessionValue;
 
 /**
  * AuthorizationResult.

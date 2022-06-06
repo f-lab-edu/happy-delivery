@@ -1,6 +1,6 @@
 package com.happy.delivery.domain.restaurant;
 
-import com.happy.delivery.domain.vo.PointValue;
+import com.happy.delivery.domain.common.vo.PointValue;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import javax.persistence.Column;

@@ -1,4 +1,4 @@
-package com.happy.delivery.presentation.user.handler;
+package com.happy.delivery.presentation.common.handler;
 
 import com.happy.delivery.domain.exception.common.NotLoggedInException;
 import com.happy.delivery.domain.exception.common.NullTokenValueException;
