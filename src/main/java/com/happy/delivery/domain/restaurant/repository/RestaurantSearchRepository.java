@@ -13,7 +13,7 @@ public interface RestaurantSearchRepository {
 
   List<Restaurant> getAllRestaurants();
 
-  List<Restaurant> getAllRestaurantsByCategory(String category);
+  List<Restaurant> getAllRestaurantsByCategory(List<Long> restaurantIdList, String category);
 
   Restaurant getRestaurantInfoAndAllMenus(Long restaurantId);
 }
