@@ -3,7 +3,7 @@ package com.happy.delivery.application.restaurant.result;
 import com.happy.delivery.domain.restaurant.MenuGroup;
 import com.happy.delivery.domain.restaurant.Restaurant;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
@@ -17,13 +17,13 @@ public class RestaurantResult {
   private final Double longitude;
   private final Double latitude;
   private final String addressDetail;
-  private Set<MenuGroupResult> menuGroups;
+  private SortedSet<MenuGroupResult> menuGroups;
 
   /**
    * RestaurantResult Constructor.
    */
   public RestaurantResult(Long id, String name, String category, Double longitude,
-      Double latitude, String addressDetail, Set<MenuGroupResult> menuGroups) {
+      Double latitude, String addressDetail, SortedSet<MenuGroupResult> menuGroups) {
     this.id = id;
     this.name = name;
     this.category = category;
@@ -73,9 +73,9 @@ public class RestaurantResult {
    * set 변형 : MenuGroup => MenuGroupResult.
    * stack-over-flow 를 예방하고, 계층을 변경할 수 있음.
    */
-  private static Set<MenuGroupResult> toMenuGroupResultSet(Set<MenuGroup> menuGroups) {
+  private static SortedSet<MenuGroupResult> toMenuGroupResultSet(SortedSet<MenuGroup> menuGroups) {
     Iterator<MenuGroup> itr = menuGroups.iterator();
-    Set<MenuGroupResult> results = new TreeSet<>();
+    SortedSet<MenuGroupResult> results = new TreeSet<>();
     while (itr.hasNext()) {
       results.add(MenuGroupResult.fromMenuGroup(itr.next()));
     }
@@ -106,7 +106,7 @@ public class RestaurantResult {
     return addressDetail;
   }
 
-  public Set<MenuGroupResult> getMenuGroups() {
+  public SortedSet<MenuGroupResult> getMenuGroups() {
     return menuGroups;
   }
 }

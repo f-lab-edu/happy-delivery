@@ -2,7 +2,7 @@ package com.happy.delivery.application.common;
 
 import com.happy.delivery.application.common.command.AuthorizationCommand;
 import com.happy.delivery.application.common.result.AuthorizationResult;
-import com.happy.delivery.domain.vo.SessionValue;
+import com.happy.delivery.domain.common.vo.SessionValue;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;

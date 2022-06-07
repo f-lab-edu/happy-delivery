@@ -1,9 +1,11 @@
 package com.happy.delivery.infra.repository.restaurant.adapter;
 
+import com.happy.delivery.domain.exception.restaurant.NoRestaurantsInThatCategoryException;
 import com.happy.delivery.domain.restaurant.Restaurant;
 import com.happy.delivery.domain.restaurant.RestaurantCategory;
 import com.happy.delivery.domain.restaurant.repository.RestaurantSearchRepository;
 import com.happy.delivery.infra.mybatis.restaurant.RestaurantSearchMapper;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,8 +25,29 @@ public class RestaurantSearchRepositoryAdapter implements RestaurantSearchReposi
   }
 
   @Override
-  public List<Restaurant> getAllRestaurantsByCategory(String category) {
-    return restaurantSearchMapper.getAllRestaurantsByCategory(category);
+  public List<Restaurant> getAllRestaurants() {
+    return restaurantSearchMapper.getAllRestaurants();
+  }
+
+  @Override
+  public List<Restaurant> getAllRestaurantsByCategory(List<Long> restaurantIdList,
+      String category) {
+
+    List<Restaurant> restaurantList = new ArrayList<>();
+
+    for (Long restaurantId : restaurantIdList) {
+      Restaurant restaurant =
+          restaurantSearchMapper.getRestaurantsByIdAndCategory(restaurantId, category);
+      if (restaurant != null) {
+        restaurantList.add(restaurant);
+      }
+    }
+
+    if (restaurantList.isEmpty()) {
+      throw new NoRestaurantsInThatCategoryException("해당 카테고리에 배달 가능한 음식점이 없습니다.");
+    }
+
+    return restaurantList;
   }
 
   @Override

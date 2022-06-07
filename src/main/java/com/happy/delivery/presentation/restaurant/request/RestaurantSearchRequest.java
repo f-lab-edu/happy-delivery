@@ -10,13 +10,15 @@ public class RestaurantSearchRequest {
 
   private Double longitude;
   private Double latitude;
+  private Integer distance;
 
   /**
    * RestaurantSearchRequest Constructor.
    */
-  public RestaurantSearchRequest(Double longitude, Double latitude) {
+  public RestaurantSearchRequest(Double longitude, Double latitude, Integer distance) {
     this.longitude = longitude;
     this.latitude = latitude;
+    this.distance = distance;
   }
 
   public Double getLongitude() {
@@ -27,6 +29,10 @@ public class RestaurantSearchRequest {
     return latitude;
   }
 
+  public Integer getDistance() {
+    return distance;
+  }
+
   /**
    * RestaurantSearchCommand.
    * request -> command.
@@ -34,7 +40,8 @@ public class RestaurantSearchRequest {
   public RestaurantSearchCommand toCommand() {
     return new RestaurantSearchCommand(
         this.longitude,
-        this.latitude
+        this.latitude,
+        this.distance
     );
   }
 }

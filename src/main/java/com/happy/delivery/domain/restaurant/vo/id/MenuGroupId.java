@@ -1,4 +1,4 @@
-package com.happy.delivery.domain.restaurant.vo;
+package com.happy.delivery.domain.restaurant.vo.id;
 
 import java.io.Serializable;
 import java.util.Objects;

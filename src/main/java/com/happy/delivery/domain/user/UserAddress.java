@@ -1,7 +1,7 @@
 package com.happy.delivery.domain.user;
 
 
-import com.happy.delivery.domain.vo.PointValue;
+import com.happy.delivery.domain.common.vo.PointValue;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;

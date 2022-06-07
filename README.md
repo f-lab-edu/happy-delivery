@@ -29,6 +29,12 @@
   -Delastic.apm.application_packages=com.happy.delivery
   -Delastic.apm.transaction_sample_rate=1
   -Delastic.apm.trace_methods=com.happy.*
+  -Delastic.apm.span_frames_min_duration=1ms
+  -Delastic.apm.span_min_duration=0ms
+  -Delastic.apm.trace_methods_duration_threshold=1ms
+  -Delastic.apm.transaction_sample_rate=1
+  -Delastic.apm.enable_log_correlation=true
+  -Delastic.apm.max_queue_size=2048
   ```
 
 ## CI
