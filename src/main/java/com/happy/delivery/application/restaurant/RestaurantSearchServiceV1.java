@@ -3,13 +3,13 @@ package com.happy.delivery.application.restaurant;
 import com.happy.delivery.application.restaurant.command.RestaurantSearchCommand;
 import com.happy.delivery.application.restaurant.result.RestaurantCategoryResult;
 import com.happy.delivery.application.restaurant.result.RestaurantResult;
+import com.happy.delivery.domain.exception.restaurant.EmptyRestaurantListException;
 import com.happy.delivery.domain.restaurant.Restaurant;
 import com.happy.delivery.domain.restaurant.RestaurantCategory;
 import com.happy.delivery.domain.restaurant.repository.RestaurantCacheRepository;
 import com.happy.delivery.domain.restaurant.repository.RestaurantSearchRepository;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,10 +42,32 @@ public class RestaurantSearchServiceV1 implements RestaurantSearchService {
                                 그러나, 객체가 생성되는 시점엔 아직 주입되는 Bean 들이 초기화가 되지 않은 상태이므로
                                 주입된 Bean 을 사용하는 경우 NPE 가 발생한다.
   */
-  @PostConstruct
+
+  /**
+   * init() cursor-pagination 을 이용하여 MySQL 에 있는 레스토랑 목록을 Redis 로 옮기는 메서드. 모든 레스토랑 데이터를 한번에 옮기는 것은 많은
+   * 부하를 일으킨다. 따라서 cursor 를 이용해 값을 나눠서 가져온다.
+   */
+  //@PostConstruct
+  @Override
+  @Transactional
   public void init() {
-    List<Restaurant> restaurants = restaurantSearchRepository.getAllRestaurants();
+
+    List<Restaurant> restaurants = restaurantSearchRepository.getTop10Restaurants();
+
+    if (restaurants.isEmpty()) {
+      throw new EmptyRestaurantListException("DB에 저장된 음식점이 없습니다.");
+    }
+
+    Long lastRestaurantId = restaurants.get(restaurants.size() - 1).getId();
     restaurantCacheRepository.save(restaurants);
+    restaurants.clear();
+
+    while (restaurants.addAll(
+        restaurantSearchRepository.getTop10RestaurantsById(lastRestaurantId))) {
+      lastRestaurantId = restaurants.get(restaurants.size() - 1).getId();
+      restaurantCacheRepository.save(restaurants);
+      restaurants.clear();
+    }
   }
 
   @Override
