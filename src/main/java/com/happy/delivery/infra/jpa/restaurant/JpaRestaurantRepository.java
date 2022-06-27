@@ -14,7 +14,7 @@ public interface JpaRestaurantRepository extends JpaRepository<Restaurant, Long>
 
   List<Restaurant> findTop10RestaurantsByIdGreaterThanOrderByIdAsc(Long id);
 
-  Restaurant findRestaurantByIdAndCategory(Long id, String category);
+  List<Restaurant> findRestaurantsByIdInAndCategory(List<Long> restaurantIdList, String category);
 
   /**
    * n + 1 문제를 해결하기 위해서 fetch-join 나 @EntityGraph 를 사용할 수 있다.
