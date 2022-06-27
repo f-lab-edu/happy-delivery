@@ -5,18 +5,17 @@ import com.happy.delivery.domain.restaurant.Restaurant;
 import com.happy.delivery.domain.restaurant.repository.RestaurantCacheRepository;
 import com.happy.delivery.domain.restaurant.vo.RestaurantSearchValue;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.data.geo.Circle;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.GeoResults;
 import org.springframework.data.geo.Point;
-import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.connection.RedisGeoCommands.DistanceUnit;
 import org.springframework.data.redis.connection.RedisGeoCommands.GeoLocation;
-import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Repository;
@@ -59,21 +58,19 @@ public class RestaurantRedisTemplate implements RestaurantCacheRepository {
                    이 hashed string 은 지정한 key 의 sorted set 에 저장한다.
                    따라서, Redis Geo 를 사용할 때엔 RedisTemplate<String, String>을 사용해야 한다.
 
-
    */
   @Override
   public void save(List<Restaurant> restaurants) {
 
-    restaurantPointRedisTemplate.executePipelined(new RedisCallback<Object>() {
-      public Object doInRedis(RedisConnection connection) throws DataAccessException {
-        for (Restaurant restaurant : restaurants) {
-          Point point = new Point(restaurant.getLongitude(), restaurant.getLatitude());
-          connection.geoCommands().geoAdd(stringSerializer.serialize(GEO_KEY), point,
-              stringSerializer.serialize(restaurant.getId().toString()));
-        }
-        return null;
-      }
-    });
+    Map<String, Point> pointMap = new HashMap<>();
+
+    for (int i = 0; i < restaurants.size(); i++) {
+      Point point = new Point(restaurants.get(i).getLongitude(), restaurants.get(i).getLatitude());
+      pointMap.put(restaurants.get(i).getId().toString(), point);
+    }
+
+    restaurantPointRedisTemplate.opsForGeo().add(GEO_KEY, pointMap);
+
   }
 
   @Override
