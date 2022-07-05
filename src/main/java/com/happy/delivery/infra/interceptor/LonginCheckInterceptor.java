@@ -1,6 +1,9 @@
 package com.happy.delivery.infra.interceptor;
 
 import com.happy.delivery.application.common.AuthorizationService;
+import com.happy.delivery.application.common.result.AuthorizationResult;
+import com.happy.delivery.domain.enumeration.Authority;
+import com.happy.delivery.domain.exception.common.MisMatchedAuthorityException;
 import com.happy.delivery.domain.exception.common.NotLoggedInException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,9 +52,16 @@ public class LonginCheckInterceptor implements HandlerInterceptor {
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
-    if (authorizationService.getCurrentUser(request) == null) {
+    AuthorizationResult currentUser = authorizationService.getCurrentUser(request);
+
+    if (currentUser == null) {
       throw new NotLoggedInException("로그인이 필요한 서비스입니다.");
     }
+
+    if (currentUser.getAuthority() != Authority.USER) {
+      throw new MisMatchedAuthorityException("사용자 권한이 없습니다.");
+    }
+
     return true;
   }
 }
