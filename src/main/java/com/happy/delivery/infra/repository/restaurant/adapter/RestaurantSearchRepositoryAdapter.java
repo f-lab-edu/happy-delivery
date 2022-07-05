@@ -24,8 +24,15 @@ public class RestaurantSearchRepositoryAdapter implements RestaurantSearchReposi
     return restaurantSearchMapper.getAllCategories();
   }
 
+  // 미완성 :: MyBatis 에 대한 공부가 더 필요함.
   @Override
-  public List<Restaurant> getAllRestaurants() {
+  public List<Restaurant> getTop10Restaurants() {
+    return restaurantSearchMapper.getAllRestaurants();
+  }
+
+  // 미완성 :: MyBatis 에 대한 공부가 더 필요함.
+  @Override
+  public List<Restaurant> getTop10RestaurantsById(Long lastRestaurantId) {
     return restaurantSearchMapper.getAllRestaurants();
   }
 

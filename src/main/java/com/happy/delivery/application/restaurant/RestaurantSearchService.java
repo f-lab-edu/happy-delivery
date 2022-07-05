@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface RestaurantSearchService {
 
+  void init();
+
   List<RestaurantCategoryResult> getCategories();
 
   List<RestaurantResult> getRestaurantsByCategoryAndPoint(String category,

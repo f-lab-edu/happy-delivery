@@ -33,6 +33,16 @@ public class RestaurantSearchController {
   }
 
   /**
+   * init().
+   * 레스토랑 위치 정보를 DB 에서 가져와 Redis 에 저장하는 메서드.
+   */
+  @GetMapping("/init")
+  public ApiResponse init() {
+    restaurantSearchService.init();
+    return ApiResponse.success(null);
+  }
+
+  /**
    * getRestaurantCategories.
    * 메인화면에서 큰 카테고리들을 조회.
    * Ex) 치킨, 피자, 중국집 등
@@ -48,7 +58,7 @@ public class RestaurantSearchController {
    * 위치 정보를 어떻게 활용할 것인지 생각해봐야 함.
    * ..
    * redis 가게 위치 정보 저장 + 가게 id
-   * 가게 정보가 추가나 수정될 때마다 redis에도 동일하게 적용해야함.
+   * 가게 정보가 추가나 수정될 때마다 redis 에도 동일하게 적용해야함.
    * 위치 정보를 가지고 걸러주는 기능 있음.
    */
   @GetMapping({"/{category}"})
